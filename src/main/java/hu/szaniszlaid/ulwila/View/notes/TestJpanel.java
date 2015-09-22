@@ -8,9 +8,6 @@ package hu.szaniszlaid.ulwila.View.notes;
 
 import java.awt.Graphics;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
 import hu.szaniszlaid.ulwila.notesGraphics.NotesGraphics;
 
 /**
