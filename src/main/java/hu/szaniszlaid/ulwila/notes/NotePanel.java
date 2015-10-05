@@ -1,4 +1,9 @@
-package hu.szaniszlaid.ulwila.View.notes;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,8 +19,8 @@ import hu.szaniszlaid.ulwila.note.util.Octave;
  *
  * @author Franklin
  */
-public abstract class MusicComponent extends JComponent{
-    
+public abstract class NotePanel extends MusicComponent {
+
     private int nWidth;
     private int nHeight;
 
@@ -26,25 +31,22 @@ public abstract class MusicComponent extends JComponent{
 
     private Color color;
 
-   //TODO ez fog kikerülni note-ba private Pitch pitch;
+    private Octave pitch;
 
-    public MusicComponent(NoteBuilder builder) {
+    public NotePanel(NoteBuilder builder) {
         this.color = builder.getColor();
         this.containerHeight = builder.getContainerHeight();
         this.containerWidth = builder.getContainerWidth();
         this.nHeight = builder.getnHeigh();
         this.nWidth = builder.getnWidth();
         this.margin = builder.getMargin();
-       
-        reSize();
+        this.pitch = builder.getPitch();
+        
+        setPreferredSize(new Dimension(containerWidth + margin, containerHeight + margin));
     }
 
-    public MusicComponent() {
+    public NotePanel() {
         this(new NoteBuilder());
-    }
-    
-    public final void reSize(){
-        setPreferredSize(new Dimension(containerWidth + margin, containerHeight + margin));
     }
 
     @Override
@@ -71,14 +73,11 @@ public abstract class MusicComponent extends JComponent{
     public Color getColor() {
         return color;
     }
-    
-    public MusicComponent setContainerWidth(int width){
-         this.containerWidth = width;
-         reSize();
-         return this;
+
+    public Octave getPitch() {
+        return pitch;
     }
 
-    
     public static class NoteBuilder {
 
         int nWidth = 100;
@@ -119,6 +118,11 @@ public abstract class MusicComponent extends JComponent{
             return this;
         }
 
+        public NoteBuilder setPitch(Octave pitch) {
+            this.pitch = pitch;
+            return this;
+        }
+
         public int getnHeigh() {
             return nHeigh;
         }
@@ -143,6 +147,10 @@ public abstract class MusicComponent extends JComponent{
             return margin;
         }
 
+        public Octave getPitch() {
+            return pitch;
+        }
+
     }
-    
+
 }

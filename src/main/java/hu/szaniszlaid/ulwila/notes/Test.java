@@ -1,4 +1,4 @@
-package hu.szaniszlaid.ulwila.View.notes;
+package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

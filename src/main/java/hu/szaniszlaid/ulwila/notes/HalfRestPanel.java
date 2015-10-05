@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.szaniszlaid.ulwila.View.notes;
+package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.Graphics2D;
 
@@ -11,20 +11,21 @@ import java.awt.Graphics2D;
  *
  * @author Franklin
  */
-public class WholeRestPanel extends NotePanel {
+public class HalfRestPanel extends NotePanel {
 
-    public WholeRestPanel() {
+    
+    /**
+     * Creates new form HalfRestPanel
+     */
+    public HalfRestPanel() {
         super(new NoteBuilder()
-                .setnWidth(90)
-                .setContainerWidth(360)
-                .setContainerHeight(100));
+                .setContainerWidth(180)
+                .setnWidth(90));
     }
 
     @Override
     public void draw(Graphics2D g) {
         g.drawPolygon(Components.getHexagon(0, 0, getNWidth(), getNHeight()));
         g.drawPolygon(Components.getHexagon(getNWidth(), 0, getNWidth(), getNHeight()));
-        g.drawPolygon(Components.getHexagon(2 * getNWidth(), 0, getNWidth(), getNHeight()));
-        g.drawPolygon(Components.getHexagon(3 * getNWidth(), 0, getNWidth(), getNHeight()));
     }
 }
