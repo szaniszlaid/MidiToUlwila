@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.szaniszlaid.ulwila.notes;
+package hu.szaniszlaid.ulwila.notes.rest;
 
 import java.awt.Graphics2D;
+
+import hu.szaniszlaid.ulwila.notes.Components;
+import hu.szaniszlaid.ulwila.notes.NotePanel;
 
 /**
  *
@@ -13,9 +16,6 @@ import java.awt.Graphics2D;
  */
 public class EightRestPanel extends NotePanel {
 
-    /**
-     * Creates new form EightRestPanel
-     */
     public EightRestPanel() {
         super(new NoteBuilder().setContainerWidth(45));
     }

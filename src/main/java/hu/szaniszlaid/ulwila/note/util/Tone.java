@@ -16,13 +16,13 @@ public enum Tone {
 
         @Override
         public Color getColor() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return Color.BLUE;
         }
     },D {
 
         @Override
         public Color getColor() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return Color.RED;
         }
     },E {
 

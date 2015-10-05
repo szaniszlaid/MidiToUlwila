@@ -10,5 +10,5 @@ package hu.szaniszlaid.ulwila.note.util;
  * @author Franklin
  */
 public enum Octave {
-    FIRST, SECOND, THIRD, FOURTH
+    FIRST, SECOND, THIRD
 }

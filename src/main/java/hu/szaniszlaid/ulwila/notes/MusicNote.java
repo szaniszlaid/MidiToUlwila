@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
+import hu.szaniszlaid.ulwila.note.util.Tone;
 
 /**
  *
@@ -16,22 +17,24 @@ import hu.szaniszlaid.ulwila.note.util.Octave;
  */
 public abstract class MusicNote extends MusicComponent {
 
-    Octave pitch;
+    Octave octave;
+    private Tone tone;
     
     public final int offsetX = getNWidth() / 3 * 2;
 
-    public MusicNote(NoteBuilder builder, Octave pitch) {
+    public MusicNote(NoteBuilder builder, Octave octave, Tone tone) {
         super(builder);
-        this.pitch = pitch;
+        this.octave = octave;
+        this.tone = tone;
     }
 
-    public MusicNote setPitch(Octave pitch) {
-        this.pitch = pitch;
+    public MusicNote setOctave(Octave octave) {
+        this.octave = octave;
         return this;
     }
 
-    public Octave getPitch() {
-        return pitch;
+    public Octave getOctave() {
+        return octave;
     }
     
     public int getNthOffset(int n){
@@ -41,7 +44,7 @@ public abstract class MusicNote extends MusicComponent {
     @Override
     public void draw(Graphics2D g) {
         drawNote(g);
-        switch (pitch) {
+        switch (octave) {
             case FIRST:
                 drawColoredOctave(g, Color.BLACK);
                 break;
@@ -49,21 +52,25 @@ public abstract class MusicNote extends MusicComponent {
                 break;
             case THIRD:
                 drawColoredOctave(g, Color.WHITE);
-                break;
-            case FOURTH:
-                throw new UnsupportedOperationException();
-               // break;
-                
+                break;                
         }
     }
 
     public abstract void drawNote(Graphics2D g);
 
-    private void drawColoredOctave(Graphics2D g, Color pithColor) {
-        g.setColor(pithColor);
+    private void drawColoredOctave(Graphics2D g, Color octaveColor) {
+        g.setColor(octaveColor);
         drawOctave(g);
     }
 
     public abstract void drawOctave(Graphics2D g);
+
+    public Tone getTone() {
+        return tone;
+    }
+
+    public void setTone(Tone tone) {
+        this.tone = tone;
+    }
 
 }

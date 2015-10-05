@@ -24,12 +24,7 @@ public abstract class MusicComponent extends JComponent{
 
     private int margin;
 
-    private Color color;
-
-   //TODO ez fog kikerülni note-ba private Pitch pitch;
-
     public MusicComponent(NoteBuilder builder) {
-        this.color = builder.getColor();
         this.containerHeight = builder.getContainerHeight();
         this.containerWidth = builder.getContainerWidth();
         this.nHeight = builder.getnHeigh();
@@ -67,10 +62,6 @@ public abstract class MusicComponent extends JComponent{
     public int getNHeight() {
         return nHeight;
     }
-
-    public Color getColor() {
-        return color;
-    }
     
     public MusicComponent setContainerWidth(int width){
          this.containerWidth = width;
@@ -86,8 +77,6 @@ public abstract class MusicComponent extends JComponent{
         int margin = 10;
         int containerWidth = nWidth + margin;
         int containerHeight = nHeigh + margin;
-        Color color = Color.BLACK;
-        Octave pitch = Octave.SECOND;
 
         public NoteBuilder setnHeigh(int nHeigh) {
             this.nHeigh = nHeigh;
@@ -109,11 +98,7 @@ public abstract class MusicComponent extends JComponent{
             return this;
         }
 
-        public NoteBuilder setColor(Color color) {
-            this.color = color;
-            return this;
-        }
-
+        
         public NoteBuilder setMargin(int margin) {
             this.margin = margin;
             return this;
@@ -133,10 +118,6 @@ public abstract class MusicComponent extends JComponent{
 
         public int getContainerHeight() {
             return containerHeight;
-        }
-
-        public Color getColor() {
-            return color;
         }
 
         public int getMargin() {

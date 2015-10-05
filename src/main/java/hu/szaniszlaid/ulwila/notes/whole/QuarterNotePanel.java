@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.szaniszlaid.ulwila.notes;
+package hu.szaniszlaid.ulwila.notes.whole;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
+import hu.szaniszlaid.ulwila.note.util.Tone;
+import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 /**
  *
@@ -20,10 +22,10 @@ public class QuarterNotePanel extends MusicNote {
      * Creates new form QuarterNote
      *
      * @param color
-     * @param pitch
+     * @param octave
      */
-    public QuarterNotePanel(Color color, Octave pitch) {
-        super(new MusicComponent.NoteBuilder().setColor(color), pitch);
+    public QuarterNotePanel(Octave octave, Tone tone) {
+        super(new NoteBuilder(), octave, tone);
         setContainerWidth(getNHeight());
     }
 
@@ -70,7 +72,7 @@ public class QuarterNotePanel extends MusicNote {
 
     @Override
     public void drawNote(Graphics2D g) {
-        g.setColor(getColor());
+        g.setColor(getTone().getColor());
         g.fillOval(0, 0, getNWidth(), getNHeight());
         g.setColor(Color.BLACK);
         g.drawOval(0, 0, getNWidth(), getNHeight());
@@ -80,7 +82,7 @@ public class QuarterNotePanel extends MusicNote {
     public void drawOctave(Graphics2D g) {
         int centerX = getNWidth() / 2 - getNWidth() / 10;
         int centerY = getNHeight() / 2 - getNHeight() / 10;
-
+        
         g.fillOval(centerX, centerY, getNWidth() / 5, getNHeight() / 5);
         g.setColor(Color.BLACK);
         g.drawOval(centerX, centerY, getNWidth() / 5, getNHeight() / 5);

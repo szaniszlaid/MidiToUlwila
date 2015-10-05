@@ -11,7 +11,7 @@ import java.awt.Polygon;
  * @author Franklin
  */
 public class Components {
-    static Polygon getHexagon(int x, int y, int Width, int Height){
+    public static Polygon getHexagon(int x, int y, int Width, int Height){
         Polygon hexagon = new Polygon();
         
         int xPoints [] = {0,Width/2 , Width, Width ,Width/2,0};
@@ -31,7 +31,7 @@ public class Components {
         return hexagon;
     }
     
-    static Polygon getHalfHexagon(int x, int y, int Width, int Height){
+    public static Polygon getHalfHexagon(int x, int y, int Width, int Height){
         Polygon polygon = new Polygon();
         
         int xPoints [] = {0,Width/2 ,Width/2,0};
