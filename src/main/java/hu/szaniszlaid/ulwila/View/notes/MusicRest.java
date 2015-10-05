@@ -9,6 +9,6 @@ package hu.szaniszlaid.ulwila.View.notes;
  *
  * @author Franklin
  */
-public abstract class MusicRest extends MusicElement{
+public abstract class MusicRest extends MusicComponent{
     
 }

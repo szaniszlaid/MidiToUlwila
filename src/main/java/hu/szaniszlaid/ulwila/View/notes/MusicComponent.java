@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.szaniszlaid.ulwila.View.notes;
 
 import java.awt.Color;
@@ -19,7 +14,7 @@ import hu.szaniszlaid.ulwila.note.util.Octave;
  *
  * @author Franklin
  */
-public abstract class MusicElement extends JComponent{
+public abstract class MusicComponent extends JComponent{
     
     private int nWidth;
     private int nHeight;
@@ -33,7 +28,7 @@ public abstract class MusicElement extends JComponent{
 
    //TODO ez fog kikerülni note-ba private Pitch pitch;
 
-    public MusicElement(NoteBuilder builder) {
+    public MusicComponent(NoteBuilder builder) {
         this.color = builder.getColor();
         this.containerHeight = builder.getContainerHeight();
         this.containerWidth = builder.getContainerWidth();
@@ -44,7 +39,7 @@ public abstract class MusicElement extends JComponent{
         reSize();
     }
 
-    public MusicElement() {
+    public MusicComponent() {
         this(new NoteBuilder());
     }
     
@@ -77,7 +72,7 @@ public abstract class MusicElement extends JComponent{
         return color;
     }
     
-    public MusicElement setContainerWidth(int width){
+    public MusicComponent setContainerWidth(int width){
          this.containerWidth = width;
          reSize();
          return this;

@@ -14,7 +14,7 @@ import hu.szaniszlaid.ulwila.note.util.Octave;
  *
  * @author Franklin
  */
-public abstract class MusicNote extends MusicElement {
+public abstract class MusicNote extends MusicComponent {
 
     Octave pitch;
     

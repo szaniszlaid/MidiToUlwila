@@ -19,7 +19,7 @@ import hu.szaniszlaid.ulwila.note.util.Octave;
  *
  * @author Franklin
  */
-public abstract class NotePanel extends JComponent {
+public abstract class NotePanel extends MusicComponent {
 
     private int nWidth;
     private int nHeight;
