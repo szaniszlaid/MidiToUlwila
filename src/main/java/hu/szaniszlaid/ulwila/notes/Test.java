@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
+import hu.szaniszlaid.ulwila.notes.semitone.QuarterSemiNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNotePanel;
 
 public class Test extends JFrame {
@@ -45,8 +46,20 @@ public class Test extends JFrame {
 //        notesPanel.add(new EighthNotePanel(Color.RED, Octave.SECOND));
 //        notesPanel.add(new EighthNotePanel(Color.RED, Octave.THIRD));
 //        notesPanel.add(new WholeRestPanel());
-        notesPanel.add(new QuarterNotePanel(Octave.FIRST, Tone.C));
-        notesPanel.add(new QuarterNotePanel(Octave.FIRST, Tone.D));
+//        notesPanel.add(new QuarterNotePanel(Octave.FIRST, Tone.C));
+//        notesPanel.add(new QuarterNotePanel(Octave.FIRST, Tone.D));
+//        notesPanel.add(new QuarterSemiNote(Octave.FIRST, Tone.CIS));
+        
+        for (Octave octave : Octave.values()) {
+			for (Tone tone : Tone.values()) {
+				if (tone.isSemiTone()){
+					notesPanel.add(new QuarterSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new QuarterNotePanel(octave, tone));
+				}
+			}
+		}
+
 //        notesPanel.add(new QuarterNotePanel(Color.BLUE, Octave.SECOND));
 //        notesPanel.add(new QuarterNotePanel(Color.BLUE, Octave.THIRD));
 //        notesPanel.add(new SixteenthNotePanel(Color.GREEN, Octave.FIRST));
@@ -55,7 +68,7 @@ public class Test extends JFrame {
 //        notesPanel.add(new WholeNotePanel(Color.MAGENTA, Octave.SECOND));
         
         notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        notesPanel.setPreferredSize(new Dimension(500, 500));
+        notesPanel.setPreferredSize(new Dimension(500, 1500));
 
        
         JScrollPane scrollPanel = new JScrollPane(notesPanel);

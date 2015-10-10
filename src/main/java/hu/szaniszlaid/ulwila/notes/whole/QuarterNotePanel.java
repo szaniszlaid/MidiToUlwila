@@ -7,6 +7,7 @@ package hu.szaniszlaid.ulwila.notes.whole;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Arc2D;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
@@ -29,53 +30,23 @@ public class QuarterNotePanel extends MusicNote {
         setContainerWidth(getNHeight());
     }
 
-//    @Override
-//    public void draw(Graphics2D g) {
-//        int centerX = getNWidth() / 2 - getNWidth() / 10;
-//        int centerY = getNHeight() / 2 - getNHeight() / 10;
-//        switch (getPitch()) {
-//            case BASS:
-//                if (getColor().equals(Color.BLACK)) {
-//                    int whiteWidth = Math.round(getNWidth() / (float) 1.5);
-//                    int whiteHeight = Math.round(getNHeight() / (float) 1.5);
-//                    int whiteX = getNWidth() / 2 - whiteWidth / 2;
-//                    int whiteY = getNHeight() / 2 - whiteHeight / 2;
-//                    g.fillOval(0, 0, getNWidth(), getNHeight());
-//                    g.setColor(Color.WHITE);
-//                    g.fillOval(whiteX, whiteY, whiteWidth, whiteHeight);
-//                } else {
-//                    g.setColor(getColor());
-//                    g.fillOval(0, 0, getNWidth(), getNHeight());
-//                }
-//                g.setColor(Color.BLACK);
-//                g.drawOval(0, 0, getNWidth(), getNHeight());
-//                g.fillOval(centerX, centerY, getNWidth() / 5, getNHeight() / 5);
-//                break;
-//            case MIDDLE:
-//                g.setColor(getColor());
-//                g.fillOval(0, 0, getNWidth(), getNHeight());
-//                g.setColor(Color.BLACK);
-//                g.drawOval(0, 0, getNWidth(), getNHeight());
-//                break;
-//            case HIGH:
-//                g.setColor(getColor());
-//                g.fillOval(0, 0, getNWidth(), getNHeight());
-//                g.setColor(Color.BLACK);
-//                g.drawOval(0, 0, getNWidth(), getNHeight());
-//                g.setColor(Color.WHITE);
-//                g.fillOval(centerX, centerY, getNWidth() / 5, getNHeight() / 5);
-//                //TODO 3 vonalas C
-//                break;
-//        }
-//
-//    }
-
     @Override
     public void drawNote(Graphics2D g) {
-        g.setColor(getTone().getColor());
+    	double x = getNWidth() / 2 - getNWidth() / 3;
+    	double y = getNHeight() / 2 - getNHeight() / 3;
+    			
+    	
+        g.setColor(getColor());
         g.fillOval(0, 0, getNWidth(), getNHeight());
         g.setColor(Color.BLACK);
         g.drawOval(0, 0, getNWidth(), getNHeight());
+        
+        if (getTone() == Tone.C && getOctave() == Octave.FIRST){
+        	  g.setColor(Color.WHITE);
+              Arc2D whiteCircle = new Arc2D.Double(x, y, getNWidth()/1.5, getNHeight()/1.5, 0, 360, Arc2D.CHORD);
+              g.fill(whiteCircle);
+
+        }
     }
 
     @Override

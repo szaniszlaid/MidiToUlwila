@@ -52,7 +52,10 @@ public abstract class MusicNote extends MusicComponent {
                 break;
             case THIRD:
                 drawColoredOctave(g, Color.WHITE);
-                break;                
+                break;
+            case FOURTH:
+                drawColoredOctave(g, Color.BLACK);
+                break;   
         }
     }
 
@@ -72,5 +75,64 @@ public abstract class MusicNote extends MusicComponent {
     public void setTone(Tone tone) {
         this.tone = tone;
     }
+    
+   public Color getColor(){
+    	switch (getTone()) {
+		case C:
+			if (getOctave() == Octave.FOURTH) {
+				return Color.WHITE;
+			}
+			return Color.BLACK;
+		case D:			
+			return new Color(145, 75, 41);
+		case E:			
+			return new Color(0, 0, 255);
+		case F:			
+			return new Color(0, 170, 0);
+		case G:			
+			return Color.RED;
+		case A:			
+			return new Color(255, 153, 0);
+		case H:			
+			return Color.YELLOW;
+		default:
+			throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if tone is semi note");
+		}
+    }
+   
+   public Color getLeftColor(){
+	   switch (getTone()) {
+		case CIS:			
+			return Color.BLACK;
+		case DIS:			
+			return new Color(145, 75, 41);
+		case FIS:			
+			return new Color(0, 170, 0);
+		case GIS:			
+			return Color.RED;
+		case AIS:			
+			return new Color(255, 153, 0);
+		default:
+			throw new UnsupportedOperationException("Use getColor() method if tone is whole note");
+	   }
+   }
+   
+   
+   public Color getRightColor(){
+	   switch (getTone()) {
+		case CIS:
+			return new Color(140, 80, 60);
+		case DIS:			
+			return Color.BLUE;
+		case FIS:			
+			return Color.RED;
+		case GIS:			
+			return new Color(255, 153, 0);
+		case AIS:			
+			return Color.YELLOW;
+		default:
+			throw new UnsupportedOperationException("Use getColor() method if tone is whole note");
+	   }
+   }
 
 }
