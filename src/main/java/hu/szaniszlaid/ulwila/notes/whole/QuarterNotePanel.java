@@ -7,6 +7,7 @@ package hu.szaniszlaid.ulwila.notes.whole;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Arc2D;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
@@ -50,12 +51,10 @@ public class QuarterNotePanel extends MusicNote {
     }
 
     @Override
-    public void drawOctave(Graphics2D g) {
-        int centerX = getNWidth() / 2 - getNWidth() / 10;
-        int centerY = getNHeight() / 2 - getNHeight() / 10;
+    public Shape getOctaveShape() {
+        int x = getNWidth() / 2 - getNWidth() / 10;
+        int y = getNHeight() / 2 - getNHeight() / 10;
         
-        g.fillOval(centerX, centerY, getNWidth() / 5, getNHeight() / 5);
-        g.setColor(Color.BLACK);
-        g.drawOval(centerX, centerY, getNWidth() / 5, getNHeight() / 5);
+        return new Arc2D.Double(x, y, getNWidth()/ 5, getNHeight()/ 5, 0, 360, Arc2D.CHORD);
     }
 }

@@ -69,8 +69,8 @@ public abstract class MusicComponent extends JComponent{
     
     public static class NoteBuilder {
 
-        int nWidth = 100;
-        int nHeigh = 100;
+        int nWidth = 150;
+        int nHeigh = 150;
         int margin = 10;
         int containerWidth = nWidth + margin;
         int containerHeight = nHeigh + margin;

@@ -7,6 +7,7 @@ package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
@@ -17,122 +18,151 @@ import hu.szaniszlaid.ulwila.note.util.Tone;
  */
 public abstract class MusicNote extends MusicComponent {
 
-    Octave octave;
-    private Tone tone;
-    
-    public final int offsetX = getNWidth() / 3 * 2;
+	Octave octave;
+	private Tone tone;
 
-    public MusicNote(NoteBuilder builder, Octave octave, Tone tone) {
-        super(builder);
-        this.octave = octave;
-        this.tone = tone;
-    }
+	public final int offsetX = getNWidth() / 3 * 2;
 
-    public MusicNote setOctave(Octave octave) {
-        this.octave = octave;
-        return this;
-    }
+	public MusicNote(NoteBuilder builder, Octave octave, Tone tone) {
+		super(builder);
+		this.octave = octave;
+		this.tone = tone;
+	}
 
-    public Octave getOctave() {
-        return octave;
-    }
-    
-    public int getNthOffset(int n){
-        return n * (getNWidth() - (getNWidth() - offsetX));
-    }
+	public MusicNote(Octave octave, Tone tone) {
+		super(new NoteBuilder());
+		this.octave = octave;
+		this.tone = tone;
+	}
 
-    @Override
-    public void draw(Graphics2D g) {
-        drawNote(g);
-        switch (octave) {
-            case FIRST:
-                drawColoredOctave(g, Color.BLACK);
-                break;
-            case SECOND:
-                break;
-            case THIRD:
-                drawColoredOctave(g, Color.WHITE);
-                break;
-            case FOURTH:
-                drawColoredOctave(g, Color.BLACK);
-                break;   
-        }
-    }
+	public MusicNote setOctave(Octave octave) {
+		this.octave = octave;
+		return this;
+	}
 
-    public abstract void drawNote(Graphics2D g);
+	public Octave getOctave() {
+		return octave;
+	}
 
-    private void drawColoredOctave(Graphics2D g, Color octaveColor) {
-        g.setColor(octaveColor);
-        drawOctave(g);
-    }
+	public int getNthOffset(int n) {
+		return n * (getNWidth() - (getNWidth() - offsetX));
+	}
 
-    public abstract void drawOctave(Graphics2D g);
+	@Override
+	public void draw(Graphics2D g) {
+		drawNote(g);
+		drawOctave(g);
+	}
+	
+	public abstract void drawNote(Graphics2D g);
 
-    public Tone getTone() {
-        return tone;
-    }
+	protected void drawOctave(Graphics2D g) {
+		Color octaveColor = Color.BLACK;
+		switch (octave) {
+			case FIRST:
+				octaveColor = Color.BLACK;
+				break;
+			case SECOND:
+				return;//FIXME refactor, disgusting
+			case THIRD:
+				octaveColor = Color.WHITE;
+				break;
+			case FOURTH:
+				octaveColor = Color.BLACK;
+				break;
+		}
 
-    public void setTone(Tone tone) {
-        this.tone = tone;
-    }
-    
-   public Color getColor(){
-    	switch (getTone()) {
+		
+		g.setColor(octaveColor);
+		g.fill(getOctaveShape());
+		
+		g.setColor(getOctaveBorderColor());
+		g.draw(getOctaveShape());
+	}
+	
+	private Color getOctaveBorderColor(){
+		//set inverse border color if necessary
+		if (tone.isSemiTone()){
+			if (getLeftColor().equals(Color.BLACK)){
+				return Color.WHITE;
+			} else {
+				return Color.BLACK;				
+			}
+		} else {
+			if (getColor().equals(Color.BLACK)){
+				return Color.WHITE;
+			} else {
+				return Color.BLACK;				
+			}
+		}
+	}
+
+	public abstract Shape getOctaveShape();
+
+	public Tone getTone() {
+		return tone;
+	}
+
+	public void setTone(Tone tone) {
+		this.tone = tone;
+	}
+
+	public Color getColor() {
+		switch (getTone()) {
 		case C:
 			if (getOctave() == Octave.FOURTH) {
 				return Color.WHITE;
 			}
 			return Color.BLACK;
-		case D:			
+		case D:
 			return new Color(145, 75, 41);
-		case E:			
+		case E:
 			return new Color(0, 0, 255);
-		case F:			
+		case F:
 			return new Color(0, 170, 0);
-		case G:			
+		case G:
 			return Color.RED;
-		case A:			
+		case A:
 			return new Color(255, 153, 0);
-		case H:			
+		case H:
 			return Color.YELLOW;
 		default:
 			throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if tone is semi note");
 		}
-    }
-   
-   public Color getLeftColor(){
-	   switch (getTone()) {
-		case CIS:			
+	}
+
+	public Color getLeftColor() {
+		switch (getTone()) {
+		case CIS:
 			return Color.BLACK;
-		case DIS:			
+		case DIS:
 			return new Color(145, 75, 41);
-		case FIS:			
+		case FIS:
 			return new Color(0, 170, 0);
-		case GIS:			
+		case GIS:
 			return Color.RED;
-		case AIS:			
+		case AIS:
 			return new Color(255, 153, 0);
 		default:
 			throw new UnsupportedOperationException("Use getColor() method if tone is whole note");
-	   }
-   }
-   
-   
-   public Color getRightColor(){
-	   switch (getTone()) {
+		}
+	}
+
+	public Color getRightColor() {
+		switch (getTone()) {
 		case CIS:
 			return new Color(140, 80, 60);
-		case DIS:			
+		case DIS:
 			return Color.BLUE;
-		case FIS:			
+		case FIS:
 			return Color.RED;
-		case GIS:			
+		case GIS:
 			return new Color(255, 153, 0);
-		case AIS:			
+		case AIS:
 			return Color.YELLOW;
 		default:
 			throw new UnsupportedOperationException("Use getColor() method if tone is whole note");
-	   }
-   }
+		}
+	}
 
 }
