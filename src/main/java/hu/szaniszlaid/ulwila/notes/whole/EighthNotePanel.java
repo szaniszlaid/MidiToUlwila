@@ -32,13 +32,15 @@ public class EighthNotePanel extends MusicNote {
 	}
 
 	@Override
-	public void drawNote(Graphics2D g) {
+	public int drawNote(Graphics2D g) {
 		g.setColor(getColor());
 		Arc2D quarter = new Arc2D.Double(0, 0, getNWidth(), getNHeight(), 90, 180, Arc2D.OPEN);
 		g.fill(quarter);
 		g.setColor(Color.BLACK);
 		Arc2D.Double border = new Arc2D.Double(0, 0, getNWidth(), getNHeight(), 90, 180, Arc2D.CHORD);
 		g.draw(border);
+		//FIXME
+		return 100;
 	}
 
 	@Override

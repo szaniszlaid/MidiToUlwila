@@ -7,9 +7,8 @@ package hu.szaniszlaid.ulwila.notes;
 import java.awt.Polygon;
 
 /**
- *
- * @author Franklin
- */
+ * Utility class to draw Polygons
+ * */
 public class Components {
     public static Polygon getHexagon(int x, int y, int Width, int Height){
         Polygon hexagon = new Polygon();

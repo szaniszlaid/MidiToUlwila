@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,10 +18,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
-import hu.szaniszlaid.ulwila.notes.semitone.EightSemiNote;
-import hu.szaniszlaid.ulwila.notes.semitone.QuarterSemiNote;
-import hu.szaniszlaid.ulwila.notes.whole.EighthNotePanel;
-import hu.szaniszlaid.ulwila.notes.whole.QuarterNotePanel;
+import hu.szaniszlaid.ulwila.notes.rest.EightRestPanel;
+import hu.szaniszlaid.ulwila.notes.rest.HalfRestPanel;
+import hu.szaniszlaid.ulwila.notes.whole.WholeNotePanel;
 
 public class Test extends JFrame {
 
@@ -61,7 +59,7 @@ public class Test extends JFrame {
         //TODO Temporary, just for design test
         JPanel menu = new JPanel();
         mainPanel.add(menu, BorderLayout.NORTH);
-        JButton btnHha = new JButton("Uzsgyi");
+        JButton btnHha = new JButton("Uccu");
         menu.add(btnHha);
 
         //Test notes
@@ -80,17 +78,27 @@ public class Test extends JFrame {
 //        notesPanel.add(new QuarterNotePanel(Octave.FIRST, Tone.D));
 //  
 // 		  notesPanel.add(new EightSemiNote(Octave.THIRD, Tone.CIS));
+        
+        notesPanel.add(new EightRestPanel());
+        notesPanel.add(new WholeNotePanel(Octave.SECOND, Tone.E));
+		  notesPanel.add(new WholeNotePanel(Octave.SECOND, Tone.D));
+		  notesPanel.add(new HalfRestPanel());
+        
+  
 
-		for (Octave octave : notes.keySet()) {
-			for (Tone tone : notes.get(octave)) {
-				if (tone.isSemiTone()) {
-					notesPanel.add(new EightSemiNote(octave, tone));
-				} else {
-					notesPanel.add(new EighthNotePanel(octave, tone));
-				}
-				System.out.println(tone);
-			}
-		}
+
+
+
+//		for (Octave octave : notes.keySet()) {
+//			for (Tone tone : notes.get(octave)) {
+//				if (tone.isSemiTone()) {
+//					notesPanel.add(new EightSemiNote(octave, tone));
+//				} else {
+//					notesPanel.add(new EighthNotePanel(octave, tone));
+//				}
+//				//System.out.println(tone);
+//			}
+//		}
         
 //			for (Tone tone : Tone.values()) {
 //				if (tone.isSemiTone()){
@@ -106,7 +114,6 @@ public class Test extends JFrame {
 //        notesPanel.add(new SixteenthNotePanel(Color.GREEN, Octave.FIRST));
 //        notesPanel.add(new SixteenthNotePanel(Color.GREEN, Octave.SECOND));
 //        notesPanel.add(new SixteenthNotePanel(Color.GREEN, Octave.THIRD));
-//        notesPanel.add(new WholeNotePanel(Color.MAGENTA, Octave.SECOND));
         
         notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         notesPanel.setPreferredSize(new Dimension(500, 1500));

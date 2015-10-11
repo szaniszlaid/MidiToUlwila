@@ -6,6 +6,7 @@
 package hu.szaniszlaid.ulwila.notes.whole;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
@@ -32,7 +33,7 @@ public class QuarterNotePanel extends MusicNote {
     }
 
     @Override
-    public void drawNote(Graphics2D g) {
+    public Dimension drawNote(Graphics2D g) {
     	double x = getNWidth() / 2 - getNWidth() / 3;
     	double y = getNHeight() / 2 - getNHeight() / 3;
     			
@@ -48,6 +49,8 @@ public class QuarterNotePanel extends MusicNote {
               g.fill(whiteCircle);
 
         }
+        //FIXME
+        return 100;
     }
 
     @Override

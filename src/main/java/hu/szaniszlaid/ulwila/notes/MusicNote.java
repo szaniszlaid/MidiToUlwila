@@ -6,6 +6,7 @@
 package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 
@@ -21,16 +22,10 @@ public abstract class MusicNote extends MusicComponent {
 	Octave octave;
 	private Tone tone;
 
-	public final int offsetX = getNWidth() / 3 * 2;
-
-	public MusicNote(NoteBuilder builder, Octave octave, Tone tone) {
-		super(builder);
-		this.octave = octave;
-		this.tone = tone;
-	}
+	public final int offsetX = getDimension().width / 3 * 2;
 
 	public MusicNote(Octave octave, Tone tone) {
-		super(new NoteBuilder());
+		super();
 		this.octave = octave;
 		this.tone = tone;
 	}
@@ -45,16 +40,17 @@ public abstract class MusicNote extends MusicComponent {
 	}
 
 	public int getNthOffset(int n) {
-		return n * (getNWidth() - (getNWidth() - offsetX));
+		return n * (getDimension().width - (getDimension().width - offsetX));
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
-		drawNote(g);
+	public Dimension draw(Graphics2D g) {
+		Dimension dimension = drawNote(g);
 		drawOctave(g);
+		return dimension;
 	}
 	
-	public abstract void drawNote(Graphics2D g);
+	public abstract Dimension drawNote(Graphics2D g);
 
 	protected void drawOctave(Graphics2D g) {
 		Color octaveColor = Color.BLACK;
@@ -83,7 +79,7 @@ public abstract class MusicNote extends MusicComponent {
 	private Color getOctaveBorderColor(){
 		//set inverse border color if necessary
 		if (tone.isSemiTone()){
-			if (getLeftColor().equals(Color.BLACK)){
+			if (getRightColor().equals(Color.BLACK)){
 				return Color.WHITE;
 			} else {
 				return Color.BLACK;				
