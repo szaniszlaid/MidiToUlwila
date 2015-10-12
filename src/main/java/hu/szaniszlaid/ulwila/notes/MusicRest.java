@@ -6,9 +6,8 @@
 package hu.szaniszlaid.ulwila.notes;
 
 /**
- *
  * @author Franklin
  */
-public abstract class MusicRest extends MusicComponent{
-    
+public abstract class MusicRest extends MusicComponent {
+
 }

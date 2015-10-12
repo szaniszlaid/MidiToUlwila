@@ -1,46 +1,54 @@
 package hu.szaniszlaid.ulwila.notes.semitone;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 
-public class EightSemiNote extends MusicNote{
-	 /**
+public class EightSemiNote extends MusicNote {
+
+    int width = QUARTER_NOTE_WIDTH;
+    int height = QUARTER_NOTE_HEIGHT;
+
+    /**
      * Creates new form QuarterNote
-     *
      * @param color
      * @param octave
      */
     public EightSemiNote(Octave octave, Tone tone) {
         super(octave, tone);
-        setContainerWidth(getNWidth()/2);
     }
 
     @Override
-    public int drawNote(Graphics2D g) {
+    public Dimension drawNote(Graphics2D g) {
+
         g.setColor(getRightColor());
-        Arc2D left = new Arc2D.Double(0, 0, getNWidth(), getNHeight(), 90, 180, Arc2D.CHORD);
+        Arc2D left = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
         g.fill(left);
         g.setColor(getLeftColor());
-        Arc2D right = new Arc2D.Double(0, 0, getNWidth(), getNHeight(), 110, 140, Arc2D.CHORD);
+        Arc2D right = new Arc2D.Double(0, 0, width, height, 110, 140, Arc2D.CHORD);
         g.fill(right);
         g.setColor(Color.BLACK);
-        Arc2D.Double border = new Arc2D.Double(0, 0, getNWidth(), getNHeight(), 90, 180, Arc2D.CHORD);
+        Arc2D.Double border = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
         g.draw(border);
-        //FIXME
-        return 100;
+
+        return new Dimension(width / 2, height);
     }
 
     @Override
-    public Shape getOctaveShape() {
-        int centerX = getNWidth() / 2 - getNWidth() / 10;
-        int centerY = getNHeight() / 2 - getNHeight() / 10;        
-        return new Arc2D.Double(centerX, centerY, getNWidth()/5, getNHeight()/5, 90, 180, Arc2D.OPEN);
+    public List<Shape> getOctaveShapes() {
+        int centerX = width / 2 - width / 10;
+        int centerY = height / 2 - height / 10;
+        List<Shape> octaveShapes = new ArrayList<>();
+        octaveShapes.add(new Arc2D.Double(centerX, centerY, width / 5, height / 5, 90, 180, Arc2D.OPEN));
+        return octaveShapes;
 
     }
 }

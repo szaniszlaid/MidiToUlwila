@@ -7,19 +7,18 @@ import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
 
-public abstract class MusicComponent extends JComponent{
-	
-	
-    public static final int QUARTER_NOTE_WIDTH = 200;
-    public static final int QUARTER_NOTE_HEIGHT = 200;
-    
+public abstract class MusicComponent extends JComponent {
+
+    public static final int QUARTER_NOTE_WIDTH = 100;
+    public static final int QUARTER_NOTE_HEIGHT = 100;
+
     private static final int MARGIN = 10;
-        
-    private Dimension dimension = new Dimension(QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);  
-    
+
+    private Dimension dimension = new Dimension(QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+
     @Override
     public Dimension getPreferredSize() {
-    	return getDimension();
+        return getDimension();
     };
 
     @Override
@@ -29,7 +28,7 @@ public abstract class MusicComponent extends JComponent{
     }
 
     protected void paintComponent(Graphics2D g) {
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);        
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Dimension dimension = draw(g);
         //add margin TODO refactor, clear code, efficiency ...? 
         dimension.width += MARGIN;
@@ -38,9 +37,9 @@ public abstract class MusicComponent extends JComponent{
         invalidate();
     }
 
-    public abstract Dimension draw(Graphics2D g);   
-   
+    public abstract Dimension draw(Graphics2D g);
+
     public Dimension getDimension() {
-		return dimension;
-	}    
+        return dimension;
+    }
 }
