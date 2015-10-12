@@ -1,4 +1,4 @@
-package hu.szaniszlaid.ulwila.notes.semitone;
+package hu.szaniszlaid.ulwila.notes.semi;
 
 import java.awt.Color;
 import java.awt.Dimension;

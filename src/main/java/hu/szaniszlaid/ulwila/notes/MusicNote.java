@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.Color;
@@ -14,9 +9,6 @@ import java.util.List;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 
-/**
- * @author Franklin
- */
 public abstract class MusicNote extends MusicComponent {
 
     Octave octave;
