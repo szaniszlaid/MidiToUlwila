@@ -11,7 +11,7 @@ import hu.szaniszlaid.ulwila.note.util.Tone;
 
 public abstract class MusicNote extends MusicComponent {
 
-    Octave octave;
+    private Octave octave;
     private Tone tone;
 
     public final int offsetX = getDimension().width / 3 * 2;
@@ -117,7 +117,7 @@ public abstract class MusicNote extends MusicComponent {
         case H:
             return Color.YELLOW;
         default:
-            throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if tone is semi note");
+            throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if note is a semi note!");
         }
     }
 
@@ -134,7 +134,7 @@ public abstract class MusicNote extends MusicComponent {
         case AIS:
             return new Color(255, 153, 0);
         default:
-            throw new UnsupportedOperationException("Use getColor() method if tone is whole note");
+            throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
         }
     }
 
@@ -151,7 +151,7 @@ public abstract class MusicNote extends MusicComponent {
         case AIS:
             return Color.YELLOW;
         default:
-            throw new UnsupportedOperationException("Use getColor() method if tone is whole note");
+            throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
         }
     }
 

@@ -17,11 +17,6 @@ public class QuarterSemiNote extends MusicNote {
     int width = QUARTER_NOTE_WIDTH;
     int height = QUARTER_NOTE_HEIGHT;
 
-    /**
-     * Creates new form QuarterNote
-     * @param color
-     * @param octave
-     */
     public QuarterSemiNote(Octave octave, Tone tone) {
         super(octave, tone);
     }

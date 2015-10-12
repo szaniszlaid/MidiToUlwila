@@ -14,11 +14,6 @@ import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class QuarterNote extends MusicNote {
 
-    /**
-     * Creates new form QuarterNote
-     * @param color
-     * @param octave
-     */
     public QuarterNote(Octave octave, Tone tone) {
         super(octave, tone);
     }
