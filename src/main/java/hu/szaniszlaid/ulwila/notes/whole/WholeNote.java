@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.geom.Arc2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
@@ -42,8 +44,17 @@ public class WholeNote extends MusicNote {
 
     }
 
-    @Override
-    public List<Shape> getOctaveShapes() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public List<Shape> getOctaveShapes() {
+		int x = QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 10;
+		int y = QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 10;
+		
+		List<Shape> octaveShapes = new ArrayList<>();
+		octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.OPEN));
+		octaveShapes.add(new Arc2D.Double(x + getNthOffset(1), y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.OPEN));
+		octaveShapes.add(new Arc2D.Double(x + getNthOffset(2), y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.OPEN));
+		octaveShapes.add(new Arc2D.Double(x + getNthOffset(3), y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.OPEN));
+		
+		return octaveShapes;
+	}
 }
