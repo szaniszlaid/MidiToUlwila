@@ -45,4 +45,24 @@ public class Components {
         }
         return polygon;
     }
+    
+    public static Polygon getQuarterHexagon(int x, int y, int Width, int Height) {
+        Polygon polygon = new Polygon();
+
+        int xPoints[] = { 0, Width / 4, Width / 4, 0 };
+        int yPoints[] = { Height / 4, Height / 8, Height - Height / 8, Height / 4 * 3 };
+        //Add x gaps
+        for (int i = 0; i < xPoints.length; i++) {
+            xPoints[i] += x;
+        }
+        //Add y gaps
+        for (int i = 0; i < yPoints.length; i++) {
+            yPoints[i] += y;
+        }
+
+        for (int i = 0; i < xPoints.length; i++) {
+            polygon.addPoint(xPoints[i], yPoints[i]);
+        }
+        return polygon;
+    }
 }

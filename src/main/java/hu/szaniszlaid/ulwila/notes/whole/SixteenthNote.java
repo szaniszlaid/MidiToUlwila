@@ -34,11 +34,11 @@ public class SixteenthNote extends MusicNote {
 
     @Override
     public List<Shape> getOctaveShapes() {
-        int x = width / 8 - height / 10;
-        int y = width / 2 - height / 10;
+        int x = width / 5 - width/ 10;
+        int y = height / 2 - height / 10;
 
         List<Shape> octaveShapes = new ArrayList<>();
-        octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 0, 360, Arc2D.OPEN));
+        octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
         return octaveShapes;
     }
 }

@@ -24,7 +24,10 @@ import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
 import hu.szaniszlaid.ulwila.notes.rest.SixteenthRest;
 import hu.szaniszlaid.ulwila.notes.rest.WholeRest;
 import hu.szaniszlaid.ulwila.notes.semi.EightSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.HalfSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.WholeSemiNote;
 import hu.szaniszlaid.ulwila.notes.whole.EighthNote;
 import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
@@ -95,12 +98,17 @@ public class Test extends JFrame {
         notesPanel.add(new SixteenthNote(Octave.THIRD, Tone.H));
         notesPanel.add(new EighthNote(Octave.THIRD, Tone.A));
         notesPanel.add(new QuarterNote(Octave.FIRST, Tone.C));
+        notesPanel.add(new HalfNote(Octave.FIRST, Tone.G));
         notesPanel.add(new HalfNote(Octave.FIRST, Tone.C));
         notesPanel.add(new WholeNote(Octave.SECOND, Tone.E));
 
         //semi notes      
         notesPanel.add(new EightSemiNote(Octave.FIRST, Tone.GIS));
         notesPanel.add(new QuarterSemiNote(Octave.FIRST, Tone.GIS));
+        notesPanel.add(new HalfSemiNote(Octave.THIRD, Tone.AIS));
+        notesPanel.add(new WholeSemiNote(Octave.FIRST, Tone.DIS));
+        notesPanel.add(new SixteenthSemiNote(Octave.FIRST, Tone.FIS));
+
 
 //		for (Octave octave : notes.keySet()) {
 //			for (Tone tone : notes.get(octave)) {
