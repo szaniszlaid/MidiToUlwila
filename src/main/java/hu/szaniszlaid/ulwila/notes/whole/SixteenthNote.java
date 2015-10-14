@@ -34,8 +34,8 @@ public class SixteenthNote extends MusicNote {
 
     @Override
     public List<Shape> getOctaveShapes() {
-        int x = width / 5 - width/ 10;
-        int y = height / 2 - height / 10;
+        double x = (double)  width / 5 -  (double) width/ 10;
+        double y = (double)  height / 2 - (double)  height / 10;
 
         List<Shape> octaveShapes = new ArrayList<>();
         octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));

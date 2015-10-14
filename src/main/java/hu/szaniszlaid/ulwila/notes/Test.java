@@ -36,144 +36,176 @@ import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
 
 public class Test extends JFrame {
 
-    private void initComponents() {
+	private void initComponents() {
 
-        //Dummy notes for testing
-        Map<Octave, List<Tone>> notes = new LinkedHashMap<>();
-        notes.put(Octave.FIRST, new ArrayList<>());
-        for (Tone tone : Tone.values()) {
-            notes.get(Octave.FIRST).add(tone);
-        }
+		// Dummy notes for testing
+		Map<Octave, List<Tone>> notes = new LinkedHashMap<>();
+		notes.put(Octave.FIRST, new ArrayList<>());
+		for (Tone tone : Tone.values()) {
+			notes.get(Octave.FIRST).add(tone);
+		}
 
-        notes.put(Octave.SECOND, new ArrayList<>());
-        for (Tone tone : Tone.values()) {
-            notes.get(Octave.SECOND).add(tone);
-        }
+		notes.put(Octave.SECOND, new ArrayList<>());
+		for (Tone tone : Tone.values()) {
+			notes.get(Octave.SECOND).add(tone);
+		}
 
-        notes.put(Octave.THIRD, new ArrayList<>());
-        for (Tone tone : Tone.values()) {
-            notes.get(Octave.THIRD).add(tone);
-        }
+		notes.put(Octave.THIRD, new ArrayList<>());
+		for (Tone tone : Tone.values()) {
+			notes.get(Octave.THIRD).add(tone);
+		}
 
-        notes.put(Octave.FOURTH, new ArrayList<>());
-        notes.get(Octave.FOURTH).add(Tone.C);
+		notes.put(Octave.FOURTH, new ArrayList<>());
+		notes.get(Octave.FOURTH).add(Tone.C);
 
-        //Set sizes of root frame
-        setBounds(500, 500, 800, 500);
+		// Set sizes of root frame
+		setBounds(500, 500, 800, 500);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout(0, 0));
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout(0, 0));
 
-        //TODO Temporary, just for design test
-        JPanel menu = new JPanel();
-        mainPanel.add(menu, BorderLayout.NORTH);
-        JButton btnHha = new JButton("Uccu");
-        menu.add(btnHha);
+		// TODO Temporary, just for design test
+		JPanel menu = new JPanel();
+		mainPanel.add(menu, BorderLayout.NORTH);
+		JButton btnHha = new JButton("Uccu");
+		menu.add(btnHha);
 
-        //Test notes
-        JPanel notesPanel = new JPanel();
-//        notesPanel.add(new HalfRest());
-//        notesPanel.add(new EightRest());
-//        notesPanel.add(new SixteenthRest());
-//        notesPanel.add(new HalfNote(Color.YELLOW, Octave.FIRST));
-//        notesPanel.add(new HalfNote(Color.YELLOW, Octave.SECOND));
-//        notesPanel.add(new HalfNote(Color.YELLOW, Octave.THIRD));
-//        notesPanel.add(new EighthNote(Color.RED, Octave.FIRST));
-//        notesPanel.add(new EighthNote(Color.RED, Octave.SECOND));
-//        notesPanel.add(new EighthNote(Color.RED, Octave.THIRD));
-//        notesPanel.add(new WholeRest());
-//        notesPanel.add(new QuarterNote(Octave.FIRST, Tone.C));
-//        notesPanel.add(new QuarterNote(Octave.FIRST, Tone.D));
-//  
-// 		  notesPanel.add(new EightSemiNote(Octave.THIRD, Tone.CIS));
+		// Test notes
+		JPanel notesPanel = new JPanel();
+		// notesPanel.add(new HalfRest());
+		// notesPanel.add(new EightRest());
+		// notesPanel.add(new SixteenthRest());
+		// notesPanel.add(new HalfNote(Color.YELLOW, Octave.FIRST));
+		// notesPanel.add(new HalfNote(Color.YELLOW, Octave.SECOND));
+		// notesPanel.add(new HalfNote(Color.YELLOW, Octave.THIRD));
+		// notesPanel.add(new EighthNote(Color.RED, Octave.FIRST));
+		// notesPanel.add(new EighthNote(Color.RED, Octave.SECOND));
+		// notesPanel.add(new EighthNote(Color.RED, Octave.THIRD));
+		// notesPanel.add(new WholeRest());
+		// notesPanel.add(new QuarterNote(Octave.FIRST, Tone.C));
+		// notesPanel.add(new QuarterNote(Octave.FIRST, Tone.D));
+		//
+		// notesPanel.add(new EightSemiNote(Octave.THIRD, Tone.CIS));
 
-        //rests
-        notesPanel.add(new SixteenthRest());
-        notesPanel.add(new EightRest());
-        notesPanel.add(new QuarterRest());
-        notesPanel.add(new HalfRest());
-        notesPanel.add(new WholeRest());
+		// rests
+		notesPanel.add(new SixteenthRest());
+		notesPanel.add(new EightRest());
+		notesPanel.add(new QuarterRest());
+		notesPanel.add(new HalfRest());
+		notesPanel.add(new WholeRest());
 
-        //whole notes
-        notesPanel.add(new SixteenthNote(Octave.THIRD, Tone.H));
-        notesPanel.add(new EighthNote(Octave.THIRD, Tone.A));
-        notesPanel.add(new QuarterNote(Octave.FIRST, Tone.C));
-        notesPanel.add(new HalfNote(Octave.FIRST, Tone.G));
-        notesPanel.add(new HalfNote(Octave.FIRST, Tone.C));
-        notesPanel.add(new WholeNote(Octave.SECOND, Tone.E));
+		// //whole notes
+		// notesPanel.add(new SixteenthNote(Octave.THIRD, Tone.H));
+		// notesPanel.add(new EighthNote(Octave.THIRD, Tone.A));
+		// notesPanel.add(new QuarterNote(Octave.FIRST, Tone.C));
+		// notesPanel.add(new HalfNote(Octave.FIRST, Tone.G));
+		// notesPanel.add(new HalfNote(Octave.FIRST, Tone.C));
+		// notesPanel.add(new WholeNote(Octave.SECOND, Tone.E));
+		//
+		// //semi notes
+		// notesPanel.add(new EightSemiNote(Octave.FIRST, Tone.GIS));
+		// notesPanel.add(new QuarterSemiNote(Octave.FIRST, Tone.GIS));
+		// notesPanel.add(new HalfSemiNote(Octave.THIRD, Tone.AIS));
+		// notesPanel.add(new WholeSemiNote(Octave.FIRST, Tone.DIS));
+		// notesPanel.add(new SixteenthSemiNote(Octave.FIRST, Tone.FIS));
+		
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new SixteenthSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new SixteenthNote(octave, tone));
+				}
+			}
+		}
 
-        //semi notes      
-        notesPanel.add(new EightSemiNote(Octave.FIRST, Tone.GIS));
-        notesPanel.add(new QuarterSemiNote(Octave.FIRST, Tone.GIS));
-        notesPanel.add(new HalfSemiNote(Octave.THIRD, Tone.AIS));
-        notesPanel.add(new WholeSemiNote(Octave.FIRST, Tone.DIS));
-        notesPanel.add(new SixteenthSemiNote(Octave.FIRST, Tone.FIS));
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new EightSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new EighthNote(octave, tone));
+				}
+				// System.out.println(tone);
+			}
+		}
 
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new QuarterSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new QuarterNote(octave, tone));
+				}
+				// System.out.println(tone);
+			}
+		}
 
-//		for (Octave octave : notes.keySet()) {
-//			for (Tone tone : notes.get(octave)) {
-//				if (tone.isSemiTone()) {
-//					notesPanel.add(new EightSemiNote(octave, tone));
-//				} else {
-//					notesPanel.add(new EighthNote(octave, tone));
-//				}
-//				//System.out.println(tone);
-//			}
-//		}
+		
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new HalfSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new HalfNote(octave, tone));
+				}
+				// System.out.println(tone);
+			}
+		}
+		
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new WholeSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new WholeNote(octave, tone));
+				}
+				// System.out.println(tone);
+			}
+		}
+		// notesPanel.add(new QuarterNote(Color.BLUE, Octave.SECOND));
+		// notesPanel.add(new QuarterNote(Color.BLUE, Octave.THIRD));
+		// notesPanel.add(new SixteenthNote(Color.GREEN, Octave.FIRST));
+		// notesPanel.add(new SixteenthNote(Color.GREEN, Octave.SECOND));
+		// notesPanel.add(new SixteenthNote(Color.GREEN, Octave.THIRD));
 
-//			for (Tone tone : Tone.values()) {
-//				if (tone.isSemiTone()){
-//					notesPanel.add(new QuarterSemiNote(Octave.FOURTH, tone));
-//				} else {
-//					notesPanel.add(new QuarterNote(Octave.FOURTH, tone));
-//				}
-//				System.out.println(tone);
-//			}
+		notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		notesPanel.setPreferredSize(new Dimension(500, 5000));
 
-//        notesPanel.add(new QuarterNote(Color.BLUE, Octave.SECOND));
-//        notesPanel.add(new QuarterNote(Color.BLUE, Octave.THIRD));
-//        notesPanel.add(new SixteenthNote(Color.GREEN, Octave.FIRST));
-//        notesPanel.add(new SixteenthNote(Color.GREEN, Octave.SECOND));
-//        notesPanel.add(new SixteenthNote(Color.GREEN, Octave.THIRD));
+		JScrollPane scrollPanel = new JScrollPane(notesPanel);
+		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 
-        notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        notesPanel.setPreferredSize(new Dimension(500, 1500));
+		// set scroll speed TODO properties file
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 
-        JScrollPane scrollPanel = new JScrollPane(notesPanel);
-        mainPanel.add(scrollPanel, BorderLayout.CENTER);
+		setContentPane(mainPanel);
+	}
 
-        //set scroll speed TODO properties file 
-        scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Test frame = new Test();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-        setContentPane(mainPanel);
-    }
+	public Test() {
+		// set LookAndFeel to system default
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Test frame = new Test();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    public Test() {
-        //set LookAndFeel to system default
-        try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
+		initComponents();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        initComponents();
-
-    }
+	}
 
 }
