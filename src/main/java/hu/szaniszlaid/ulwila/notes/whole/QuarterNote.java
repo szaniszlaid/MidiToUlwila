@@ -20,13 +20,13 @@ public class QuarterNote extends MusicNote {
 
     @Override
     public Dimension drawNote(Graphics2D g) {
-        double x = QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 3;
-        double y = QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 3;
+        double x = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 3) + MARGIN_LEFT;
+        double y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 3) + MARGIN_TOP;
 
         g.setColor(getColor());
-        g.fillOval(0, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+        g.fillOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
         g.setColor(Color.BLACK);
-        g.drawOval(0, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+        g.drawOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 
         if (getTone() == Tone.C && getOctave() == Octave.FIRST) {
             g.setColor(Color.WHITE);
@@ -40,8 +40,8 @@ public class QuarterNote extends MusicNote {
 
     @Override
     public List<Shape> getOctaveShapes() {
-        int x = QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 10;
-        int y = QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 10;
+		int x = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 10) + MARGIN_LEFT;
+        int y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 10) + MARGIN_TOP;
 
         List<Shape> octaveShapes = new ArrayList<>();
         octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));

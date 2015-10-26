@@ -24,10 +24,10 @@ public class EighthNote extends MusicNote {
     @Override
     public Dimension drawNote(Graphics2D g) {
         g.setColor(getColor());
-        Arc2D quarter = new Arc2D.Double(0, 0, width, heiht, 90, 180, Arc2D.OPEN);
+        Arc2D quarter = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.OPEN);
         g.fill(quarter);
         g.setColor(Color.BLACK);
-        Arc2D.Double border = new Arc2D.Double(0, 0, width, heiht, 90, 180, Arc2D.CHORD);
+        Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.CHORD);
         g.draw(border);
 
         return new Dimension(width / 2, heiht);
@@ -35,8 +35,8 @@ public class EighthNote extends MusicNote {
 
     @Override
     public List<Shape> getOctaveShapes() {
-        int x = width / 2 - width / 10;
-        int y = heiht / 2 - heiht / 10;
+        int x = width / 2 - width / 10 + MARGIN_LEFT;
+        int y = heiht / 2 - heiht / 10 + MARGIN_TOP;
         List<Shape> octaveShapes = new ArrayList<>();
         octaveShapes.add(new Arc2D.Double(x, y, width / 5, heiht / 5, 90, 180, Arc2D.OPEN));
         return octaveShapes;

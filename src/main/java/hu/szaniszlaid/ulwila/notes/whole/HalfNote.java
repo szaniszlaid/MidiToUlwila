@@ -24,21 +24,21 @@ public class HalfNote extends MusicNote {
 	@Override
 	public Dimension drawNote(Graphics2D g) {
 		g.setColor(getColor());
-		g.fillOval(offsetX, 0, width, height);
+		g.fillOval(offsetX + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
 		g.setColor(Color.BLACK);
-		g.drawOval(offsetX, 0, width, height);
+		g.drawOval(offsetX + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
 		g.setColor(getColor());
-		g.fillOval(0, 0, width, height);
+		g.fillOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
 		g.setColor(Color.BLACK);
-		g.drawOval(0, 0, width, height);
+		g.drawOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
 
 		return new Dimension(width + offsetX, height);
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
-		int x = width / 2 - width / 10;
-		int y = height / 2 - height / 10;
+		int x = (width / 2 - width / 10) + MARGIN_LEFT;
+		int y = (height / 2 - height / 10) + MARGIN_TOP;
 		
 		List<Shape> octaveShapes = new ArrayList<>();
 		octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 0, 360, Arc2D.OPEN));

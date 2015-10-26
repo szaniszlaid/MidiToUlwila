@@ -1,45 +1,89 @@
 package hu.szaniszlaid.ulwila.notes;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
-public abstract class MusicComponent extends JComponent {
+public abstract class MusicComponent extends JComponent implements FocusListener, MouseListener {
 
-    public static final int QUARTER_NOTE_WIDTH = 100;
-    public static final int QUARTER_NOTE_HEIGHT = 100;
+	public static final int QUARTER_NOTE_WIDTH = 100;
+	public static final int QUARTER_NOTE_HEIGHT = 100;
 
-    private static final int MARGIN = 10;
+	private static final int MARGIN = 10;
+	
+	public static final int MARGIN_LEFT = MARGIN / 2;
+	public static final int MARGIN_RIGHT = MARGIN / 2;
+	public static final int MARGIN_TOP = MARGIN / 2;
+	public static final int MARGIN_BOTTOM = MARGIN / 2;
 
-    private Dimension dimension = new Dimension(QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+	private boolean selected = false;
 
-    @Override
-    public Dimension getPreferredSize() {
-        return getDimension();
-    };
+	private Dimension dimension = new Dimension(QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        paintComponent((Graphics2D) g);
-    }
+	public MusicComponent() {
+		addFocusListener(this);
+        setFocusable(true);
+        addMouseListener(this);
+	}
 
-    protected void paintComponent(Graphics2D g) {
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Dimension dimension = draw(g);
-        //add margin TODO refactor, clear code, efficiency ...? 
-        dimension.width += MARGIN;
-        dimension.height += MARGIN;
-        this.dimension = dimension;
-        invalidate();
-    }
+	@Override
+	protected void paintComponent(Graphics g) {
+		paintComponent((Graphics2D) g);
+		super.paintComponent(g);
+	}
 
-    public abstract Dimension draw(Graphics2D g);
+	protected void paintComponent(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		Dimension dimension = draw(g);
+		// add margin TODO refactor, clear code, efficiency ...?
+		dimension.width += MARGIN;
+		dimension.height += MARGIN;
+		this.dimension = dimension;
 
-    public Dimension getDimension() {
-        return dimension;
-    }
+		if (selected) {
+			g.setColor(new Color(255,157, 0 ,128));
+			g.fillRoundRect(0, 0, dimension.width, dimension.height, 20, 15);
+		}
+
+		setPreferredSize(dimension);
+		invalidate();
+	}
+
+	public abstract Dimension draw(Graphics2D g);
+
+	public Dimension getDimension() {
+		return dimension;
+	}
+		
+	@Override
+	public void mousePressed(MouseEvent me) {
+	    requestFocus();
+	}
+
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		selected = true;
+		repaint();
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		selected = false;
+		repaint();
+
+	}
+	
+	public void mouseReleased(MouseEvent me) {}
+	public void mouseClicked(MouseEvent me) {}
+	public void mouseEntered(MouseEvent me) {}
+	public void mouseExited(MouseEvent me) {}
 }

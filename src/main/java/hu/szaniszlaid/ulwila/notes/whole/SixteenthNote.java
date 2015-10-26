@@ -25,9 +25,9 @@ public class SixteenthNote extends MusicNote {
     @Override
     public Dimension drawNote(Graphics2D g) {
         g.setColor(getColor());
-        g.fillRect(0, 0, width, height);
+        g.fillRect(0 + MARGIN_LEFT, 0 + MARGIN_RIGHT, width, height);
         g.setColor(Color.BLACK);
-        g.drawRect(0, 0, width, height);
+        g.drawRect(0 + MARGIN_LEFT, 0 + MARGIN_RIGHT, width, height);
 
         return new Dimension(width, height);
     }
@@ -38,7 +38,7 @@ public class SixteenthNote extends MusicNote {
         double y = (double)  height / 2 - (double)  height / 10;
 
         List<Shape> octaveShapes = new ArrayList<>();
-        octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
+        octaveShapes.add(new Arc2D.Double(x + MARGIN_LEFT, y + MARGIN_RIGHT, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
         return octaveShapes;
     }
 }
