@@ -4,12 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,152 +39,114 @@ import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
+import hu.szaniszlaid.ulwila.view.MidiFile;
+import hu.szaniszlaid.ulwila.view.MidiTrack;
+import hu.szaniszlaid.ulwila.view.MusicTrack;
+import hu.szaniszlaid.ulwila.view.NoteDuration;
+import hu.szaniszlaid.ulwila.view.TimeSignature;
 
 public class Test extends JFrame {
 
+	private JPanel mainPanel = new JPanel();
+
 	private void initComponents() {
-
-		// Dummy notes for testing
-		Map<Octave, List<Tone>> notes = new LinkedHashMap<>();
-		notes.put(Octave.FIRST, new ArrayList<>());
-		for (Tone tone : Tone.values()) {
-			notes.get(Octave.FIRST).add(tone);
-		}
-
-		notes.put(Octave.SECOND, new ArrayList<>());
-		for (Tone tone : Tone.values()) {
-			notes.get(Octave.SECOND).add(tone);
-		}
-
-		notes.put(Octave.THIRD, new ArrayList<>());
-		for (Tone tone : Tone.values()) {
-			notes.get(Octave.THIRD).add(tone);
-		}
-
-		notes.put(Octave.FOURTH, new ArrayList<>());
-		notes.get(Octave.FOURTH).add(Tone.C);
 
 		// Set sizes of root frame
 		setBounds(500, 500, 800, 500);
 
-		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout(0, 0));
 
-		// TODO Temporary, just for design test
 		JPanel menu = new JPanel();
 		mainPanel.add(menu, BorderLayout.NORTH);
-		JButton btnHha = new JButton("Uccu");
+
+		JButton btnHha = new JButton("Uzsgyi");
+		btnHha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+
+					JPanel notesPanel = getMidiTrack(new File(selectedFile.getPath()));
+					repaintNotesPanel(notesPanel);	
+					
+
+				}
+			}
+		});
+
 		menu.add(btnHha);
-
-		// Test notes
-		JPanel notesPanel = new JPanel();
-		// notesPanel.add(new HalfRest());
-		// notesPanel.add(new EightRest());
-		// notesPanel.add(new SixteenthRest());
-		// notesPanel.add(new HalfNote(Color.YELLOW, Octave.FIRST));
-		// notesPanel.add(new HalfNote(Color.YELLOW, Octave.SECOND));
-		// notesPanel.add(new HalfNote(Color.YELLOW, Octave.THIRD));
-		// notesPanel.add(new EighthNote(Color.RED, Octave.FIRST));
-		// notesPanel.add(new EighthNote(Color.RED, Octave.SECOND));
-		// notesPanel.add(new EighthNote(Color.RED, Octave.THIRD));
-		// notesPanel.add(new WholeRest());
-		// notesPanel.add(new QuarterNote(Octave.FIRST, Tone.C));
-		// notesPanel.add(new QuarterNote(Octave.FIRST, Tone.D));
-		//
-		// notesPanel.add(new EightSemiNote(Octave.THIRD, Tone.CIS));
-
-		// rests
-		notesPanel.add(new SixteenthRest());
-		notesPanel.add(new EightRest());
-		notesPanel.add(new QuarterRest());
-		notesPanel.add(new HalfRest());
-		notesPanel.add(new WholeRest());
-
-		// //whole notes
-		// notesPanel.add(new SixteenthNote(Octave.THIRD, Tone.H));
-		// notesPanel.add(new EighthNote(Octave.THIRD, Tone.A));
-		// notesPanel.add(new QuarterNote(Octave.FIRST, Tone.C));
-		// notesPanel.add(new HalfNote(Octave.FIRST, Tone.G));
-		// notesPanel.add(new HalfNote(Octave.FIRST, Tone.C));
-		// notesPanel.add(new WholeNote(Octave.SECOND, Tone.E));
-		//
-		// //semi notes
-		// notesPanel.add(new EightSemiNote(Octave.FIRST, Tone.GIS));
-		// notesPanel.add(new QuarterSemiNote(Octave.FIRST, Tone.GIS));
-		// notesPanel.add(new HalfSemiNote(Octave.THIRD, Tone.AIS));
-		// notesPanel.add(new WholeSemiNote(Octave.FIRST, Tone.DIS));
-		// notesPanel.add(new SixteenthSemiNote(Octave.FIRST, Tone.FIS));
 		
-		for (Octave octave : notes.keySet()) {
-			for (Tone tone : notes.get(octave)) {
-				if (tone.isSemiTone()) {
-					notesPanel.add(new SixteenthSemiNote(octave, tone));
-				} else {
-					notesPanel.add(new SixteenthNote(octave, tone));
-				}
+		JButton btnSample = new JButton("Sample");
+		btnSample.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				repaintNotesPanel(getNotesPanelFromMap(getTestNotes()));
 			}
-		}
+		});
+		menu.add(btnSample);
 
-		for (Octave octave : notes.keySet()) {
-			for (Tone tone : notes.get(octave)) {
-				if (tone.isSemiTone()) {
-					notesPanel.add(new EightSemiNote(octave, tone));
-				} else {
-					notesPanel.add(new EighthNote(octave, tone));
-				}
-				// System.out.println(tone);
-			}
-		}
-
-		for (Octave octave : notes.keySet()) {
-			for (Tone tone : notes.get(octave)) {
-				if (tone.isSemiTone()) {
-					notesPanel.add(new QuarterSemiNote(octave, tone));
-				} else {
-					notesPanel.add(new QuarterNote(octave, tone));
-				}
-				// System.out.println(tone);
-			}
-		}
-
-		
-		for (Octave octave : notes.keySet()) {
-			for (Tone tone : notes.get(octave)) {
-				if (tone.isSemiTone()) {
-					notesPanel.add(new HalfSemiNote(octave, tone));
-				} else {
-					notesPanel.add(new HalfNote(octave, tone));
-				}
-				// System.out.println(tone);
-			}
-		}
-		
-		for (Octave octave : notes.keySet()) {
-			for (Tone tone : notes.get(octave)) {
-				if (tone.isSemiTone()) {
-					notesPanel.add(new WholeSemiNote(octave, tone));
-				} else {
-					notesPanel.add(new WholeNote(octave, tone));
-				}
-				// System.out.println(tone);
-			}
-		}
-		// notesPanel.add(new QuarterNote(Color.BLUE, Octave.SECOND));
-		// notesPanel.add(new QuarterNote(Color.BLUE, Octave.THIRD));
-		// notesPanel.add(new SixteenthNote(Color.GREEN, Octave.FIRST));
-		// notesPanel.add(new SixteenthNote(Color.GREEN, Octave.SECOND));
-		// notesPanel.add(new SixteenthNote(Color.GREEN, Octave.THIRD));
-
+		setContentPane(mainPanel);
+	}
+	
+	private void repaintNotesPanel(JPanel notesPanel){
 		notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		notesPanel.setPreferredSize(new Dimension(500, 5000));
+		notesPanel.setPreferredSize(new Dimension(500, 1800));
 
 		JScrollPane scrollPanel = new JScrollPane(notesPanel);
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 
 		// set scroll speed TODO properties file
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
+		
+		scrollPanel.revalidate();
+		scrollPanel.repaint();
+		
+		
 
-		setContentPane(mainPanel);
+	}
+
+	private byte[] readFile(File file) {
+		byte[] data = null;
+		try {
+			FileInputStream fileInputStream = new FileInputStream(file.getCanonicalPath());
+
+			data = new byte[(int) file.length()];
+			int offset = 0;
+			int len = (int) file.length();
+			while (true) {
+				if (offset == len)
+					break;
+				int n = fileInputStream.read(data, offset, len - offset);
+				if (n <= 0)
+					break;
+				offset += n;
+			}
+			fileInputStream.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return data;
+	}
+
+	public JPanel getMidiTrack(File info) {
+
+		MidiFile f = new MidiFile(readFile(info), "");
+		List<MidiTrack> tracks = f.getTracks();
+		TimeSignature timeSignature = f.getTimesig();
+
+		JPanel notesPanel = new JPanel();
+
+		for (MidiTrack midiTrack : tracks) {
+			MusicTrack musicTrack = new MusicTrack(midiTrack.getNotes(), timeSignature);
+
+			for (MusicComponent component : musicTrack.getComponents()) {
+				notesPanel.add(component);
+			}
+		}
+
+		return notesPanel;
+
 	}
 
 	public static void main(String[] args) {
@@ -206,6 +174,95 @@ public class Test extends JFrame {
 
 		initComponents();
 
+	}
+
+	private Map<Octave, List<Tone>> getTestNotes() {
+		// Dummy notes for testing
+		Map<Octave, List<Tone>> notes = new LinkedHashMap<>();
+		notes.put(Octave.FIRST, new ArrayList<>());
+		for (Tone tone : Tone.values()) {
+			notes.get(Octave.FIRST).add(tone);
+		}
+
+		notes.put(Octave.SECOND, new ArrayList<>());
+		for (Tone tone : Tone.values()) {
+			notes.get(Octave.SECOND).add(tone);
+		}
+
+		notes.put(Octave.THIRD, new ArrayList<>());
+		for (Tone tone : Tone.values()) {
+			notes.get(Octave.THIRD).add(tone);
+		}
+
+		notes.put(Octave.FOURTH, new ArrayList<>());
+		notes.get(Octave.FOURTH).add(Tone.C);
+
+		return notes;
+	}
+
+	private JPanel getNotesPanelFromMap(Map<Octave, List<Tone>> notes) {
+
+		// Test notes
+		JPanel notesPanel = new JPanel();
+
+		// rests
+		notesPanel.add(new SixteenthRest());
+		notesPanel.add(new EightRest());
+		notesPanel.add(new QuarterRest());
+		notesPanel.add(new HalfRest());
+		notesPanel.add(new WholeRest());
+
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new SixteenthSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new SixteenthNote(octave, tone));
+				}
+			}
+		}
+
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new EightSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new EighthNote(octave, tone));
+				}
+			}
+		}
+
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new QuarterSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new QuarterNote(octave, tone));
+				}
+			}
+		}
+
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new HalfSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new HalfNote(octave, tone));
+				}
+			}
+		}
+
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					notesPanel.add(new WholeSemiNote(octave, tone));
+				} else {
+					notesPanel.add(new WholeNote(octave, tone));
+				}
+			}
+		}
+
+		return notesPanel;
 	}
 
 }
