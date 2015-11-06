@@ -26,8 +26,6 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 
 	private boolean selected = false;
 
-	private Dimension dimension = new Dimension(QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
-
 	public MusicComponent() {
 		addFocusListener(this);
         setFocusable(true);
@@ -46,7 +44,8 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		// add margin TODO refactor, clear code, efficiency ...?
 		dimension.width += MARGIN;
 		dimension.height += MARGIN;
-		this.dimension = dimension;
+		
+		setPreferredSize(dimension);
 
 		// if component is selected draw selection shape around
 		if (selected) {
@@ -58,11 +57,6 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	}
 
 	public abstract Dimension draw(Graphics2D g);
-
-	@Override
-	public Dimension getPreferredSize() {
-		return dimension;
-	}
 	
 		
 	@Override
