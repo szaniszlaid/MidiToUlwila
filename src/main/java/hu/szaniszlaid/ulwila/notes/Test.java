@@ -68,8 +68,7 @@ public class Test extends JFrame {
 					File selectedFile = fileChooser.getSelectedFile();
 
 					JPanel notesPanel = getMidiTrack(new File(selectedFile.getPath()));
-					repaintNotesPanel(notesPanel);	
-					
+					repaintNotesPanel(notesPanel);						
 
 				}
 			}
@@ -98,40 +97,15 @@ public class Test extends JFrame {
 		// set scroll speed TODO properties file
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 		
-		scrollPanel.revalidate();
-		scrollPanel.repaint();
-		
-		
+		mainPanel.revalidate();		
 
 	}
 
-	private byte[] readFile(File file) {
-		byte[] data = null;
-		try {
-			FileInputStream fileInputStream = new FileInputStream(file.getCanonicalPath());
 
-			data = new byte[(int) file.length()];
-			int offset = 0;
-			int len = (int) file.length();
-			while (true) {
-				if (offset == len)
-					break;
-				int n = fileInputStream.read(data, offset, len - offset);
-				if (n <= 0)
-					break;
-				offset += n;
-			}
-			fileInputStream.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 
-		return data;
-	}
+	public static JPanel getMidiTrack(File info) {
 
-	public JPanel getMidiTrack(File info) {
-
-		MidiFile f = new MidiFile(readFile(info), "");
+		MidiFile f = new MidiFile(info);
 		List<MidiTrack> tracks = f.getTracks();
 		TimeSignature timeSignature = f.getTimesig();
 
@@ -141,6 +115,7 @@ public class Test extends JFrame {
 			MusicTrack musicTrack = new MusicTrack(midiTrack.getNotes(), timeSignature);
 
 			for (MusicComponent component : musicTrack.getComponents()) {
+			    System.out.println(component.getSize());
 				notesPanel.add(component);
 			}
 		}
@@ -176,7 +151,7 @@ public class Test extends JFrame {
 
 	}
 
-	private Map<Octave, List<Tone>> getTestNotes() {
+	private static Map<Octave, List<Tone>> getTestNotes() {
 		// Dummy notes for testing
 		Map<Octave, List<Tone>> notes = new LinkedHashMap<>();
 		notes.put(Octave.FIRST, new ArrayList<>());
@@ -200,7 +175,7 @@ public class Test extends JFrame {
 		return notes;
 	}
 
-	private JPanel getNotesPanelFromMap(Map<Octave, List<Tone>> notes) {
+	private static JPanel getNotesPanelFromMap(Map<Octave, List<Tone>> notes) {
 
 		// Test notes
 		JPanel notesPanel = new JPanel();

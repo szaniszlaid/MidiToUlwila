@@ -1,6 +1,8 @@
 package hu.szaniszlaid.ulwila.view;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MidiFile {
@@ -54,6 +56,35 @@ public class MidiFile {
     public MidiFile(byte[] rawdata, String filename) {
         this.filename = filename;
         parse(rawdata);
+    }
+    
+    /** Create a new MidiFile from the byte[] */
+    public MidiFile(File file) {
+        this(readFile(file), file.getName());
+    }
+    
+    private static byte[] readFile(File file) {
+        byte[] data = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file.getCanonicalPath());
+
+            data = new byte[(int) file.length()];
+            int offset = 0;
+            int len = (int) file.length();
+            while (true) {
+                if (offset == len)
+                    break;
+                int n = fileInputStream.read(data, offset, len - offset);
+                if (n <= 0)
+                    break;
+                offset += n;
+            }
+            fileInputStream.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return data;
     }
 
 	/**

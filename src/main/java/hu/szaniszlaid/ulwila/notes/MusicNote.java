@@ -14,7 +14,7 @@ public abstract class MusicNote extends MusicComponent {
     private Octave octave;
     private Tone tone;
 
-    public final int offsetX = getDimension().width / 3 * 2;
+    public final int offsetX = getSize().width / 3 * 2;
 
     public MusicNote(Octave octave, Tone tone) {
         super();
@@ -32,7 +32,7 @@ public abstract class MusicNote extends MusicComponent {
     }
 
     public int getNthOffset(int n) {
-        return n * (getDimension().width - (getDimension().width - offsetX));
+        return n * (getSize().width - (getSize().width - offsetX));
     }
 
     @Override

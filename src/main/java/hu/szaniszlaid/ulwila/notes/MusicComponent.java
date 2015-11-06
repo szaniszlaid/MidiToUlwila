@@ -48,20 +48,22 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		dimension.height += MARGIN;
 		this.dimension = dimension;
 
+		// if component is selected draw selection shape around
 		if (selected) {
 			g.setColor(new Color(255,157, 0 ,128));
 			g.fillRoundRect(0, 0, dimension.width, dimension.height, 20, 15);
 		}
-
-		setPreferredSize(dimension);
+		
 		invalidate();
 	}
 
 	public abstract Dimension draw(Graphics2D g);
 
-	public Dimension getDimension() {
+	@Override
+	public Dimension getPreferredSize() {
 		return dimension;
 	}
+	
 		
 	@Override
 	public void mousePressed(MouseEvent me) {
@@ -79,7 +81,6 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public void focusLost(FocusEvent e) {
 		selected = false;
 		repaint();
-
 	}
 	
 	public void mouseReleased(MouseEvent me) {}
