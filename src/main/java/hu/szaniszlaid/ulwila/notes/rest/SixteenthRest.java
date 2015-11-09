@@ -15,4 +15,9 @@ public class SixteenthRest extends MusicComponent {
 
         return new Dimension(width / 4, QUARTER_NOTE_HEIGHT);
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/16;
+	}
 }

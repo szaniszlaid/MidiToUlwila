@@ -47,4 +47,9 @@ public class QuarterNote extends MusicNote {
         octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
         return octaveShapes;
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/4;
+	}
 }

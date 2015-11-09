@@ -41,4 +41,9 @@ public class EighthNote extends MusicNote {
         octaveShapes.add(new Arc2D.Double(x, y, width / 5, heiht / 5, 90, 180, Arc2D.OPEN));
         return octaveShapes;
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/8;
+	}
 }

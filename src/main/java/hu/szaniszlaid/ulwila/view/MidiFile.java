@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 public class MidiFile {
 
-	private File fileuri;
-	/** The file reference */
+	
 	private String filename;
 	/** The Midi file name */
 	private ArrayList<ArrayList<MidiEvent>> allevents;

@@ -46,4 +46,9 @@ public class HalfNote extends MusicNote {
 		
 		return octaveShapes;
 	}
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/2;
+	}
 }

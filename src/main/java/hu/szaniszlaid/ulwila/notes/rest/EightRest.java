@@ -15,4 +15,9 @@ public class EightRest extends MusicComponent {
 
         return new Dimension(width / 2, QUARTER_NOTE_HEIGHT);
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/8;
+	}
 }

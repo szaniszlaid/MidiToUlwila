@@ -58,6 +58,8 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 
 	public abstract Dimension draw(Graphics2D g);
 	
+    public abstract double getMusicalLength();
+	
 		
 	@Override
 	public void mousePressed(MouseEvent me) {

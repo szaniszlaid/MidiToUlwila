@@ -10,9 +10,9 @@ import java.util.List;
 
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
-import hu.szaniszlaid.ulwila.notes.MusicNote;
+import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
 
-public class WholeSemiNote extends MusicNote {
+public class WholeSemiNote extends WholeNote {
 
 	int width = QUARTER_NOTE_WIDTH;
 	int height = QUARTER_NOTE_HEIGHT;

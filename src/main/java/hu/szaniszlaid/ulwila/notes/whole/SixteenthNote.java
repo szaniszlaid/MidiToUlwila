@@ -41,4 +41,9 @@ public class SixteenthNote extends MusicNote {
         octaveShapes.add(new Arc2D.Double(x + MARGIN_LEFT, y + MARGIN_RIGHT, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
         return octaveShapes;
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/16;
+	}
 }

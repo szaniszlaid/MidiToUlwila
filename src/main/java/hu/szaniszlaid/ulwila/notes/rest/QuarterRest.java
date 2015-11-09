@@ -16,4 +16,9 @@ public class QuarterRest extends MusicComponent {
 
         return new Dimension(width, height);
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/4;
+	}
 }

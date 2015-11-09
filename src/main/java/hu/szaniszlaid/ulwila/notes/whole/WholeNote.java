@@ -57,4 +57,9 @@ public class WholeNote extends MusicNote {
 		
 		return octaveShapes;
 	}
+
+	@Override
+	public double getMusicalLength() {
+		return 1;
+	}
 }

@@ -19,4 +19,9 @@ public class WholeRest extends MusicComponent {
 
         return new Dimension(width * 4, height);
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1;
+	}
 }

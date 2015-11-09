@@ -18,4 +18,9 @@ public class HalfRest extends MusicComponent {
         return new Dimension(width * 2, height);
 
     }
+
+	@Override
+	public double getMusicalLength() {
+		return (double) 1/2;
+	}
 }

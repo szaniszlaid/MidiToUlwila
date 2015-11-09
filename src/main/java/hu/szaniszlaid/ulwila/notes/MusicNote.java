@@ -21,6 +21,7 @@ public abstract class MusicNote extends MusicComponent {
         this.octave = octave;
         this.tone = tone;
     }
+    
 
     public MusicNote setOctave(Octave octave) {
         this.octave = octave;

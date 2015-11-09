@@ -7,8 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,86 +40,123 @@ import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
 import hu.szaniszlaid.ulwila.view.MidiFile;
 import hu.szaniszlaid.ulwila.view.MidiTrack;
 import hu.szaniszlaid.ulwila.view.MusicTrack;
-import hu.szaniszlaid.ulwila.view.NoteDuration;
 import hu.szaniszlaid.ulwila.view.TimeSignature;
+import hu.szaniszlaid.ulwila.view.UlwilaRow;
+import javax.swing.BoxLayout;
 
 public class Test extends JFrame {
 
 	private JPanel mainPanel = new JPanel();
+	private JScrollPane scrollPanel;
 
 	private void initComponents() {
 
 		// Set sizes of root frame
-		setBounds(500, 500, 800, 500);
+		setSize(800, 500);
 
-		mainPanel.setLayout(new BorderLayout(0, 0));
+		setLocationRelativeTo(null);
 
 		JPanel menu = new JPanel();
-		mainPanel.add(menu, BorderLayout.NORTH);
+		
+		scrollPanel = new JScrollPane();
+		scrollPanel.setColumnHeaderView(menu);	
+		
+		// set scroll speed TODO properties file
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(24);
+		
+		mainPanel.add(scrollPanel, BorderLayout.CENTER);
+		
+		JPanel ulwilaSheet = new JPanel();
+		ulwilaSheet.setLayout(new BoxLayout(ulwilaSheet, BoxLayout.Y_AXIS));
 
-		JButton btnHha = new JButton("Uzsgyi");
-		btnHha.addActionListener(new ActionListener() {
+
+
+		JButton btnOpenFile = new JButton("Uzsgyi");
+		btnOpenFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 
-					JPanel notesPanel = getMidiTrack(new File(selectedFile.getPath()));
-					repaintNotesPanel(notesPanel);						
+					List<JPanel> rows = getRows(getMusicTrack(new File(selectedFile.getPath())).get(0));
+					
+					for (JPanel row : rows) {
+						ulwilaSheet.add(row);						
+					}
+					
+					scrollPanel.setViewportView(ulwilaSheet);	
 
 				}
 			}
 		});
 
-		menu.add(btnHha);
+		menu.add(btnOpenFile);
 		
 		JButton btnSample = new JButton("Sample");
 		btnSample.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				repaintNotesPanel(getNotesPanelFromMap(getTestNotes()));
+				scrollPanel.setViewportView(getNotesPanelFromMap(getTestNotes()));
 			}
 		});
+		
 		menu.add(btnSample);
 
-		setContentPane(mainPanel);
+		setContentPane(scrollPanel);
 	}
 	
-	private void repaintNotesPanel(JPanel notesPanel){
-		notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		notesPanel.setPreferredSize(new Dimension(500, 1800));
-
-		JScrollPane scrollPanel = new JScrollPane(notesPanel);
-		mainPanel.add(scrollPanel, BorderLayout.CENTER);
-
-		// set scroll speed TODO properties file
-		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
-		
-		mainPanel.revalidate();		
-
-	}
 
 
 
-	public static JPanel getMidiTrack(File info) {
-
-		MidiFile f = new MidiFile(info);
-		List<MidiTrack> tracks = f.getTracks();
-		TimeSignature timeSignature = f.getTimesig();
+	public static JPanel getNotesPanel(MusicTrack musicTrack) {
 
 		JPanel notesPanel = new JPanel();
-
-		for (MidiTrack midiTrack : tracks) {
-			MusicTrack musicTrack = new MusicTrack(midiTrack.getNotes(), timeSignature);
-
-			for (MusicComponent component : musicTrack.getComponents()) {
-			    System.out.println(component.getSize());
-				notesPanel.add(component);
-			}
+		notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		for (MusicComponent component : musicTrack.getComponents()) {
+			notesPanel.add(component);
 		}
 
 		return notesPanel;
 
+	}
+	
+	private static List<MusicTrack> getMusicTrack(File file){
+
+		MidiFile f = new MidiFile(file);
+		List<MidiTrack> tracks = f.getTracks();
+		TimeSignature timeSignature = f.getTimesig();
+		
+		List<MusicTrack> musicTracks = new ArrayList<>();
+
+		System.out.println("TimeSignature: " + timeSignature.getNumerator() + "/" + timeSignature.getDenominator());
+		
+
+		for (MidiTrack midiTrack : tracks) {
+			musicTracks.add(new MusicTrack(midiTrack.getNotes(), timeSignature));
+		}
+		
+		return musicTracks;
+	}
+	
+	
+	
+	public static List<JPanel> getRows(MusicTrack musicTrack){
+		List<JPanel> rows = new ArrayList<>();
+		UlwilaRow row = new UlwilaRow(musicTrack.getTimeSignature());
+		for (MusicComponent component: musicTrack.getComponents()) {
+			if (row.canFit(component)){
+				row.add(component);
+			} else { //TODO nem tetszik
+				rows.add(row);
+				row = new UlwilaRow(musicTrack.getTimeSignature());
+				row.add(component);
+			}
+		}
+		
+		rows.add(row);
+		
+		return rows;
+		
 	}
 
 	public static void main(String[] args) {

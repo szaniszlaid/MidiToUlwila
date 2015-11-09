@@ -29,7 +29,7 @@ public class MusicTrack {
 	
 	public MusicTrack(List <MidiNote> midiNotes, TimeSignature timeSignature){
 		this.midiNotes = midiNotes;
-		this.timeSignature = timeSignature;
+		this.setTimeSignature(timeSignature);
 	}
 	
 	public List<MusicComponent> getComponents(){
@@ -40,19 +40,19 @@ public class MusicTrack {
 			while (startTime > prevEnd){				
 				int duration = startTime - prevEnd;	
 			
-				NoteDuration restDuration = timeSignature.GetNoteDuration(duration);
+				NoteDuration restDuration = getTimeSignature().GetNoteDuration(duration);
 				
 				MusicComponent rest = getRestComponent(restDuration);
 				components.add(rest);
 
-				prevEnd += timeSignature.DurationToTime(restDuration);
+				prevEnd += getTimeSignature().DurationToTime(restDuration);
 					
 				
 			} 
 			prevEnd = midiNote.getEndTime();
 
 			
-			NoteDuration duration = timeSignature.GetNoteDuration(midiNote.getDuration());
+			NoteDuration duration = getTimeSignature().GetNoteDuration(midiNote.getDuration());
 			
 			MusicComponent comp = getNoteComponent(duration, midiNote.getOctave(), midiNote.getTone());
 			if (comp != null){
@@ -116,6 +116,14 @@ public class MusicTrack {
 		default:
 			return null;
 		}
+	}
+
+	public TimeSignature getTimeSignature() {
+		return timeSignature;
+	}
+
+	public void setTimeSignature(TimeSignature timeSignature) {
+		this.timeSignature = timeSignature;
 	}
 	
 }
