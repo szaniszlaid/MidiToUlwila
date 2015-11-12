@@ -79,10 +79,10 @@ public class Test extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 
-					List<JPanel> rows = getRows(getMusicTrack(new File(selectedFile.getPath())).get(0));
+					List<UlwilaRow> rows = getRows(getMusicTrack(new File(selectedFile.getPath())).get(0));
 					
-					for (JPanel row : rows) {
-						ulwilaSheet.add(row);						
+					for (UlwilaRow row : rows) {
+						ulwilaSheet.add(row.getRow());						
 					}
 					
 					scrollPanel.setViewportView(ulwilaSheet);	
@@ -140,8 +140,8 @@ public class Test extends JFrame {
 	
 	
 	
-	public static List<JPanel> getRows(MusicTrack musicTrack){
-		List<JPanel> rows = new ArrayList<>();
+	public static List<UlwilaRow> getRows(MusicTrack musicTrack){
+		List<UlwilaRow> rows = new ArrayList<>();
 		UlwilaRow row = new UlwilaRow(musicTrack.getTimeSignature());
 		for (MusicComponent component: musicTrack.getComponents()) {
 			if (row.canFit(component)){

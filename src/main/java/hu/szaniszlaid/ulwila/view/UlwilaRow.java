@@ -1,44 +1,67 @@
 package hu.szaniszlaid.ulwila.view;
 
-import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
-public class UlwilaRow extends JPanel{
+public class UlwilaRow{
 	
-	int elementsCount = 0;	
-	double timeSignature;
+	private List<Ulwilarhythm> rhytms;
+	
+	float timeSignature;
 	private double musicalLenght = 0;
 	
 	public UlwilaRow(int numerator, int denominator) {
-		timeSignature = numerator / denominator;
+		timeSignature = (float) numerator / denominator;	
+		setRhytms(new ArrayList<>());
 	}
 	
 	public UlwilaRow(TimeSignature timeSignature) {
 		this(timeSignature.getNumerator(), timeSignature.getDenominator());
 	}
+
 	
-	
-	@Override
-	public Component add(Component comp) {
-		if (comp instanceof MusicComponent){
-			return addMusicComponent((MusicComponent) comp);
-		} else {
-			throw new UnsupportedOperationException();
-		}
-	}
-	
-	public Component addMusicComponent(MusicComponent comp){
-		elementsCount++;
+	public void add(MusicComponent comp){
 		musicalLenght += comp.getMusicalLength();
-		System.out.println(musicalLenght);
-		return super.add(comp);
+		getCurrentRhytm().add(comp);		
 	}
 	
 	public boolean canFit (MusicComponent musicComponent){
-		//TODO calculate metre
-		return musicalLenght < 1 ? true : false;
+		//FIXME calculate metre
+		return musicalLenght < 2 ? true : false;
+	}
+	
+	
+	private Ulwilarhythm getCurrentRhytm(){
+		Ulwilarhythm rhytm;
+		if (getRhytms().size() > 0) {
+			rhytm = getRhytms().get(getRhytms().size() - 1);
+			if (!rhytm.isFull()){
+				return getRhytms().get(getRhytms().size() - 1);
+			} 
+		}
+		rhytm = new Ulwilarhythm(timeSignature);
+		getRhytms().add(rhytm);
+		
+		return rhytm;
+	}
+
+	public List<Ulwilarhythm> getRhytms() {
+		return rhytms;
+	}
+
+	public void setRhytms(List<Ulwilarhythm> rhytms) {
+		this.rhytms = rhytms;
+	}
+	
+	public JPanel getRow(){
+		JPanel row = new JPanel();
+		for (Ulwilarhythm ulwilaUtem : rhytms) {
+			row.add(ulwilaUtem.getRhytmPanel());
+		}
+		return row;
 	}
 }
