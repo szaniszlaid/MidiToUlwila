@@ -10,7 +10,7 @@
  *  GNU General Public License for more details.
  */
 
-package hu.szaniszlaid.ulwila.view;
+package hu.szaniszlaid.ulwila.midi;
 
 import java.util.Comparator;
 

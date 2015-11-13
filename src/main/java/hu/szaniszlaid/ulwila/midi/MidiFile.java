@@ -1,9 +1,11 @@
-package hu.szaniszlaid.ulwila.view;
+package hu.szaniszlaid.ulwila.midi;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import hu.szaniszlaid.ulwila.view.TimeSignature;
 
 public class MidiFile {
 

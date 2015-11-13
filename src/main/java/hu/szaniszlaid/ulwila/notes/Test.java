@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import hu.szaniszlaid.ulwila.midi.MidiFile;
+import hu.szaniszlaid.ulwila.midi.MidiTrack;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.rest.EightRest;
@@ -37,8 +39,6 @@ import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
-import hu.szaniszlaid.ulwila.view.MidiFile;
-import hu.szaniszlaid.ulwila.view.MidiTrack;
 import hu.szaniszlaid.ulwila.view.MusicTrack;
 import hu.szaniszlaid.ulwila.view.TimeSignature;
 import hu.szaniszlaid.ulwila.view.UlwilaRow;

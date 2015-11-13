@@ -79,6 +79,11 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		repaint();
 	}
 	
+	@Override
+	public String toString() {
+	    return "MusicComponent - length: " + getMusicalLength();
+	}
+	
 	public void mouseReleased(MouseEvent me) {}
 	public void mouseClicked(MouseEvent me) {}
 	public void mouseEntered(MouseEvent me) {}

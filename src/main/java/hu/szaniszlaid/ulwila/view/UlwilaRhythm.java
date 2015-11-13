@@ -8,25 +8,25 @@ import javax.swing.border.EmptyBorder;
 
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
-public class Ulwilarhythm{
+public class UlwilaRhythm{
 	private float notesLength = 0;
 	private float timeSignature;
 	
 	private List<MusicComponent> musicComponents = new ArrayList<>();
 	private JPanel rhytmPanel;
 	
-	public Ulwilarhythm(float timeSignature){
+	public UlwilaRhythm(float timeSignature){
 		this.timeSignature = timeSignature;
 		rhytmPanel = new JPanel();
 		rhytmPanel.setBorder(new EmptyBorder(0, 0, 0, 100));
 	}
 	
-	public Ulwilarhythm(int numerator, int denominator) {
+	public UlwilaRhythm(int numerator, int denominator) {
 		this(numerator / denominator);
 	}
 	
 	
-	public Ulwilarhythm(TimeSignature timeSignature) {
+	public UlwilaRhythm(TimeSignature timeSignature) {
 		this(timeSignature.getNumerator(), timeSignature.getDenominator());
 	}
 	

@@ -155,5 +155,10 @@ public abstract class MusicNote extends MusicComponent {
             throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
         }
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " | Octave: " + octave.name() + "   Tone: " + tone.name();
+    }
 
 }

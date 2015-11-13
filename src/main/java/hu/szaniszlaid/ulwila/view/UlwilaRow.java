@@ -9,7 +9,7 @@ import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
 public class UlwilaRow{
 	
-	private List<Ulwilarhythm> rhytms;
+	private List<UlwilaRhythm> rhytms;
 	
 	float timeSignature;
 	private double musicalLenght = 0;
@@ -35,31 +35,31 @@ public class UlwilaRow{
 	}
 	
 	
-	private Ulwilarhythm getCurrentRhytm(){
-		Ulwilarhythm rhytm;
+	private UlwilaRhythm getCurrentRhytm(){
+		UlwilaRhythm rhytm;
 		if (getRhytms().size() > 0) {
 			rhytm = getRhytms().get(getRhytms().size() - 1);
 			if (!rhytm.isFull()){
 				return getRhytms().get(getRhytms().size() - 1);
 			} 
 		}
-		rhytm = new Ulwilarhythm(timeSignature);
+		rhytm = new UlwilaRhythm(timeSignature);
 		getRhytms().add(rhytm);
 		
 		return rhytm;
 	}
 
-	public List<Ulwilarhythm> getRhytms() {
+	public List<UlwilaRhythm> getRhytms() {
 		return rhytms;
 	}
 
-	public void setRhytms(List<Ulwilarhythm> rhytms) {
+	public void setRhytms(List<UlwilaRhythm> rhytms) {
 		this.rhytms = rhytms;
 	}
 	
 	public JPanel getRow(){
 		JPanel row = new JPanel();
-		for (Ulwilarhythm ulwilaUtem : rhytms) {
+		for (UlwilaRhythm ulwilaUtem : rhytms) {
 			row.add(ulwilaUtem.getRhytmPanel());
 		}
 		return row;

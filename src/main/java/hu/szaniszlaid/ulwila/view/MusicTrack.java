@@ -3,6 +3,7 @@ package hu.szaniszlaid.ulwila.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.szaniszlaid.ulwila.midi.MidiNote;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;

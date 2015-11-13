@@ -1,4 +1,4 @@
-package hu.szaniszlaid.ulwila.view;
+package hu.szaniszlaid.ulwila.midi;
 
 
 /** @class MidiFileException

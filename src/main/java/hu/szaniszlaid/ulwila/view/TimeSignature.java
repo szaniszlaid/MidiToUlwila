@@ -14,6 +14,8 @@ package hu.szaniszlaid.ulwila.view;
 
 import java.io.*;
 
+import hu.szaniszlaid.ulwila.midi.MidiFileException;
+
 /** @class TimeSignature
  * The TimeSignature class represents
  * - The time signature of the song, such as 4/4, 3/4, or 6/8 time, and

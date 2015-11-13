@@ -12,7 +12,7 @@
 
 
 
-package hu.szaniszlaid.ulwila.view;
+package hu.szaniszlaid.ulwila.midi;
 
 import java.util.*;
 
