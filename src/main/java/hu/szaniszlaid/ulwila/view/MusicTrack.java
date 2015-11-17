@@ -7,12 +7,12 @@ import hu.szaniszlaid.ulwila.midi.MidiNote;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
-import hu.szaniszlaid.ulwila.notes.rest.EightRest;
+import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
 import hu.szaniszlaid.ulwila.notes.rest.SixteenthRest;
 import hu.szaniszlaid.ulwila.notes.rest.WholeRest;
-import hu.szaniszlaid.ulwila.notes.semi.EightSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.EighthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.HalfSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
@@ -68,7 +68,7 @@ public class MusicTrack {
 		switch (noteDuration) {
 		case Eighth:
 			if (tone.isSemiTone()) {
-				return new EightSemiNote(octave, tone);
+				return new EighthSemiNote(octave, tone);
 			} else {
 				return new EighthNote(octave, tone);
 			}
@@ -105,7 +105,7 @@ public class MusicTrack {
 	public static MusicComponent getRestComponent(NoteDuration duration) {
 		switch (duration) {
 		case Eighth:
-			return new EightRest();
+			return new EighthRest();
 		case Half:
 			return new HalfRest();
 		case Quarter:

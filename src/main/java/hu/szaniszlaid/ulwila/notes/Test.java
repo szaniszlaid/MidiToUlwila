@@ -24,12 +24,12 @@ import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
-import hu.szaniszlaid.ulwila.notes.rest.EightRest;
+import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
 import hu.szaniszlaid.ulwila.notes.rest.SixteenthRest;
 import hu.szaniszlaid.ulwila.notes.rest.WholeRest;
-import hu.szaniszlaid.ulwila.notes.semi.EightSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.EighthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.HalfSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
@@ -217,7 +217,7 @@ public class Test extends JFrame {
 
 		// rests
 		notesPanel.add(new SixteenthRest());
-		notesPanel.add(new EightRest());
+		notesPanel.add(new EighthRest());
 		notesPanel.add(new QuarterRest());
 		notesPanel.add(new HalfRest());
 		notesPanel.add(new WholeRest());
@@ -235,7 +235,7 @@ public class Test extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					notesPanel.add(new EightSemiNote(octave, tone));
+					notesPanel.add(new EighthSemiNote(octave, tone));
 				} else {
 					notesPanel.add(new EighthNote(octave, tone));
 				}

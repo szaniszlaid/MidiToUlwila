@@ -25,22 +25,22 @@ public class SixteenthSemiNote extends SixteenthNote {
     @Override
     public Dimension drawNote(Graphics2D g) {
         g.setColor(getLeftColor());
-        g.fillRect(0, 0, width / 2, height);
+        g.fillRect(MARGIN_LEFT, MARGIN_TOP, width / 2, height);
         g.setColor(Color.BLACK);
-        g.drawRect(0, 0, width / 2, height);
+        g.drawRect(MARGIN_LEFT, MARGIN_TOP, width / 2, height);
         
         g.setColor(getRightColor());
-        g.fillRect(width / 2, 0, width / 2, height);
+        g.fillRect(width / 2 + MARGIN_LEFT, MARGIN_TOP, width / 2, height);
         g.setColor(Color.BLACK);
-        g.drawRect(width / 2, 0, width / 2, height);
+        g.drawRect(width / 2 + MARGIN_LEFT, MARGIN_TOP, width / 2, height);
         
         return new Dimension(width, height);
     }
 
     @Override
     public List<Shape> getOctaveShapes() {
-        double x = (double)  width / 5 -  (double) width/ 10;
-        double y = (double)  height / 2 - (double)  height / 10;
+        double x = ((double)  width / 5 -  (double) width/ 10) + MARGIN_LEFT;
+        double y = ((double)  height / 2 - (double)  height / 10) + MARGIN_TOP;
 
         List<Shape> octaveShapes = new ArrayList<>();
         octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));

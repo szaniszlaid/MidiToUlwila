@@ -12,7 +12,7 @@ public class QuarterRest extends MusicComponent {
     public Dimension draw(Graphics2D g) {
         int width = QUARTER_NOTE_WIDTH - QUARTER_NOTE_WIDTH / 10;
         int height = QUARTER_NOTE_HEIGHT;
-        g.drawPolygon(Components.getHexagon(0, 0, width, height));
+        g.drawPolygon(Components.getHexagon(MARGIN_LEFT, MARGIN_TOP, width, height));
 
         return new Dimension(width, height);
     }

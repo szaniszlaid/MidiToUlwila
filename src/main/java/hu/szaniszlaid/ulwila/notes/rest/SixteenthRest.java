@@ -11,7 +11,7 @@ public class SixteenthRest extends MusicComponent {
     @Override
     public Dimension draw(Graphics2D g) {
         int width = QUARTER_NOTE_WIDTH - (QUARTER_NOTE_HEIGHT / 10);
-        g.drawPolygon(Components.getQuarterHexagon(0, 0, width, QUARTER_NOTE_HEIGHT));
+        g.drawPolygon(Components.getQuarterHexagon(MARGIN_LEFT, MARGIN_TOP, width, QUARTER_NOTE_HEIGHT));
 
         return new Dimension(width / 4, QUARTER_NOTE_HEIGHT);
     }
