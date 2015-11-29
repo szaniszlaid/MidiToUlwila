@@ -17,7 +17,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public static final int QUARTER_NOTE_WIDTH = 100;
 	public static final int QUARTER_NOTE_HEIGHT = 100;
 
-	private static final int MARGIN = 10;
+	private static final int MARGIN = 5;
 	
 	public static final int MARGIN_LEFT = MARGIN / 2;
 	public static final int MARGIN_RIGHT = MARGIN / 2;
