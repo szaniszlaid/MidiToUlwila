@@ -13,13 +13,10 @@ public class UlwilaBar{
 	private float timeSignature;
 	
 	private List<MusicComponent> musicComponents = new ArrayList<>();
-	private JPanel rhytmPanel;
 	
 	public UlwilaBar(float timeSignature){
 		this.timeSignature = timeSignature;
-		rhytmPanel = new JPanel();
-		//add separator to rhytm right side
-		rhytmPanel.setBorder(new EmptyBorder(0, 0, 0, 30));
+
 	}
 	
 	public UlwilaBar(int numerator, int denominator) {
@@ -32,23 +29,34 @@ public class UlwilaBar{
 	}
 	
 	public void add(MusicComponent comp) {
-		musicComponents.add(comp);
-		notesLength += comp.getMusicalLength();
+		if (isFull()){
+			throw new RuntimeException("Cannot add more components to this bar, it is full.");
+		} else {
+			musicComponents.add(comp);
+			notesLength += comp.getMusicalLength();
+		}
 	}
 	
 	public boolean isFull(){
 		return notesLength >= timeSignature ? true : false;
 	}
 	
+	public boolean isNotFull(){
+		return !isFull();
+	}
+	
 	public List<MusicComponent> getComponents(){
 		return musicComponents;
 	}
 	
-	public JPanel getRhytmPanel(){
+	public JPanel getPanel(){
+		JPanel barPanel = new JPanel();
+		//add separator to bar right side
+		barPanel.setBorder(new EmptyBorder(0, 0, 0, 30));
 		for (MusicComponent musicComponent : musicComponents) {
-			rhytmPanel.add(musicComponent);
+			barPanel.add(musicComponent);
 		}		
-		return rhytmPanel;
+		return barPanel;
 	}
 	
 }

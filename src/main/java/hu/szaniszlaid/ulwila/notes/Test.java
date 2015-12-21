@@ -1,9 +1,7 @@
 package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -41,8 +40,9 @@ import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
 import hu.szaniszlaid.ulwila.view.MusicTrack;
 import hu.szaniszlaid.ulwila.view.TimeSignature;
+import hu.szaniszlaid.ulwila.view.UlwilaBar;
 import hu.szaniszlaid.ulwila.view.UlwilaRow;
-import javax.swing.BoxLayout;
+import hu.szaniszlaid.ulwila.view.UlwilaTrack;
 
 public class Test extends JFrame {
 
@@ -79,13 +79,70 @@ public class Test extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 
-					List<UlwilaRow> rows = getRows(getMusicTrack(new File(selectedFile.getPath())).get(0));
+					//List<UlwilaRow> rows = getRows(getMusicTrack(new File(selectedFile.getPath())).get(0));
+					//TODO modify this to list (remove get(0))
+					MusicTrack track = getMusicTrack(new File(selectedFile.getPath())).get(0);
+					List <MusicComponent> components = track.getComponents();
+					List<UlwilaTrack> tracks = new ArrayList<>();
 					
-					for (UlwilaRow row : rows) {
-						ulwilaSheet.add(row.getRow());						
+					UlwilaTrack ulwilaTrack = null;
+					UlwilaRow lastRow = null;
+					UlwilaBar lastBar = null;
+					
+					
+					for (int i = 0; i < components.size(); i++) {
+						MusicComponent musicComponent = components.get(i);
+						
+						//Last note in track
+						if (i == components.size() - 1) {
+							lastBar.add(musicComponent);
+							lastRow.add(lastBar);
+							ulwilaTrack.add(lastRow);
+						}
+						if (ulwilaTrack == null) {
+							ulwilaTrack = new UlwilaTrack();
+						}
+
+						if (lastRow == null) {
+							lastRow = new UlwilaRow(track.getTimeSignature());
+						}
+
+						if (lastBar == null) {
+							lastBar = new UlwilaBar(track.getTimeSignature());
+						}
+						
+//						if (lastBar.isNotFull()) {
+//							lastBar.add(musicComponent);
+//						} else {
+//							if (lastRow.isNotFull()){
+//								lastRow.add(lastBar);
+//							} else {
+//								ulwilaTrack.add(lastRow);
+//								lastRow = new UlwilaRow(track.getTimeSignature());
+//								lastRow.add(bar);
+//							}
+//							
+//						}
+						if (lastRow.isNotFull()) {
+							if (lastBar.isNotFull()) {
+								lastBar.add(musicComponent);
+							} else {
+								lastRow.add(lastBar);
+								lastBar = new UlwilaBar(track.getTimeSignature());
+								lastBar.add(musicComponent);
+							}
+						} else {
+							ulwilaTrack.add(lastRow);
+							lastRow = new UlwilaRow(track.getTimeSignature());
+							lastBar = new UlwilaBar(track.getTimeSignature());
+							lastBar.add(musicComponent);
+						}
 					}
+//					for (UlwilaRow row : rows) {
+//						ulwilaSheet.add(row.getRow());						
+//					}
 					
-					scrollPanel.setViewportView(ulwilaSheet);	
+					scrollPanel.setViewportView(ulwilaTrack.getPanel());	
 
 				}
 			}
@@ -111,7 +168,6 @@ public class Test extends JFrame {
 	public static JPanel getNotesPanel(MusicTrack musicTrack) {
 
 		JPanel notesPanel = new JPanel();
-		notesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		for (MusicComponent component : musicTrack.getComponents()) {
 			notesPanel.add(component);
 		}
@@ -140,24 +196,28 @@ public class Test extends JFrame {
 	
 	
 	
-	public static List<UlwilaRow> getRows(MusicTrack musicTrack){
-		List<UlwilaRow> rows = new ArrayList<>();
-		UlwilaRow row = new UlwilaRow(musicTrack.getTimeSignature());
-		for (MusicComponent component: musicTrack.getComponents()) {
-			if (row.canFit(component)){
-				row.add(component);
-			} else { //TODO nem tetszik
-				rows.add(row);
-				row = new UlwilaRow(musicTrack.getTimeSignature());
-				row.add(component);
-			}
-		}
-		
-		rows.add(row);
-		
-		return rows;
-		
-	}
+//	public static List<UlwilaRow> getRows(MusicTrack musicTrack){
+//		List<UlwilaRow> rows = new ArrayList<>();
+//		UlwilaRow row = new UlwilaRow(musicTrack.getTimeSignature());
+//		List<UlwilaBar> bars = new ArrayList<>();
+//		for (MusicComponent component: musicTrack.getComponents()) {
+//			if (!row.isFull()){
+//				
+//				row.add(component);
+//			} else { //TODO nem tetszik
+//				rows.add(row);
+//				row = new UlwilaRow(musicTrack.getTimeSignature());
+//				row.add(component);
+//			}
+//		}
+//		
+//		rows.add(row);
+//		
+//		return rows;
+//		
+//	}
+	
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
