@@ -40,14 +40,25 @@ import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
 import hu.szaniszlaid.ulwila.view.MusicTrack;
 import hu.szaniszlaid.ulwila.view.TimeSignature;
-import hu.szaniszlaid.ulwila.view.UlwilaBar;
-import hu.szaniszlaid.ulwila.view.UlwilaRow;
 import hu.szaniszlaid.ulwila.view.UlwilaTrack;
 
-public class Test extends JFrame {
+public class Main extends JFrame {
 
 	private JPanel mainPanel = new JPanel();
 	private JScrollPane scrollPanel;
+	
+   public Main() {
+        // set LookAndFeel to system default
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();        }
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        initComponents();
+
+    }
 
 	private void initComponents() {
 
@@ -83,64 +94,9 @@ public class Test extends JFrame {
 					//TODO modify this to list (remove get(0))
 					MusicTrack track = getMusicTrack(new File(selectedFile.getPath())).get(0);
 					List <MusicComponent> components = track.getComponents();
-					List<UlwilaTrack> tracks = new ArrayList<>();
 					
-					UlwilaTrack ulwilaTrack = null;
-					UlwilaRow lastRow = null;
-					UlwilaBar lastBar = null;
-					
-					
-					for (int i = 0; i < components.size(); i++) {
-						MusicComponent musicComponent = components.get(i);
-						
-						//Last note in track
-						if (i == components.size() - 1) {
-							lastBar.add(musicComponent);
-							lastRow.add(lastBar);
-							ulwilaTrack.add(lastRow);
-						}
-						if (ulwilaTrack == null) {
-							ulwilaTrack = new UlwilaTrack();
-						}
+					UlwilaTrack ulwilaTrack = new UlwilaTrack(components, track.getTimeSignature());
 
-						if (lastRow == null) {
-							lastRow = new UlwilaRow(track.getTimeSignature());
-						}
-
-						if (lastBar == null) {
-							lastBar = new UlwilaBar(track.getTimeSignature());
-						}
-						
-//						if (lastBar.isNotFull()) {
-//							lastBar.add(musicComponent);
-//						} else {
-//							if (lastRow.isNotFull()){
-//								lastRow.add(lastBar);
-//							} else {
-//								ulwilaTrack.add(lastRow);
-//								lastRow = new UlwilaRow(track.getTimeSignature());
-//								lastRow.add(bar);
-//							}
-//							
-//						}
-						if (lastRow.isNotFull()) {
-							if (lastBar.isNotFull()) {
-								lastBar.add(musicComponent);
-							} else {
-								lastRow.add(lastBar);
-								lastBar = new UlwilaBar(track.getTimeSignature());
-								lastBar.add(musicComponent);
-							}
-						} else {
-							ulwilaTrack.add(lastRow);
-							lastRow = new UlwilaRow(track.getTimeSignature());
-							lastBar = new UlwilaBar(track.getTimeSignature());
-							lastBar.add(musicComponent);
-						}
-					}
-//					for (UlwilaRow row : rows) {
-//						ulwilaSheet.add(row.getRow());						
-//					}
 					
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());	
 
@@ -163,18 +119,6 @@ public class Test extends JFrame {
 	}
 	
 
-
-
-	public static JPanel getNotesPanel(MusicTrack musicTrack) {
-
-		JPanel notesPanel = new JPanel();
-		for (MusicComponent component : musicTrack.getComponents()) {
-			notesPanel.add(component);
-		}
-
-		return notesPanel;
-
-	}
 	
 	private static List<MusicTrack> getMusicTrack(File file){
 
@@ -194,36 +138,12 @@ public class Test extends JFrame {
 		return musicTracks;
 	}
 	
-	
-	
-//	public static List<UlwilaRow> getRows(MusicTrack musicTrack){
-//		List<UlwilaRow> rows = new ArrayList<>();
-//		UlwilaRow row = new UlwilaRow(musicTrack.getTimeSignature());
-//		List<UlwilaBar> bars = new ArrayList<>();
-//		for (MusicComponent component: musicTrack.getComponents()) {
-//			if (!row.isFull()){
-//				
-//				row.add(component);
-//			} else { //TODO nem tetszik
-//				rows.add(row);
-//				row = new UlwilaRow(musicTrack.getTimeSignature());
-//				row.add(component);
-//			}
-//		}
-//		
-//		rows.add(row);
-//		
-//		return rows;
-//		
-//	}
-	
-
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Test frame = new Test();
+					Main frame = new Main();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -232,19 +152,7 @@ public class Test extends JFrame {
 		});
 	}
 
-	public Test() {
-		// set LookAndFeel to system default
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		initComponents();
-
-	}
 
 	private static Map<Octave, List<Tone>> getTestNotes() {
 		// Dummy notes for testing
@@ -272,7 +180,7 @@ public class Test extends JFrame {
 
 	private static JPanel getNotesPanelFromMap(Map<Octave, List<Tone>> notes) {
 
-		// Test notes
+		// Main notes
 		JPanel notesPanel = new JPanel();
 
 		// rests

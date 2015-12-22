@@ -17,7 +17,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public static final int QUARTER_NOTE_WIDTH = 100;
 	public static final int QUARTER_NOTE_HEIGHT = 100;
 
-	private static final int MARGIN = 5;
+	private static final int MARGIN = 6;
 	
 	public static final int MARGIN_LEFT = MARGIN / 2;
 	public static final int MARGIN_RIGHT = MARGIN / 2;
@@ -46,7 +46,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		dimension.height += MARGIN;
 		
 		setPreferredSize(dimension);
-
+		
 		// if component is selected draw selection shape around
 		if (selected) {
 			g.setColor(new Color(255,157, 0 ,128));
