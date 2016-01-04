@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import org.jdesktop.swingx.VerticalLayout;
 
+import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
 public class UlwilaTrack {

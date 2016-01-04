@@ -52,4 +52,10 @@ public class QuarterNote extends MusicNote {
 	public double getMusicalLength() {
 		return (double) 1/4;
 	}
+
+	@Override
+	public Dimension getSize() {
+        return new Dimension(QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+	}
+
 }

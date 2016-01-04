@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
 public class UlwilaBar{

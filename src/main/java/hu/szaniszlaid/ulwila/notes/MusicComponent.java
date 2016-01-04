@@ -40,17 +40,13 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 
 	protected void paintComponent(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		Dimension dimension = draw(g);
-		// add margin TODO refactor, clear code, efficiency ...?
-		dimension.width += MARGIN;
-		dimension.height += MARGIN;
 		
-		setPreferredSize(dimension);
-		
+		draw(g);
+
 		// if component is selected draw selection shape around
 		if (selected) {
 			g.setColor(new Color(255,157, 0 ,128));
-			g.fillRoundRect(0, 0, dimension.width, dimension.height, 20, 15);
+			g.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 15);
 		}
 		
 		invalidate();
@@ -59,7 +55,20 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public abstract Dimension draw(Graphics2D g);
 	
     public abstract double getMusicalLength();
-	
+    
+    @Override
+    public abstract Dimension getSize();
+    
+    @Override
+    public int getWidth() {
+    	return getSize().width + MARGIN_LEFT + MARGIN_RIGHT;
+    }
+    
+    @Override
+    public int getHeight() {
+    	return getSize().height + MARGIN_TOP + MARGIN_BOTTOM;
+    }
+    	
 		
 	@Override
 	public void mousePressed(MouseEvent me) {

@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import hu.szaniszlaid.ulwila.midi.TimeSignature;
+
 public class UlwilaRow {
 
     private List<UlwilaBar> bars = new ArrayList<>();
