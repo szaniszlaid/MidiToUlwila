@@ -22,15 +22,13 @@ public class EighthNote extends MusicNote {
     }
 
     @Override
-    public Dimension drawNote(Graphics2D g) {
+    public void drawNote(Graphics2D g) {
         g.setColor(getColor());
         Arc2D quarter = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.OPEN);
         g.fill(quarter);
         g.setColor(Color.BLACK);
         Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.CHORD);
         g.draw(border);
-
-        return new Dimension(width / 2, heiht);
     }
 
     @Override
@@ -46,4 +44,9 @@ public class EighthNote extends MusicNote {
 	public double getMusicalLength() {
 		return (double) 1/8;
 	}
+
+    @Override
+    public Dimension getSize() {
+        return new Dimension(width / 2, heiht);
+    }
 }

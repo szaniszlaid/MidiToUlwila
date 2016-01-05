@@ -19,7 +19,7 @@ public class QuarterNote extends MusicNote {
     }
 
     @Override
-    public Dimension drawNote(Graphics2D g) {
+    public void drawNote(Graphics2D g) {
         double x = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 3) + MARGIN_LEFT;
         double y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 3) + MARGIN_TOP;
 
@@ -35,7 +35,6 @@ public class QuarterNote extends MusicNote {
 
         }
 
-        return new Dimension(QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
     }
 
     @Override

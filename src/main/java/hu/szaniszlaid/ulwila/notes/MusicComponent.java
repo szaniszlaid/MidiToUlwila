@@ -42,7 +42,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		draw(g);
-
+		setPreferredSize(getSize());
 		// if component is selected draw selection shape around
 		if (selected) {
 			g.setColor(new Color(255,157, 0 ,128));
@@ -52,7 +52,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		invalidate();
 	}
 
-	public abstract Dimension draw(Graphics2D g);
+	public abstract void draw(Graphics2D g);
 	
     public abstract double getMusicalLength();
     

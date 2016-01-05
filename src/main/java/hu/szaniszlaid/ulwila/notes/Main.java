@@ -138,8 +138,17 @@ public class Main extends JFrame {
 		menu.add(btnSample);
 
 		setContentPane(scrollPanel);
-
-		ExportHelper.exportComponent(new QuarterNote(Octave.FIRST, Tone.E));
+		ArrayList<MusicComponent> components = new ArrayList<>();
+		components.add(new EighthNote(Octave.THIRD, Tone.D));
+		components.add(new EighthNote(Octave.THIRD, Tone.F));
+		components.add(new QuarterNote(Octave.THIRD, Tone.G));
+		components.add(new EighthNote(Octave.THIRD, Tone.A));
+		components.add(new EighthNote(Octave.THIRD, Tone.D));
+        components.add(new EighthNote(Octave.THIRD, Tone.F));
+        components.add(new QuarterNote(Octave.THIRD, Tone.G));
+        components.add(new EighthNote(Octave.THIRD, Tone.A));
+		
+		ExportHelper.exportComponents(components);
 	}
 
 
@@ -153,8 +162,6 @@ public class Main extends JFrame {
 		TimeSignature timeSignature = f.getTimesig();
 
 		List<MusicTrack> musicTracks = new ArrayList<>();
-
-		System.out.println("TimeSignature: " + timeSignature.getNumerator() + "/" + timeSignature.getDenominator());
 
 		for (MidiTrack midiTrack : tracks) {
 			musicTracks.add(new MusicTrack(midiTrack.getNotes(), timeSignature));

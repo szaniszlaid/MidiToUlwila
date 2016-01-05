@@ -8,56 +8,74 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.BreakType;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTable.XWPFBorderType;
 
 public class ExportHelper {
-	
-	public static void exportComponent(JComponent panel) {
-		BufferedImage bi = getImage(panel);
 
-		try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream("images.docx")) {
-			XWPFParagraph p = doc.createParagraph();
-			XWPFRun r = p.createRun();
+    public static void exportComponents(List<? extends JComponent> components) {
 
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream("images.docx")) {
 
-			ImageIO.write(bi, "png", os);
+           
+            
+           XWPFTable table =  doc.createTable(2, 8);
+           table.setInsideHBorder(XWPFBorderType.NIL, 0, 0, null);
+           table.setInsideVBorder(XWPFBorderType.NIL, 0, 0, null);
+           table.getCTTbl().getTblPr().unsetTblBorders();
+            
+           for(int i = 0; i<components.size(); i++) {
+                JComponent component = components.get(i);
+                BufferedImage bi = getImage(component);                
 
-			InputStream is = new ByteArrayInputStream(os.toByteArray());
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-			r.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "asdf", Units.toEMU(100), Units.toEMU(100));
+                ImageIO.write(bi, "png", os);
 
-			r.addBreak(BreakType.PAGE);
+                InputStream is = new ByteArrayInputStream(os.toByteArray());
+                
+                XWPFParagraph p = table.getRow(0).getCell(i).getParagraphs().get(0);
+                p.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun r = p.createRun();
 
-			doc.write(out);
-		} catch (IOException | InvalidFormatException e) {
-			// TODO handling, logging
-			e.printStackTrace();
-		}
+                r.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "id", Units.toEMU(component.getWidth() / 2), Units.toEMU(component.getHeight() / 2));   
 
-	}
-	
-	private static BufferedImage getImage(Component c) {
-		BufferedImage bi = null;
-		try {
-			bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
-			Graphics2D g2d = bi.createGraphics();
-			c.print(g2d);
-			g2d.dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		return bi;
-	}
+                table.getRow(1).getCell(i).setText("Egy kicsit hosszabb szöveg: " + i);
+                table.getRow(1).getCell(i).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+                
+            }
+
+            doc.write(out);
+        } catch (IOException | InvalidFormatException e) {
+            // TODO handling, logging
+            e.printStackTrace();
+        }
+
+    }
+
+    private static BufferedImage getImage(Component c) {
+        BufferedImage bi = null;
+        try {
+            bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = bi.createGraphics();
+            c.print(g2d);
+            g2d.dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return bi;
+    }
 
 }

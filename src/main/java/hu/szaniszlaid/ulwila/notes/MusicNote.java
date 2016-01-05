@@ -37,13 +37,12 @@ public abstract class MusicNote extends MusicComponent {
     }
 
     @Override
-    public Dimension draw(Graphics2D g) {
-        Dimension dimension = drawNote(g);
+    public void draw(Graphics2D g) {
+        drawNote(g);
         drawOctave(g);
-        return dimension;
     }
 
-    public abstract Dimension drawNote(Graphics2D g);
+    public abstract void drawNote(Graphics2D g);
 
     protected void drawOctave(Graphics2D g) {
         Color octaveColor = Color.BLACK;
