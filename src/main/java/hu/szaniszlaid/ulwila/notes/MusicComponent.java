@@ -93,6 +93,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		return "MusicComponent - length: " + getMusicalLength();
 	}
 
+
 	@Override
 	public void mouseReleased(MouseEvent me) {}
 	@Override
@@ -101,4 +102,32 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public void mouseEntered(MouseEvent me) {}
 	@Override
 	public void mouseExited(MouseEvent me) {}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(getMusicalLength());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof MusicComponent)) {
+			return false;
+		}
+		MusicComponent other = (MusicComponent) obj;
+		if (Double.doubleToLongBits(getMusicalLength()) != Double.doubleToLongBits(other.getMusicalLength())) {
+			return false;
+		}
+		return true;
+	}
 }

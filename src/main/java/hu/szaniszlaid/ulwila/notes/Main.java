@@ -121,6 +121,8 @@ public class Main extends JFrame {
 					UlwilaTrack ulwilaTrack = new UlwilaTrack(components, track.getTimeSignature());
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
+					
+					new ExportHelper().exportComponents(ulwilaTrack);
 
 				}
 			}
@@ -148,7 +150,7 @@ public class Main extends JFrame {
         components.add(new QuarterNote(Octave.THIRD, Tone.G));
         components.add(new EighthNote(Octave.THIRD, Tone.A));
 		
-		ExportHelper.exportComponents(components);
+		
 	}
 
 

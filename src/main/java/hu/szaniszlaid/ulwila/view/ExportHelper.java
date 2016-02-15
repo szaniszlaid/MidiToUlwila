@@ -9,8 +9,11 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -30,14 +33,17 @@ import org.w3c.dom.Element;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
-import hu.szaniszlaid.ulwila.notes.whole.EighthNote;
+import hu.szaniszlaid.ulwila.notes.MusicNote;
+import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 
 public class ExportHelper {
 
-	public static void exportComponents(UlwilaTrack ulwilaTrack) {
+	public void exportComponents(UlwilaTrack ulwilaTrack) {
 
 		try {
-
+			
+			writeComponenstToFileCollection(collectComponents(ulwilaTrack));
+			
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -59,35 +65,58 @@ public class ExportHelper {
 			Element body = doc.createElement("body");
 			html.appendChild(body);
 
-			// table elements
+			// külső table elements
 			Element table = doc.createElement("table");
 			body.appendChild(table);
 
 			for (UlwilaRow row : ulwilaTrack.getRows()) {
-//FIXME checkpoint
+				// egy sor amibe ütem táblázatok vannak vannak 
+				Element tr = doc.createElement("tr");
+				table.appendChild(tr);
+				
+				
+				for (UlwilaBar bar : row.getBars()) {			
+					
+					// egy elem amibe ütem táblázat van
+					Element barTableTd = doc.createElement("td");
+					tr.appendChild(barTableTd);
+					
+					//ütem táblázat
+					Element barTable = doc.createElement("table");
+					barTableTd.appendChild(barTable);	
+					
+					// hangjegyek sora
+					Element noteRow = doc.createElement("tr");
+					barTable.appendChild(noteRow);
+					
+					// szöveg sora
+					Element lyricsRow = doc.createElement("tr");
+					barTable.appendChild(lyricsRow);
+					
+					for (MusicComponent c : bar.getComponents()) {
+						// hangjegykép
+						Element noteElement = doc.createElement("td");
+						Element imageElement = doc.createElement("img");
+						imageElement.setAttribute("src", "pics/" + generateMusicComponentFileName(c));
+						noteElement.appendChild(imageElement);
+						//noteElement.appendChild(doc.createTextNode(Double.toString(c.getMusicalLength())));
+						noteRow.appendChild(noteElement);
+						
+						//lyrics
+						Element lyricsElement = doc.createElement("td");
+						lyricsElement.appendChild(doc.createTextNode(Double.toString(c.getMusicalLength()) + "szov"));
+						lyricsRow.appendChild(lyricsElement);						
+					}
+					
+
+				}
 			}
-			// tr elements
-			Element tr = doc.createElement("tr");
-			table.appendChild(tr);
-
-			// td elements
-			Element td1 = doc.createElement("td");
-			tr.appendChild(td1);
-
-			// td elements
-			Element table2 = doc.createElement("table");
-			td1.appendChild(table2);
-
-			// td2 elements
-			Element td2 = doc.createElement("td");
-			td2.appendChild(doc.createTextNode("jklé"));
-			tr.appendChild(td2);
 
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(new File("file.html"));
 
 			newXmlTransformer().transform(source, result);
-			writeComponentToFile(new EighthNote(Octave.FIRST, Tone.G));
+			//TODO writeComponentToFile(new EighthNote(Octave.FIRST, Tone.G));
 
 			System.out.println("File saved!");
 
@@ -96,6 +125,34 @@ public class ExportHelper {
 		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
 		}
+	}
+	
+	private Set<MusicComponent> collectComponents(UlwilaTrack ulwilaTrack) {
+		Set<MusicComponent> components = new HashSet<>();
+		for (UlwilaRow row : ulwilaTrack.getRows()) {
+			for (UlwilaBar bar : row.getBars()) {
+				for (MusicComponent c : bar.getComponents()) {
+					components.add(c);
+				}
+			}
+		}
+
+		return components;
+	}
+	
+	
+	protected String generateMusicComponentFileName(MusicComponent component) {
+		StringBuilder fileName = new StringBuilder();
+		fileName.append(Double.toString(component.getMusicalLength()));
+		fileName.append("_");
+		if (component instanceof MusicNote) {
+			MusicNote note = (MusicNote) component;
+			fileName.append(note.getTone());
+			fileName.append("_");
+			fileName.append(note.getOctave());
+		} 
+		fileName.append(".png");
+		return fileName.toString();
 	}
 
 	private static Transformer newXmlTransformer() {
@@ -133,7 +190,7 @@ public class ExportHelper {
 			g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 			c.print(g2d);
 			g2d.dispose();
-			bi = blurImage(bi);
+		//	bi = blurImage(bi);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -164,19 +221,17 @@ public class ExportHelper {
 		return op.filter(image, null);
 	}
 
-	private static boolean writeComponentToFile(MusicComponent c) {
-		BufferedImage img = getImage(c);
-		if (img == null) {
-			return false;
-		} else {
-			File output = new File("pics/asdf.png");
-			try {
-				ImageIO.write(img, "png", output);
-				return true;
-			} catch (IOException e) {
-				e.printStackTrace();
-				return false;
-			}
+	private void writeComponenstToFileCollection(Collection<MusicComponent> components) {
+		for (MusicComponent musicComponent : components) {
+			BufferedImage img = getImage(musicComponent);
+			if (img != null) { 
+				File output = new File("pics/" + generateMusicComponentFileName(musicComponent));
+				try {
+					ImageIO.write(img, "png", output);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}			
 		}
 	}
 
