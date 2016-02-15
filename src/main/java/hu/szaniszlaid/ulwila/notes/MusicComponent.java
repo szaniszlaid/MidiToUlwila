@@ -18,7 +18,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public static final int QUARTER_NOTE_HEIGHT = 100;
 
 	private static final int MARGIN = 6;
-	
+
 	public static final int MARGIN_LEFT = MARGIN / 2;
 	public static final int MARGIN_RIGHT = MARGIN / 2;
 	public static final int MARGIN_TOP = MARGIN / 2;
@@ -28,8 +28,8 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 
 	public MusicComponent() {
 		addFocusListener(this);
-        setFocusable(true);
-        addMouseListener(this);
+		setFocusable(true);
+		addMouseListener(this);
 	}
 
 	@Override
@@ -40,39 +40,39 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 
 	protected void paintComponent(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		draw(g);
 		setPreferredSize(getSize());
 		// if component is selected draw selection shape around
 		if (selected) {
-			g.setColor(new Color(255,157, 0 ,128));
+			g.setColor(new Color(255, 157, 0, 128));
 			g.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 15);
 		}
-		
+
 		invalidate();
 	}
 
 	public abstract void draw(Graphics2D g);
-	
-    public abstract double getMusicalLength();
-    
-    @Override
-    public abstract Dimension getSize();
-    
-    @Override
-    public int getWidth() {
-    	return getSize().width + MARGIN_LEFT + MARGIN_RIGHT;
-    }
-    
-    @Override
-    public int getHeight() {
-    	return getSize().height + MARGIN_TOP + MARGIN_BOTTOM;
-    }
-    	
-		
+
+	public abstract double getMusicalLength();
+
+	@Override
+	public abstract Dimension getSize();
+
+	@Override
+	public int getWidth() {
+		return getSize().width + MARGIN_LEFT + MARGIN_RIGHT;
+	}
+
+	@Override
+	public int getHeight() {
+		return getSize().height + MARGIN_TOP + MARGIN_BOTTOM;
+	}
+
+
 	@Override
 	public void mousePressed(MouseEvent me) {
-	    requestFocus();
+		requestFocus();
 	}
 
 
@@ -87,14 +87,18 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		selected = false;
 		repaint();
 	}
-	
+
 	@Override
 	public String toString() {
-	    return "MusicComponent - length: " + getMusicalLength();
+		return "MusicComponent - length: " + getMusicalLength();
 	}
-	
+
+	@Override
 	public void mouseReleased(MouseEvent me) {}
+	@Override
 	public void mouseClicked(MouseEvent me) {}
+	@Override
 	public void mouseEntered(MouseEvent me) {}
+	@Override
 	public void mouseExited(MouseEvent me) {}
 }

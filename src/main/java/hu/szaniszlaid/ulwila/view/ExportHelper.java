@@ -2,80 +2,182 @@ package hu.szaniszlaid.ulwila.view;
 
 import java.awt.Component;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTable.XWPFBorderType;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import hu.szaniszlaid.ulwila.note.util.Octave;
+import hu.szaniszlaid.ulwila.note.util.Tone;
+import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.whole.EighthNote;
 
 public class ExportHelper {
 
-    public static void exportComponents(List<? extends JComponent> components) {
+	public static void exportComponents(UlwilaTrack ulwilaTrack) {
 
-        try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream("images.docx")) {
+		try {
 
-           
-            
-           XWPFTable table =  doc.createTable(2, 8);
-           table.setInsideHBorder(XWPFBorderType.NIL, 0, 0, null);
-           table.setInsideVBorder(XWPFBorderType.NIL, 0, 0, null);
-           table.getCTTbl().getTblPr().unsetTblBorders();
-            
-           for(int i = 0; i<components.size(); i++) {
-                JComponent component = components.get(i);
-                BufferedImage bi = getImage(component);                
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
+			// html elements
+			Document doc = docBuilder.newDocument();
+			Element html = doc.createElement("html");
+			doc.appendChild(html);
 
-                ImageIO.write(bi, "png", os);
+			// head elements
+			Element head = doc.createElement("head");
+			html.appendChild(head);
 
-                InputStream is = new ByteArrayInputStream(os.toByteArray());
-                
-                XWPFParagraph p = table.getRow(0).getCell(i).getParagraphs().get(0);
-                p.setAlignment(ParagraphAlignment.CENTER);
-                XWPFRun r = p.createRun();
+			// style elements
+			Element style = doc.createElement("style");
+			style.setTextContent("table, th, td { border: 1px solid black; border-collapse: collapse;}");
+			head.appendChild(style);
 
-                r.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "id", Units.toEMU(component.getWidth() / 2), Units.toEMU(component.getHeight() / 2));   
+			// body elements
+			Element body = doc.createElement("body");
+			html.appendChild(body);
 
-                table.getRow(1).getCell(i).setText("Egy kicsit hosszabb szöveg: " + i);
-                table.getRow(1).getCell(i).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-                
-            }
+			// table elements
+			Element table = doc.createElement("table");
+			body.appendChild(table);
 
-            doc.write(out);
-        } catch (IOException | InvalidFormatException e) {
-            // TODO handling, logging
-            e.printStackTrace();
-        }
+			for (UlwilaRow row : ulwilaTrack.getRows()) {
+//FIXME checkpoint
+			}
+			// tr elements
+			Element tr = doc.createElement("tr");
+			table.appendChild(tr);
 
-    }
+			// td elements
+			Element td1 = doc.createElement("td");
+			tr.appendChild(td1);
 
-    private static BufferedImage getImage(Component c) {
-        BufferedImage bi = null;
-        try {
-            bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = bi.createGraphics();
-            c.print(g2d);
-            g2d.dispose();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return bi;
-    }
+			// td elements
+			Element table2 = doc.createElement("table");
+			td1.appendChild(table2);
+
+			// td2 elements
+			Element td2 = doc.createElement("td");
+			td2.appendChild(doc.createTextNode("jklé"));
+			tr.appendChild(td2);
+
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File("file.html"));
+
+			newXmlTransformer().transform(source, result);
+			writeComponentToFile(new EighthNote(Octave.FIRST, Tone.G));
+
+			System.out.println("File saved!");
+
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (TransformerException tfe) {
+			tfe.printStackTrace();
+		}
+	}
+
+	private static Transformer newXmlTransformer() {
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = null;
+
+		try {
+			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "8");
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+			transformer.setOutputProperty(OutputKeys.METHOD, "html");
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		}
+
+
+		return transformer;
+	}
+
+	private static BufferedImage getImage(Component c) {
+		BufferedImage bi = null;
+		try {
+			bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB); //TYPE_INT_ARGB TYPE_4BYTE_ABGR
+			Graphics2D g2d = bi.createGraphics();
+			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+			g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2d.setRenderingHint(RenderingHints.KEY_TEXT_LCD_CONTRAST, 100);
+			g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+			g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+			g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+			g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+			c.print(g2d);
+			g2d.dispose();
+			bi = blurImage(bi);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return bi;
+	}
+
+	//TODO write javadoc src=http://www.componenthouse.com/High-Quality-Image-Resize-with-Java-td21.html
+	public static BufferedImage blurImage(BufferedImage image) {
+		float ninth = 1.0f / 6.0f;
+		float[] blurKernel = {
+				ninth, ninth, ninth,
+				ninth, ninth, ninth,
+				ninth, ninth, ninth
+		};
+
+		Map<RenderingHints.Key, Object> map = new HashMap<>();
+
+		map.put(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+		map.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		map.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		RenderingHints hints = new RenderingHints(map);
+		BufferedImageOp op = new ConvolveOp(new Kernel(3, 3, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
+		return op.filter(image, null);
+	}
+
+	private static boolean writeComponentToFile(MusicComponent c) {
+		BufferedImage img = getImage(c);
+		if (img == null) {
+			return false;
+		} else {
+			File output = new File("pics/asdf.png");
+			try {
+				ImageIO.write(img, "png", output);
+				return true;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+	}
 
 }

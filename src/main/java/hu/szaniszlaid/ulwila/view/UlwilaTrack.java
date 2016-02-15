@@ -13,11 +13,11 @@ import hu.szaniszlaid.ulwila.notes.MusicComponent;
 public class UlwilaTrack {
 
 	private List<UlwilaRow> rows = new ArrayList<>();
-	
+
 	public void add(UlwilaRow row){
 		rows.add(row);
 	}
-	
+
 	public JPanel getPanel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new VerticalLayout());
@@ -27,34 +27,38 @@ public class UlwilaTrack {
 		}
 		return panel;
 	}
-	
+
 	public UlwilaTrack(List<MusicComponent> components, TimeSignature timesignature){
-        UlwilaRow lastRow = new UlwilaRow(timesignature);
-        UlwilaBar lastBar = new UlwilaBar(timesignature);
-        
-        lastRow.add(lastBar);
-        add(lastRow);
-        
-        for (int i = 0; i < components.size(); i++) {
-            MusicComponent musicComponent = components.get(i);
-            
-            if (lastBar.isNotFull()) {
-                lastBar.add(musicComponent);
-            } else {
-                lastBar = new UlwilaBar(timesignature);
-                lastBar.add(musicComponent);
-                if (lastRow.isNotFull()) {
-                    lastRow.add(lastBar);
-                } else {
-                    lastRow = new UlwilaRow(timesignature);
-                    lastRow.add(lastBar);
-                    add(lastRow);
-                }
-               
-            }
-            
-    
-        }
+		UlwilaRow lastRow = new UlwilaRow(timesignature);
+		UlwilaBar lastBar = new UlwilaBar(timesignature);
+
+		lastRow.add(lastBar);
+		add(lastRow);
+
+		for (int i = 0; i < components.size(); i++) {
+			MusicComponent musicComponent = components.get(i);
+
+			if (lastBar.isNotFull()) {
+				lastBar.add(musicComponent);
+			} else {
+				lastBar = new UlwilaBar(timesignature);
+				lastBar.add(musicComponent);
+				if (lastRow.isNotFull()) {
+					lastRow.add(lastBar);
+				} else {
+					lastRow = new UlwilaRow(timesignature);
+					lastRow.add(lastBar);
+					add(lastRow);
+				}
+
+			}
+
+
+		}
 	}
-	
+
+	public List<UlwilaRow> getRows() {
+		return rows;
+	}
+
 }
