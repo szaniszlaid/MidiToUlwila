@@ -30,11 +30,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import hu.szaniszlaid.ulwila.note.util.Octave;
-import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
-import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 
 public class ExportHelper {
 
@@ -56,9 +53,11 @@ public class ExportHelper {
 			Element head = doc.createElement("head");
 			html.appendChild(head);
 
-			// style elements
-			Element style = doc.createElement("style");
-			style.setTextContent("table, th, td { border: 1px solid black; border-collapse: collapse;}");
+			// link style elements
+			Element style = doc.createElement("link");
+			style.setAttribute("rel", "stylesheet");
+			style.setAttribute("type", "text/css");
+			style.setAttribute("href", "pics/style.css");
 			head.appendChild(style);
 
 			// body elements
@@ -97,14 +96,15 @@ public class ExportHelper {
 						// hangjegykép
 						Element noteElement = doc.createElement("td");
 						Element imageElement = doc.createElement("img");
+						imageElement.setAttribute("align", "center");
 						imageElement.setAttribute("src", "pics/" + generateMusicComponentFileName(c));
 						noteElement.appendChild(imageElement);
-						//noteElement.appendChild(doc.createTextNode(Double.toString(c.getMusicalLength())));
 						noteRow.appendChild(noteElement);
 						
 						//lyrics
 						Element lyricsElement = doc.createElement("td");
-						lyricsElement.appendChild(doc.createTextNode(Double.toString(c.getMusicalLength()) + "szov"));
+						lyricsElement.setAttribute("align", "center");
+						lyricsElement.appendChild(doc.createTextNode(Double.toString(c.getMusicalLength())));
 						lyricsRow.appendChild(lyricsElement);						
 					}
 					
