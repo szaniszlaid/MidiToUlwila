@@ -7,18 +7,21 @@ import hu.szaniszlaid.ulwila.notes.Components;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
 public class QuarterRest extends MusicComponent {
+	private int width = QUARTER_NOTE_WIDTH - QUARTER_NOTE_WIDTH / 10;
+	private int height = QUARTER_NOTE_HEIGHT;
 
     @Override
-    public Dimension draw(Graphics2D g) {
-        int width = QUARTER_NOTE_WIDTH - QUARTER_NOTE_WIDTH / 10;
-        int height = QUARTER_NOTE_HEIGHT;
+    public void draw(Graphics2D g) {
         g.drawPolygon(Components.getHexagon(MARGIN_LEFT, MARGIN_TOP, width, height));
-
-        return new Dimension(width, height);
     }
 
 	@Override
 	public double getMusicalLength() {
 		return (double) 1/4;
+	}
+
+	@Override
+	public Dimension getSize() {
+        return new Dimension(width, height);
 	}
 }

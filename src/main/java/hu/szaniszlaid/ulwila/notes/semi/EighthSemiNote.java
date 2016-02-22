@@ -22,7 +22,7 @@ public class EighthSemiNote extends EighthNote {
     }
 
     @Override
-    public Dimension drawNote(Graphics2D g) {
+    public void drawNote(Graphics2D g) {
 
         g.setColor(getRightColor());
         Arc2D left = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.CHORD);
@@ -33,8 +33,6 @@ public class EighthSemiNote extends EighthNote {
         g.setColor(Color.BLACK);
         Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.CHORD);
         g.draw(border);
-
-        return new Dimension(width / 2, height);
     }
 
     @Override

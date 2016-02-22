@@ -14,39 +14,39 @@ import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class EighthNote extends MusicNote {
 
-    int width = QUARTER_NOTE_WIDTH;
-    int heiht = QUARTER_NOTE_HEIGHT;
+	int width = QUARTER_NOTE_WIDTH;
+	int heiht = QUARTER_NOTE_HEIGHT;
 
-    public EighthNote(Octave octave, Tone tone) {
-        super(octave, tone);
-    }
+	public EighthNote(Octave octave, Tone tone) {
+		super(octave, tone);
+	}
 
-    @Override
-    public void drawNote(Graphics2D g) {
-        g.setColor(getColor());
-        Arc2D quarter = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.OPEN);
-        g.fill(quarter);
-        g.setColor(Color.BLACK);
-        Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.CHORD);
-        g.draw(border);
-    }
+	@Override
+	public void drawNote(Graphics2D g) {
+		g.setColor(getColor());
+		Arc2D quarter = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.OPEN);
+		g.fill(quarter);
+		g.setColor(Color.BLACK);
+		Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.CHORD);
+		g.draw(border);
+	}
 
-    @Override
-    public List<Shape> getOctaveShapes() {
-        int x = width / 2 - width / 10 + MARGIN_LEFT;
-        int y = heiht / 2 - heiht / 10 + MARGIN_TOP;
-        List<Shape> octaveShapes = new ArrayList<>();
-        octaveShapes.add(new Arc2D.Double(x, y, width / 5, heiht / 5, 90, 180, Arc2D.OPEN));
-        return octaveShapes;
-    }
+	@Override
+	public List<Shape> getOctaveShapes() {
+		int x = width / 2 - width / 10 + MARGIN_LEFT;
+		int y = heiht / 2 - heiht / 10 + MARGIN_TOP;
+		List<Shape> octaveShapes = new ArrayList<>();
+		octaveShapes.add(new Arc2D.Double(x, y, width / 5, heiht / 5, 90, 180, Arc2D.OPEN));
+		return octaveShapes;
+	}
 
 	@Override
 	public double getMusicalLength() {
-		return (double) 1/8;
+		return (double) 1 / 8;
 	}
 
-    @Override
-    public Dimension getSize() {
-        return new Dimension(width / 2, heiht);
-    }
+	@Override
+	public Dimension getSize() {
+		return new Dimension(width / 2, heiht);
+	}
 }

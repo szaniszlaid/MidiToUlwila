@@ -32,7 +32,6 @@ public class QuarterNote extends MusicNote {
             g.setColor(Color.WHITE);
             Arc2D whiteCircle = new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 1.5, QUARTER_NOTE_HEIGHT / 1.5, 0, 360, Arc2D.CHORD);
             g.fill(whiteCircle);
-
         }
 
     }

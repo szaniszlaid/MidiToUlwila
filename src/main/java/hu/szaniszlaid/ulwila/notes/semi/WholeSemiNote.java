@@ -22,8 +22,8 @@ public class WholeSemiNote extends WholeNote {
 	}
 
 	@Override
-	public Dimension drawNote(Graphics2D g) {
-		
+	public void drawNote(Graphics2D g) {
+
 		// Fourth quearter
 		g.setColor(getLeftColor());
 		Arc2D frthQuarterLeft = new Arc2D.Double(getNthOffset(3), 0, width, height, 90, 180, Arc2D.OPEN);
@@ -37,7 +37,7 @@ public class WholeSemiNote extends WholeNote {
 		g.setColor(Color.BLACK);
 		Arc2D frthQuarterRightBorder = new Arc2D.Double(getNthOffset(3), 0, width, height, 90, -180, Arc2D.CHORD);
 		g.draw(frthQuarterRightBorder);
-		
+
 		// Third quearter
 		g.setColor(getLeftColor());
 		Arc2D thrdQuarterLeft = new Arc2D.Double(getNthOffset(2), 0, width, height, 90, 180, Arc2D.OPEN);
@@ -79,8 +79,6 @@ public class WholeSemiNote extends WholeNote {
 		g.setColor(Color.BLACK);
 		Arc2D quarterRightBorder = new Arc2D.Double(0, 0, width, height, 90, -180, Arc2D.CHORD);
 		g.draw(quarterRightBorder);
-
-		return new Dimension(width + getNthOffset(3), height);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class QuarterSemiNote extends QuarterNote {
     }
 
     @Override
-    public Dimension drawNote(Graphics2D g) {
+    public void drawNote(Graphics2D g) {
 
         g.setColor(getLeftColor());
         Arc2D quarterLeft = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.OPEN);
@@ -36,8 +36,6 @@ public class QuarterSemiNote extends QuarterNote {
         g.setColor(Color.BLACK);
         Arc2D quarterRightBorder = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, -180, Arc2D.CHORD);
         g.draw(quarterRightBorder);
-
-        return new Dimension(width, height);
     }
 
     @Override

@@ -14,8 +14,8 @@ import javax.swing.JComponent;
 
 public abstract class MusicComponent extends JComponent implements FocusListener, MouseListener {
 
-	public static final int QUARTER_NOTE_WIDTH = 60;
-	public static final int QUARTER_NOTE_HEIGHT = 60;
+	public static final int QUARTER_NOTE_WIDTH = 100;
+	public static final int QUARTER_NOTE_HEIGHT = 100;
 
 	private static final int MARGIN = 6;
 
@@ -42,14 +42,13 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		draw(g);
-		setPreferredSize(getSize());
+		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		System.out.println(getPreferredSize());
 		// if component is selected draw selection shape around
 		if (selected) {
 			g.setColor(new Color(255, 157, 0, 128));
-			g.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 15);
+			g.fillRoundRect(MARGIN_LEFT / 2, MARGIN_TOP / 2, getWidth(), getHeight(), 20, 15);
 		}
-
-		invalidate();
 	}
 
 	public abstract void draw(Graphics2D g);
@@ -69,12 +68,10 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		return getSize().height + MARGIN_TOP + MARGIN_BOTTOM;
 	}
 
-
 	@Override
 	public void mousePressed(MouseEvent me) {
 		requestFocus();
 	}
-
 
 	@Override
 	public void focusGained(FocusEvent e) {
@@ -93,15 +90,21 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		return "MusicComponent - length: " + getMusicalLength();
 	}
 
+	@Override
+	public void mouseReleased(MouseEvent me) {
+	}
 
 	@Override
-	public void mouseReleased(MouseEvent me) {}
+	public void mouseClicked(MouseEvent me) {
+	}
+
 	@Override
-	public void mouseClicked(MouseEvent me) {}
+	public void mouseEntered(MouseEvent me) {
+	}
+
 	@Override
-	public void mouseEntered(MouseEvent me) {}
-	@Override
-	public void mouseExited(MouseEvent me) {}
+	public void mouseExited(MouseEvent me) {
+	}
 
 	@Override
 	public int hashCode() {
