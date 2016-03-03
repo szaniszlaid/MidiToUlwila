@@ -14,7 +14,7 @@
 
 package hu.szaniszlaid.ulwila.midi;
 
-import java.util.*;
+import java.util.ArrayList;
 
 
 

@@ -12,7 +12,7 @@
 
 package hu.szaniszlaid.ulwila.midi;
 
-import java.io.*;
+import java.io.Serializable;
 
 import hu.szaniszlaid.ulwila.notes.NoteDuration;
 

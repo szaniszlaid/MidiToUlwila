@@ -1,52 +1,31 @@
-package hu.szaniszlaid.ulwila.notes;
+package hu.szaniszlaid.ulwila.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.BreakType;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
+import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.UlwilaComponent;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
@@ -62,9 +41,6 @@ import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
-import hu.szaniszlaid.ulwila.view.ExportHelper;
-import hu.szaniszlaid.ulwila.view.MusicTrack;
-import hu.szaniszlaid.ulwila.view.UlwilaTrack;
 
 public class Main extends JFrame {
 
@@ -107,6 +83,7 @@ public class Main extends JFrame {
 
 		JButton btnOpenFile = new JButton("Uzsgyi");
 		btnOpenFile.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
 				int returnValue = fileChooser.showOpenDialog(null);
@@ -117,11 +94,16 @@ public class Main extends JFrame {
 					// TODO modify this to list (remove get(0))
 					MusicTrack track = getMusicTrack(new File(selectedFile.getPath())).get(0);
 					List<MusicComponent> components = track.getComponents();
+					List<UlwilaComponent> ulwilaComponents = new ArrayList<>();
 
-					UlwilaTrack ulwilaTrack = new UlwilaTrack(components, track.getTimeSignature());
+					for (MusicComponent component : components) { //FIXME remove sample asd
+						ulwilaComponents.add(new UlwilaComponent(component, "asd"));
+					}
+
+					UlwilaTrack ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
-					
+
 					new ExportHelper().exportComponents(ulwilaTrack);
 
 				}
@@ -132,6 +114,7 @@ public class Main extends JFrame {
 
 		JButton btnSample = new JButton("Sample");
 		btnSample.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent ae) {
 				scrollPanel.setViewportView(getNotesPanelFromMap(getTestNotes()));
 			}
@@ -140,17 +123,6 @@ public class Main extends JFrame {
 		menu.add(btnSample);
 
 		setContentPane(scrollPanel);
-		ArrayList<MusicComponent> components = new ArrayList<>();
-		components.add(new EighthNote(Octave.THIRD, Tone.D));
-		components.add(new EighthNote(Octave.THIRD, Tone.F));
-		components.add(new QuarterNote(Octave.THIRD, Tone.G));
-		components.add(new EighthNote(Octave.THIRD, Tone.A));
-		components.add(new EighthNote(Octave.THIRD, Tone.D));
-        components.add(new EighthNote(Octave.THIRD, Tone.F));
-        components.add(new QuarterNote(Octave.THIRD, Tone.G));
-        components.add(new EighthNote(Octave.THIRD, Tone.A));
-		
-		
 	}
 
 
@@ -174,6 +146,7 @@ public class Main extends JFrame {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Main frame = new Main();

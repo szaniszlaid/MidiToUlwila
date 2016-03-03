@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import org.jdesktop.swingx.VerticalLayout;
 
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
-import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.UlwilaComponent;
 
 public class UlwilaTrack {
 
@@ -28,21 +28,20 @@ public class UlwilaTrack {
 		return panel;
 	}
 
-	public UlwilaTrack(List<MusicComponent> components, TimeSignature timesignature){
+	public UlwilaTrack(List<UlwilaComponent> components, TimeSignature timesignature) {
 		UlwilaRow lastRow = new UlwilaRow(timesignature);
 		UlwilaBar lastBar = new UlwilaBar(timesignature);
 
 		lastRow.add(lastBar);
 		add(lastRow);
 
-		for (int i = 0; i < components.size(); i++) {
-			MusicComponent musicComponent = components.get(i);
+		for (UlwilaComponent ulwilaComponent : components) {
 
 			if (lastBar.isNotFull()) {
-				lastBar.add(musicComponent);
+				lastBar.add(ulwilaComponent);
 			} else {
 				lastBar = new UlwilaBar(timesignature);
-				lastBar.add(musicComponent);
+				lastBar.add(ulwilaComponent);
 				if (lastRow.isNotFull()) {
 					lastRow.add(lastBar);
 				} else {

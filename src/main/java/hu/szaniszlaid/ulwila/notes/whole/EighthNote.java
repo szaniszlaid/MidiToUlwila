@@ -14,8 +14,8 @@ import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class EighthNote extends MusicNote {
 
-	int width = QUARTER_NOTE_WIDTH;
-	int heiht = QUARTER_NOTE_HEIGHT;
+	private static int width = QUARTER_NOTE_WIDTH;
+	private static int height = QUARTER_NOTE_HEIGHT;
 
 	public EighthNote(Octave octave, Tone tone) {
 		super(octave, tone);
@@ -24,19 +24,19 @@ public class EighthNote extends MusicNote {
 	@Override
 	public void drawNote(Graphics2D g) {
 		g.setColor(getColor());
-		Arc2D quarter = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.OPEN);
+		Arc2D quarter = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.OPEN);
 		g.fill(quarter);
 		g.setColor(Color.BLACK);
-		Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, heiht, 90, 180, Arc2D.CHORD);
+		Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.CHORD);
 		g.draw(border);
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
 		int x = width / 2 - width / 10 + MARGIN_LEFT;
-		int y = heiht / 2 - heiht / 10 + MARGIN_TOP;
+		int y = height / 2 - height / 10 + MARGIN_TOP;
 		List<Shape> octaveShapes = new ArrayList<>();
-		octaveShapes.add(new Arc2D.Double(x, y, width / 5, heiht / 5, 90, 180, Arc2D.OPEN));
+		octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 90, 180, Arc2D.OPEN));
 		return octaveShapes;
 	}
 
@@ -47,6 +47,6 @@ public class EighthNote extends MusicNote {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension(width / 2, heiht);
+		return new Dimension(width / 2, height);
 	}
 }

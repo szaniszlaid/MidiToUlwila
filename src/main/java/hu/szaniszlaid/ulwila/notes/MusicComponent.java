@@ -30,6 +30,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		addFocusListener(this);
 		setFocusable(true);
 		addMouseListener(this);
+		setPreferredSize(new Dimension(getWidth(), getHeight()));
 	}
 
 	@Override
@@ -42,8 +43,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		draw(g);
-		setPreferredSize(new Dimension(getWidth(), getHeight()));
-		System.out.println(getPreferredSize());
+
 		// if component is selected draw selection shape around
 		if (selected) {
 			g.setColor(new Color(255, 157, 0, 128));

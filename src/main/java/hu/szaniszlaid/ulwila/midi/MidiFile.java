@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 public class MidiFile {
 
-	
-	private String filename;
-	/** The Midi file name */
+
 	private ArrayList<ArrayList<MidiEvent>> allevents;
 	/** The raw MidiEvents, one list per track */
 	private ArrayList<MidiTrack> tracks;
@@ -50,41 +48,42 @@ public class MidiFile {
 	public static final byte MetaEventSMPTEOffset = (byte) 0x54;
 	public static final byte MetaEventTimeSignature = (byte) 0x58;
 	public static final byte MetaEventKeySignature = (byte) 0x59;
-	
-    /** Create a new MidiFile from the byte[] */
-    public MidiFile(byte[] rawdata, String filename) {
-        this.filename = filename;
-        parse(rawdata);
-    }
-    
-    /** Create a new MidiFile from the byte[] */
-    public MidiFile(File file) {
-        this(readFile(file), file.getName());
-    }
-    
-    private static byte[] readFile(File file) {
-        byte[] data = null;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file.getCanonicalPath());
 
-            data = new byte[(int) file.length()];
-            int offset = 0;
-            int len = (int) file.length();
-            while (true) {
-                if (offset == len)
-                    break;
-                int n = fileInputStream.read(data, offset, len - offset);
-                if (n <= 0)
-                    break;
-                offset += n;
-            }
-            fileInputStream.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+	/** Create a new MidiFile from the byte[] */
+	public MidiFile(byte[] rawdata, String filename) {
+		parse(rawdata);
+	}
 
-        return data;
-    }
+	/** Create a new MidiFile from the byte[] */
+	public MidiFile(File file) {
+		this(readFile(file), file.getName());
+	}
+
+	private static byte[] readFile(File file) {
+		byte[] data = null;
+		try {
+			FileInputStream fileInputStream = new FileInputStream(file.getCanonicalPath());
+
+			data = new byte[(int) file.length()];
+			int offset = 0;
+			int len = (int) file.length();
+			while (true) {
+				if (offset == len) {
+					break;
+				}
+				int n = fileInputStream.read(data, offset, len - offset);
+				if (n <= 0) {
+					break;
+				}
+				offset += n;
+			}
+			fileInputStream.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return data;
+	}
 
 	/**
 	 * Parse the given Midi file, and return an instance of this MidiFile class. After reading the midi file, this object will contain: - The raw list of midi events - The Time
@@ -264,7 +263,7 @@ public class MidiFile {
 					if (mevent.Metalength < 2) {
 						throw new MidiFileException("Meta Event Time Signature len == " + mevent.Metalength + " != 4", file.GetOffset());
 					} else {
-						mevent.Numerator = ((byte) mevent.Value[0]);
+						mevent.Numerator = (mevent.Value[0]);
 						mevent.Denominator = ((byte) Math.pow(2, mevent.Value[1]));
 					}
 				} else if (mevent.Metaevent == MetaEventTempo) {
@@ -337,23 +336,23 @@ public class MidiFile {
 //				}
 //			}
 //		}
-		return result;	
+		return result;
 	}
-	
-    /** Check that the MidiNote start times are in increasing order.
-     * This is for debugging purposes.
-     */
-    private static void CheckStartTimes(ArrayList<MidiTrack> tracks) {
-        for (MidiTrack track : tracks) {
-            int prevtime = -1;
-            for (MidiNote note : track.getNotes()) {
-                if (note.getStartTime() < prevtime) {
-                    throw new MidiFileException("Internal parsing error", 0);
-                }
-                prevtime = note.getStartTime();
-            }
-        }
-    }
+
+	/** Check that the MidiNote start times are in increasing order.
+	 * This is for debugging purposes.
+	 */
+	private static void CheckStartTimes(ArrayList<MidiTrack> tracks) {
+		for (MidiTrack track : tracks) {
+			int prevtime = -1;
+			for (MidiNote note : track.getNotes()) {
+				if (note.getStartTime() < prevtime) {
+					throw new MidiFileException("Internal parsing error", 0);
+				}
+				prevtime = note.getStartTime();
+			}
+		}
+	}
 
 	public TimeSignature getTimesig() {
 		return timesig;
@@ -362,7 +361,7 @@ public class MidiFile {
 	public void setTimesig(TimeSignature timesig) {
 		this.timesig = timesig;
 	}
-	
-    /** Get the list of tracks */
-    public ArrayList<MidiTrack> getTracks() { return tracks; }
+
+	/** Get the list of tracks */
+	public ArrayList<MidiTrack> getTracks() { return tracks; }
 }

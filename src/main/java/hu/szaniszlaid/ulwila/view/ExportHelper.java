@@ -32,15 +32,16 @@ import org.w3c.dom.Element;
 
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
+import hu.szaniszlaid.ulwila.notes.UlwilaComponent;
 
 public class ExportHelper {
 
 	public void exportComponents(UlwilaTrack ulwilaTrack) {
 
 		try {
-			
+
 			writeComponenstToFileCollection(collectComponents(ulwilaTrack));
-			
+
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -69,45 +70,45 @@ public class ExportHelper {
 			body.appendChild(table);
 
 			for (UlwilaRow row : ulwilaTrack.getRows()) {
-				// egy sor amibe ütem táblázatok vannak vannak 
+				// egy sor amibe ütem táblázatok vannak vannak
 				Element tr = doc.createElement("tr");
 				table.appendChild(tr);
-				
-				
-				for (UlwilaBar bar : row.getBars()) {			
-					
+
+				for (UlwilaBar bar : row.getBars()) {
+
 					// egy elem amibe ütem táblázat van
 					Element barTableTd = doc.createElement("td");
 					tr.appendChild(barTableTd);
-					
+
 					//ütem táblázat
 					Element barTable = doc.createElement("table");
-					barTableTd.appendChild(barTable);	
-					
+					barTableTd.appendChild(barTable);
+
 					// hangjegyek sora
 					Element noteRow = doc.createElement("tr");
 					barTable.appendChild(noteRow);
-					
+
 					// szöveg sora
 					Element lyricsRow = doc.createElement("tr");
 					barTable.appendChild(lyricsRow);
-					
-					for (MusicComponent c : bar.getComponents()) {
+
+					for (UlwilaComponent c : bar.getComponents()) {
 						// hangjegykép
 						Element noteElement = doc.createElement("td");
 						Element imageElement = doc.createElement("img");
 						imageElement.setAttribute("align", "center");
-						imageElement.setAttribute("src", "pics/" + generateMusicComponentFileName(c));
+						imageElement.setAttribute("src", "pics/" + generateMusicComponentFileName(c.getMusicComponent()));
 						noteElement.appendChild(imageElement);
 						noteRow.appendChild(noteElement);
-						
+
 						//lyrics
 						Element lyricsElement = doc.createElement("td");
 						lyricsElement.setAttribute("align", "center");
-						lyricsElement.appendChild(doc.createTextNode(Double.toString(c.getMusicalLength())));
-						lyricsRow.appendChild(lyricsElement);						
+						if (c.getLyrics() != null) {
+							lyricsElement.appendChild(doc.createTextNode(c.getLyrics()));
+						}
+						lyricsRow.appendChild(lyricsElement);
 					}
-					
 
 				}
 			}
@@ -116,7 +117,6 @@ public class ExportHelper {
 			StreamResult result = new StreamResult(new File("file.html"));
 
 			newXmlTransformer().transform(source, result);
-			//TODO writeComponentToFile(new EighthNote(Octave.FIRST, Tone.G));
 
 			System.out.println("File saved!");
 
@@ -126,21 +126,20 @@ public class ExportHelper {
 			tfe.printStackTrace();
 		}
 	}
-	
+
 	private Set<MusicComponent> collectComponents(UlwilaTrack ulwilaTrack) {
 		Set<MusicComponent> components = new HashSet<>();
 		for (UlwilaRow row : ulwilaTrack.getRows()) {
 			for (UlwilaBar bar : row.getBars()) {
-				for (MusicComponent c : bar.getComponents()) {
-					components.add(c);
+				for (UlwilaComponent c : bar.getComponents()) {
+					components.add(c.getMusicComponent());
 				}
 			}
 		}
 
 		return components;
 	}
-	
-	
+
 	protected String generateMusicComponentFileName(MusicComponent component) {
 		StringBuilder fileName = new StringBuilder();
 		fileName.append(Double.toString(component.getMusicalLength()));
@@ -150,7 +149,7 @@ public class ExportHelper {
 			fileName.append(note.getTone());
 			fileName.append("_");
 			fileName.append(note.getOctave());
-		} 
+		}
 		fileName.append(".png");
 		return fileName.toString();
 	}
@@ -169,7 +168,6 @@ public class ExportHelper {
 		} catch (TransformerConfigurationException e) {
 			e.printStackTrace();
 		}
-
 
 		return transformer;
 	}
@@ -190,7 +188,7 @@ public class ExportHelper {
 			g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 			c.print(g2d);
 			g2d.dispose();
-		//	bi = blurImage(bi);
+			//	bi = blurImage(bi);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -224,14 +222,14 @@ public class ExportHelper {
 	private void writeComponenstToFileCollection(Collection<MusicComponent> components) {
 		for (MusicComponent musicComponent : components) {
 			BufferedImage img = getImage(musicComponent);
-			if (img != null) { 
+			if (img != null) {
 				File output = new File("pics/" + generateMusicComponentFileName(musicComponent));
 				try {
 					ImageIO.write(img, "png", output);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}			
+			}
 		}
 	}
 
