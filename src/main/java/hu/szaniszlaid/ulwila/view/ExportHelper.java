@@ -32,7 +32,6 @@ import org.w3c.dom.Element;
 
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
-import hu.szaniszlaid.ulwila.notes.UlwilaComponent;
 
 public class ExportHelper {
 

@@ -158,45 +158,4 @@ public abstract class MusicNote extends MusicComponent {
     public String toString() {
         return super.toString() + " | Octave: " + octave.name() + "   Tone: " + tone.name();
     }
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		long temp;
-		temp = Double.doubleToLongBits(getMusicalLength());
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((octave == null) ? 0 : octave.hashCode());
-		result = prime * result + ((tone == null) ? 0 : tone.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (!(obj instanceof MusicNote)) {
-			return false;
-		}
-		MusicNote other = (MusicNote) obj;
-		if (Double.doubleToLongBits(getMusicalLength()) != Double.doubleToLongBits(other.getMusicalLength())) {
-			return false;
-		}
-		if (octave != other.octave) {
-			return false;
-		}
-		if (tone != other.tone) {
-			return false;
-		}
-		return true;
-	}
-    
-
-
 }

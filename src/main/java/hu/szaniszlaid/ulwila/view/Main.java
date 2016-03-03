@@ -25,7 +25,6 @@ import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
-import hu.szaniszlaid.ulwila.notes.UlwilaComponent;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
@@ -64,7 +63,7 @@ public class Main extends JFrame {
 	private void initComponents() {
 
 		// Set sizes of root frame
-		setSize(800, 500);
+		setSize(1000, 500);
 
 		setLocationRelativeTo(null);
 
@@ -72,11 +71,12 @@ public class Main extends JFrame {
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
-
 		// set scroll speed TODO properties file
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(24);
 
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
+
+		JButton btnExport = new JButton("Export");
 
 		JPanel ulwilaSheet = new JPanel();
 		ulwilaSheet.setLayout(new BoxLayout(ulwilaSheet, BoxLayout.Y_AXIS));
@@ -96,7 +96,7 @@ public class Main extends JFrame {
 					List<MusicComponent> components = track.getComponents();
 					List<UlwilaComponent> ulwilaComponents = new ArrayList<>();
 
-					for (MusicComponent component : components) { //FIXME remove sample asd
+					for (MusicComponent component : components) { // FIXME remove sample asd
 						ulwilaComponents.add(new UlwilaComponent(component, "asd"));
 					}
 
@@ -104,13 +104,20 @@ public class Main extends JFrame {
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
 
-					new ExportHelper().exportComponents(ulwilaTrack);
+					// Export button onClick
+					btnExport.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent ae) {
+							new ExportHelper().exportComponents(ulwilaTrack);
+						}
+					});
 
 				}
 			}
 		});
 
 		menu.add(btnOpenFile);
+		menu.add(btnExport);
 
 		JButton btnSample = new JButton("Sample");
 		btnSample.addActionListener(new ActionListener() {
@@ -124,10 +131,6 @@ public class Main extends JFrame {
 
 		setContentPane(scrollPanel);
 	}
-
-
-
-
 
 	private static List<MusicTrack> getMusicTrack(File file) {
 

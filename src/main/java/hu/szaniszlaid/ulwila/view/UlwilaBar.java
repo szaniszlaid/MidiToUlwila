@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
-import hu.szaniszlaid.ulwila.notes.UlwilaComponent;
 
 public class UlwilaBar{
 	private float notesLength = 0;
