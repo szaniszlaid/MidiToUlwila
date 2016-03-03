@@ -1,7 +1,6 @@
 package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.util.List;
@@ -12,7 +11,7 @@ import hu.szaniszlaid.ulwila.note.util.Tone;
 public abstract class MusicNote extends MusicComponent {
 
     private Octave octave;
-    private Tone tone;
+	private Tone tone;
 
     public final int offsetX = QUARTER_NOTE_WIDTH / 3 * 2;
 
@@ -37,13 +36,12 @@ public abstract class MusicNote extends MusicComponent {
     }
 
     @Override
-    public Dimension draw(Graphics2D g) {
-        Dimension dimension = drawNote(g);
+    public void draw(Graphics2D g) {
+        drawNote(g);
         drawOctave(g);
-        return dimension;
     }
 
-    public abstract Dimension drawNote(Graphics2D g);
+    public abstract void drawNote(Graphics2D g);
 
     protected void drawOctave(Graphics2D g) {
         Color octaveColor = Color.BLACK;
@@ -160,5 +158,45 @@ public abstract class MusicNote extends MusicComponent {
     public String toString() {
         return super.toString() + " | Octave: " + octave.name() + "   Tone: " + tone.name();
     }
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		long temp;
+		temp = Double.doubleToLongBits(getMusicalLength());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((octave == null) ? 0 : octave.hashCode());
+		result = prime * result + ((tone == null) ? 0 : tone.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (!(obj instanceof MusicNote)) {
+			return false;
+		}
+		MusicNote other = (MusicNote) obj;
+		if (Double.doubleToLongBits(getMusicalLength()) != Double.doubleToLongBits(other.getMusicalLength())) {
+			return false;
+		}
+		if (octave != other.octave) {
+			return false;
+		}
+		if (tone != other.tone) {
+			return false;
+		}
+		return true;
+	}
+    
+
 
 }

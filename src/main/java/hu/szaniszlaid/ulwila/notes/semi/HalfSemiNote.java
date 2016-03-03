@@ -1,7 +1,6 @@
 package hu.szaniszlaid.ulwila.notes.semi;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
@@ -22,7 +21,7 @@ public class HalfSemiNote extends HalfNote {
     }
 
     @Override
-    public Dimension drawNote(Graphics2D g) {
+    public void drawNote(Graphics2D g) {
     	
         //Second quarter
         g.setColor(getLeftColor());
@@ -51,9 +50,7 @@ public class HalfSemiNote extends HalfNote {
         g.setColor(Color.BLACK);
         Arc2D quarterRightBorder = new Arc2D.Double( MARGIN_LEFT, MARGIN_TOP, width, height, 90, -180, Arc2D.CHORD);
         g.draw(quarterRightBorder);
-        
 
-		return new Dimension(width + getNthOffset(1), height);
     }
 
     @Override

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.szaniszlaid.ulwila.midi.MidiNote;
+import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.NoteDuration;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;

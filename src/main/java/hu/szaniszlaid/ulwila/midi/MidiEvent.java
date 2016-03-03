@@ -13,7 +13,7 @@
 
 package hu.szaniszlaid.ulwila.midi;
 
-import java.util.*;
+import java.util.Comparator;
 
 /** @class MidiEvent
  * A MidiEvent represents a single event (such as EventNoteOn) in the

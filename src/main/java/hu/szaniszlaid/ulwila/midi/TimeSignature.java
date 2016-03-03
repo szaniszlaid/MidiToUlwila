@@ -10,11 +10,11 @@
  *  GNU General Public License for more details.
  */
 
-package hu.szaniszlaid.ulwila.view;
+package hu.szaniszlaid.ulwila.midi;
 
-import java.io.*;
+import java.io.Serializable;
 
-import hu.szaniszlaid.ulwila.midi.MidiFileException;
+import hu.szaniszlaid.ulwila.notes.NoteDuration;
 
 /** @class TimeSignature
  * The TimeSignature class represents
@@ -121,20 +121,6 @@ public class TimeSignature implements Serializable {
             return NoteDuration.ThirtySecond;
     }
 
-    /** Convert a note duration into a stem duration.  Dotted durations
-     * are converted into their non-dotted equivalents.
-     */
-    //TODO ez tényleg szár hossz? akkor nekem nem is kell
-    public static NoteDuration GetStemDuration(NoteDuration dur) {
-        if (dur == NoteDuration.DottedHalf)
-            return NoteDuration.Half;
-        else if (dur == NoteDuration.DottedQuarter)
-            return NoteDuration.Quarter;
-        else if (dur == NoteDuration.DottedEighth)
-            return NoteDuration.Eighth;
-        else
-            return dur;
-    }
 
     /** Return the time period (in pulses) the the given duration spans */
     public int DurationToTime(NoteDuration dur) {

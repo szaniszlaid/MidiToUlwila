@@ -22,7 +22,7 @@ public class HalfNote extends MusicNote {
 	}
 
 	@Override
-	public Dimension drawNote(Graphics2D g) {
+	public void drawNote(Graphics2D g) {
 		g.setColor(getColor());
 		g.fillOval(offsetX + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
 		g.setColor(Color.BLACK);
@@ -32,7 +32,6 @@ public class HalfNote extends MusicNote {
 		g.setColor(Color.BLACK);
 		g.drawOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
 
-		return new Dimension(width + offsetX, height);
 	}
 
 	@Override
@@ -50,5 +49,10 @@ public class HalfNote extends MusicNote {
 	@Override
 	public double getMusicalLength() {
 		return (double) 1/2;
+	}
+
+	@Override
+	public Dimension getSize() {
+		return new Dimension(width + offsetX, height);
 	}
 }

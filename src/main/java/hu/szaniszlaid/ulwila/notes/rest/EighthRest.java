@@ -8,16 +8,20 @@ import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
 public class EighthRest extends MusicComponent {
 
-    @Override
-    public Dimension draw(Graphics2D g) {
-        int width = QUARTER_NOTE_WIDTH - (QUARTER_NOTE_HEIGHT / 10);
-        g.drawPolygon(Components.getHalfHexagon(MARGIN_LEFT, MARGIN_TOP, width, QUARTER_NOTE_HEIGHT));
+	private int width = QUARTER_NOTE_WIDTH - (QUARTER_NOTE_HEIGHT / 10);
 
-        return new Dimension(width / 2, QUARTER_NOTE_HEIGHT);
-    }
+	@Override
+	public void draw(Graphics2D g) {
+		g.drawPolygon(Components.getHalfHexagon(MARGIN_LEFT, MARGIN_TOP, width, QUARTER_NOTE_HEIGHT));
+	}
 
 	@Override
 	public double getMusicalLength() {
-		return (double) 1/8;
+		return (double) 1 / 8;
+	}
+
+	@Override
+	public Dimension getSize() {
+		return new Dimension(width / 2, QUARTER_NOTE_HEIGHT);
 	}
 }

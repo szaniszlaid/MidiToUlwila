@@ -1,4 +1,4 @@
-package hu.szaniszlaid.ulwila.notes;
+package hu.szaniszlaid.ulwila.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -21,8 +21,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
+import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.note.util.Octave;
 import hu.szaniszlaid.ulwila.note.util.Tone;
+import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.UlwilaComponent;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
@@ -38,27 +41,25 @@ import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
-import hu.szaniszlaid.ulwila.view.MusicTrack;
-import hu.szaniszlaid.ulwila.view.TimeSignature;
-import hu.szaniszlaid.ulwila.view.UlwilaTrack;
 
 public class Main extends JFrame {
 
 	private JPanel mainPanel = new JPanel();
 	private JScrollPane scrollPanel;
-	
-   public Main() {
-        // set LookAndFeel to system default
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();        }
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public Main() {
+		// set LookAndFeel to system default
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 
-        initComponents();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    }
+		initComponents();
+
+	}
 
 	private void initComponents() {
 
@@ -68,79 +69,84 @@ public class Main extends JFrame {
 		setLocationRelativeTo(null);
 
 		JPanel menu = new JPanel();
-		
+
 		scrollPanel = new JScrollPane();
-		scrollPanel.setColumnHeaderView(menu);	
-		
+		scrollPanel.setColumnHeaderView(menu);
+
 		// set scroll speed TODO properties file
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(24);
-		
+
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
-		
+
 		JPanel ulwilaSheet = new JPanel();
 		ulwilaSheet.setLayout(new BoxLayout(ulwilaSheet, BoxLayout.Y_AXIS));
 
-
-
 		JButton btnOpenFile = new JButton("Uzsgyi");
 		btnOpenFile.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 
-					//List<UlwilaRow> rows = getRows(getMusicTrack(new File(selectedFile.getPath())).get(0));
-					//TODO modify this to list (remove get(0))
+					// List<UlwilaRow> rows = getRows(getMusicTrack(new File(selectedFile.getPath())).get(0));
+					// TODO modify this to list (remove get(0))
 					MusicTrack track = getMusicTrack(new File(selectedFile.getPath())).get(0);
-					List <MusicComponent> components = track.getComponents();
-					
-					UlwilaTrack ulwilaTrack = new UlwilaTrack(components, track.getTimeSignature());
+					List<MusicComponent> components = track.getComponents();
+					List<UlwilaComponent> ulwilaComponents = new ArrayList<>();
 
-					
-					scrollPanel.setViewportView(ulwilaTrack.getPanel());	
+					for (MusicComponent component : components) { //FIXME remove sample asd
+						ulwilaComponents.add(new UlwilaComponent(component, "asd"));
+					}
+
+					UlwilaTrack ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
+
+					scrollPanel.setViewportView(ulwilaTrack.getPanel());
+
+					new ExportHelper().exportComponents(ulwilaTrack);
 
 				}
 			}
 		});
 
 		menu.add(btnOpenFile);
-		
+
 		JButton btnSample = new JButton("Sample");
 		btnSample.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent ae) {
 				scrollPanel.setViewportView(getNotesPanelFromMap(getTestNotes()));
 			}
 		});
-		
+
 		menu.add(btnSample);
 
 		setContentPane(scrollPanel);
 	}
-	
 
-	
-	private static List<MusicTrack> getMusicTrack(File file){
+
+
+
+
+	private static List<MusicTrack> getMusicTrack(File file) {
 
 		MidiFile f = new MidiFile(file);
 		List<MidiTrack> tracks = f.getTracks();
 		TimeSignature timeSignature = f.getTimesig();
-		
-		List<MusicTrack> musicTracks = new ArrayList<>();
 
-		System.out.println("TimeSignature: " + timeSignature.getNumerator() + "/" + timeSignature.getDenominator());
-		
+		List<MusicTrack> musicTracks = new ArrayList<>();
 
 		for (MidiTrack midiTrack : tracks) {
 			musicTracks.add(new MusicTrack(midiTrack.getNotes(), timeSignature));
 		}
-		
+
 		return musicTracks;
 	}
-	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Main frame = new Main();
@@ -151,8 +157,6 @@ public class Main extends JFrame {
 			}
 		});
 	}
-
-
 
 	private static Map<Octave, List<Tone>> getTestNotes() {
 		// Dummy notes for testing
