@@ -45,6 +45,7 @@ public class Main extends JFrame {
 
 	private JPanel mainPanel = new JPanel();
 	private JScrollPane scrollPanel;
+	private UlwilaTrack ulwilaTrack;
 
 	public Main() {
 		// set LookAndFeel to system default
@@ -68,6 +69,9 @@ public class Main extends JFrame {
 		setLocationRelativeTo(null);
 
 		JPanel menu = new JPanel();
+		JButton exportButton = getExportButton();
+		//exportButton.setEnabled(false);
+		menu.add(exportButton);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
@@ -75,8 +79,6 @@ public class Main extends JFrame {
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(24);
 
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
-
-		JButton btnExport = new JButton("Export");
 
 		JPanel ulwilaSheet = new JPanel();
 		ulwilaSheet.setLayout(new BoxLayout(ulwilaSheet, BoxLayout.Y_AXIS));
@@ -100,24 +102,16 @@ public class Main extends JFrame {
 						ulwilaComponents.add(new UlwilaComponent(component, "asd"));
 					}
 
-					UlwilaTrack ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
+					ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
+					exportButton.setEnabled(true);
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
-
-					// Export button onClick
-					btnExport.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent ae) {
-							new ExportHelper().exportComponents(ulwilaTrack);
-						}
-					});
 
 				}
 			}
 		});
 
 		menu.add(btnOpenFile);
-		menu.add(btnExport);
 
 		JButton btnSample = new JButton("Sample");
 		btnSample.addActionListener(new ActionListener() {
@@ -130,6 +124,27 @@ public class Main extends JFrame {
 		menu.add(btnSample);
 
 		setContentPane(scrollPanel);
+	}
+
+	private JButton getExportButton() {
+		JButton btnExport = new JButton("Export");
+
+		//open saveAs dialog on button click
+		btnExport.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showSaveDialog(btnExport);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+
+					new ExportHelper().exportComponents(ulwilaTrack, selectedFile);
+				}
+
+			}
+		});
+
+		return btnExport;
 	}
 
 	private static List<MusicTrack> getMusicTrack(File file) {

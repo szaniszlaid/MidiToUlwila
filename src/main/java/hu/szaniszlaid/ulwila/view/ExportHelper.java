@@ -9,6 +9,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,11 +36,13 @@ import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class ExportHelper {
 
-	public void exportComponents(UlwilaTrack ulwilaTrack) {
+	public void exportComponents(UlwilaTrack ulwilaTrack, File directory) {
+
+		String directoryName = directory.getName();
 
 		try {
 
-			writeComponenstToFileCollection(collectComponents(ulwilaTrack));
+			writeComponenstToFileCollection(collectComponents(ulwilaTrack), directory);
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -57,7 +60,8 @@ public class ExportHelper {
 			Element style = doc.createElement("link");
 			style.setAttribute("rel", "stylesheet");
 			style.setAttribute("type", "text/css");
-			style.setAttribute("href", "pics/style.css");
+			//FIXME write css to the HTML
+			style.setAttribute("href", directoryName + "/style.css");
 			head.appendChild(style);
 
 			// body elements
@@ -96,7 +100,7 @@ public class ExportHelper {
 						Element noteElement = doc.createElement("td");
 						Element imageElement = doc.createElement("img");
 						imageElement.setAttribute("align", "center");
-						imageElement.setAttribute("src", "pics/" + generateMusicComponentFileName(c.getMusicComponent()));
+						imageElement.setAttribute("src", directoryName + "/" + generateMusicComponentFileName(c.getMusicComponent()));
 						noteElement.appendChild(imageElement);
 						noteRow.appendChild(noteElement);
 
@@ -113,7 +117,7 @@ public class ExportHelper {
 			}
 
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("file.html"));
+			StreamResult result = new StreamResult(new File(directory.getParent(), directory.getName() + ".html"));
 
 			newXmlTransformer().transform(source, result);
 
@@ -218,11 +222,14 @@ public class ExportHelper {
 		return op.filter(image, null);
 	}
 
-	private void writeComponenstToFileCollection(Collection<MusicComponent> components) {
+	private void writeComponenstToFileCollection(Collection<MusicComponent> components, File folder) {
 		for (MusicComponent musicComponent : components) {
 			BufferedImage img = getImage(musicComponent);
 			if (img != null) {
-				File output = new File("pics/" + generateMusicComponentFileName(musicComponent));
+				if (Files.notExists(folder.toPath())) {
+					folder.mkdirs();
+				}
+				File output = new File(folder, generateMusicComponentFileName(musicComponent));
 				try {
 					ImageIO.write(img, "png", output);
 				} catch (IOException e) {
