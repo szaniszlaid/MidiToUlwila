@@ -56,36 +56,31 @@ public class ExportHelper {
 			Element head = doc.createElement("head");
 			html.appendChild(head);
 
-			// link style elements
-			Element style = doc.createElement("link");
-			style.setAttribute("rel", "stylesheet");
-			style.setAttribute("type", "text/css");
-			//FIXME write css to the HTML
-			style.setAttribute("href", directoryName + "/style.css");
+			// set table style
+			Element style = doc.createElement("style");
+			style.setTextContent(
+				"table{\n" +
+					"display:table;\n" + 
+					"margin-top:5px;\n" + 
+					"margin-right:50px;\n" + 
+				"}\n");
 			head.appendChild(style);
 
 			// body elements
 			Element body = doc.createElement("body");
 			html.appendChild(body);
 
-			// külső table elements
-			Element table = doc.createElement("table");
-			body.appendChild(table);
 
 			for (UlwilaRow row : ulwilaTrack.getRows()) {
 				// egy sor amibe ütem táblázatok vannak vannak
-				Element tr = doc.createElement("tr");
-				table.appendChild(tr);
+				Element belsoDiv = doc.createElement("div");
+				body.appendChild(belsoDiv);
 
 				for (UlwilaBar bar : row.getBars()) {
-
-					// egy elem amibe ütem táblázat van
-					Element barTableTd = doc.createElement("td");
-					tr.appendChild(barTableTd);
-
 					//ütem táblázat
 					Element barTable = doc.createElement("table");
-					barTableTd.appendChild(barTable);
+					barTable.setAttribute("style", "display: inline-block");
+					belsoDiv.appendChild(barTable);
 
 					// hangjegyek sora
 					Element noteRow = doc.createElement("tr");
