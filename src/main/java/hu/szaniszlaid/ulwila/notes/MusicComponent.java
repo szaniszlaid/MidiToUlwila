@@ -14,8 +14,8 @@ import javax.swing.JComponent;
 
 public abstract class MusicComponent extends JComponent implements FocusListener, MouseListener {
 
-	public static final int QUARTER_NOTE_WIDTH = 100;
-	public static final int QUARTER_NOTE_HEIGHT = 100;
+	public static final int QUARTER_NOTE_WIDTH = 80;
+	public static final int QUARTER_NOTE_HEIGHT = 80;
 
 	private static final int MARGIN = 6;
 

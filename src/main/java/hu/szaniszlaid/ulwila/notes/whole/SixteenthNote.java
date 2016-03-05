@@ -14,8 +14,8 @@ import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class SixteenthNote extends MusicNote {
 
-	int width = QUARTER_NOTE_WIDTH / 4;
-	int height = QUARTER_NOTE_HEIGHT;
+	private static int width = QUARTER_NOTE_WIDTH / 4;
+	private static int height = QUARTER_NOTE_HEIGHT;
 
 	public SixteenthNote(Octave octave, Tone tone) {
 		super(octave, tone);

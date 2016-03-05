@@ -13,7 +13,7 @@ public abstract class MusicNote extends MusicComponent {
     private Octave octave;
 	private Tone tone;
 
-    public final int offsetX = QUARTER_NOTE_WIDTH / 3 * 2;
+    public final static int offsetX = QUARTER_NOTE_WIDTH / 3 * 2;
 
     public MusicNote(Octave octave, Tone tone) {
         super();

@@ -24,6 +24,11 @@ public class UlwilaComponent extends JPanel {
 		
 	}
 	
+	public UlwilaComponent(MusicComponent musicComponent) {
+		this(musicComponent, null);
+	}
+	
+	
 	private JTextField getLyricsField(String lyricsText) {
 		JTextField lyricsField = new JTextField(lyricsText, Label.CENTER);
 		lyricsField.setHorizontalAlignment(JTextField.CENTER);

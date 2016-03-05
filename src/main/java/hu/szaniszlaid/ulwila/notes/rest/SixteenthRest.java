@@ -7,7 +7,7 @@ import hu.szaniszlaid.ulwila.notes.Components;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
 public class SixteenthRest extends MusicComponent {
-	private int width = QUARTER_NOTE_WIDTH - (QUARTER_NOTE_HEIGHT / 10);
+	private static int width = QUARTER_NOTE_WIDTH - (QUARTER_NOTE_HEIGHT / 10);
 
 	@Override
 	public void draw(Graphics2D g) {

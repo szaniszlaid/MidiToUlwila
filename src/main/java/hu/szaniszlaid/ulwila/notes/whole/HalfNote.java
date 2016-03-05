@@ -14,9 +14,6 @@ import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class HalfNote extends MusicNote {
 
-	int width = QUARTER_NOTE_WIDTH;
-	int height = QUARTER_NOTE_HEIGHT;
-
 	public HalfNote(Octave octave, Tone tone) {
 		super(octave, tone);
 	}
@@ -24,24 +21,24 @@ public class HalfNote extends MusicNote {
 	@Override
 	public void drawNote(Graphics2D g) {
 		g.setColor(getColor());
-		g.fillOval(offsetX + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
+		g.fillOval(offsetX + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawOval(offsetX + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
+		g.drawOval(offsetX + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 		g.setColor(getColor());
-		g.fillOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
+		g.fillOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, width, height);
+		g.drawOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
-		int x = (width / 2 - width / 10) + MARGIN_LEFT;
-		int y = (height / 2 - height / 10) + MARGIN_TOP;
+		int x = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 10) + MARGIN_LEFT;
+		int y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 10) + MARGIN_TOP;
 		
 		List<Shape> octaveShapes = new ArrayList<>();
-		octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 0, 360, Arc2D.OPEN));
-		octaveShapes.add(new Arc2D.Double(x + offsetX, y, width / 5, height / 5, 0, 360, Arc2D.OPEN));
+		octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.OPEN));
+		octaveShapes.add(new Arc2D.Double(x + offsetX, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.OPEN));
 		
 		return octaveShapes;
 	}
@@ -53,6 +50,6 @@ public class HalfNote extends MusicNote {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension(width + offsetX, height);
+		return new Dimension(QUARTER_NOTE_WIDTH + offsetX, QUARTER_NOTE_HEIGHT);
 	}
 }

@@ -70,7 +70,7 @@ public class Main extends JFrame {
 
 		JPanel menu = new JPanel();
 		JButton exportButton = getExportButton();
-		//exportButton.setEnabled(false);
+		exportButton.setEnabled(false);
 		menu.add(exportButton);
 
 		scrollPanel = new JScrollPane();
@@ -83,7 +83,7 @@ public class Main extends JFrame {
 		JPanel ulwilaSheet = new JPanel();
 		ulwilaSheet.setLayout(new BoxLayout(ulwilaSheet, BoxLayout.Y_AXIS));
 
-		JButton btnOpenFile = new JButton("Uzsgyi");
+		JButton btnOpenFile = new JButton("Import");
 		btnOpenFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -117,7 +117,7 @@ public class Main extends JFrame {
 		btnSample.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				scrollPanel.setViewportView(getNotesPanelFromMap(getTestNotes()));
+				scrollPanel.setViewportView(getSampleTrackFromMap(getTestNotes()).getPanel());
 			}
 		});
 
@@ -200,24 +200,24 @@ public class Main extends JFrame {
 		return notes;
 	}
 
-	private static JPanel getNotesPanelFromMap(Map<Octave, List<Tone>> notes) {
+	private static UlwilaTrack getSampleTrackFromMap(Map<Octave, List<Tone>> notes) {
 
-		// Main notes
-		JPanel notesPanel = new JPanel();
+		List<UlwilaComponent> ulwilaComponents = new ArrayList<>();
 
 		// rests
-		notesPanel.add(new SixteenthRest());
-		notesPanel.add(new EighthRest());
-		notesPanel.add(new QuarterRest());
-		notesPanel.add(new HalfRest());
-		notesPanel.add(new WholeRest());
+		ulwilaComponents.add(new UlwilaComponent(new SixteenthRest()));
+		ulwilaComponents.add(new UlwilaComponent(new EighthRest()));
+		ulwilaComponents.add(new UlwilaComponent(new QuarterRest()));
+		ulwilaComponents.add(new UlwilaComponent(new HalfRest()));
+		ulwilaComponents.add(new UlwilaComponent(new WholeRest()));
+
 
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					notesPanel.add(new SixteenthSemiNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new SixteenthSemiNote(octave, tone), "a"));
 				} else {
-					notesPanel.add(new SixteenthNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new SixteenthNote(octave, tone), "s"));
 				}
 			}
 		}
@@ -225,9 +225,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					notesPanel.add(new EighthSemiNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new EighthSemiNote(octave, tone), "as"));
 				} else {
-					notesPanel.add(new EighthNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new EighthNote(octave, tone),"as"));
 				}
 			}
 		}
@@ -235,9 +235,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					notesPanel.add(new QuarterSemiNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new QuarterSemiNote(octave, tone),"asd"));
 				} else {
-					notesPanel.add(new QuarterNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new QuarterNote(octave, tone), "asd"));
 				}
 			}
 		}
@@ -245,9 +245,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					notesPanel.add(new HalfSemiNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new HalfSemiNote(octave, tone), "asdf"));
 				} else {
-					notesPanel.add(new HalfNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new HalfNote(octave, tone), "asdf"));
 				}
 			}
 		}
@@ -255,14 +255,14 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					notesPanel.add(new WholeSemiNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new WholeSemiNote(octave, tone), "asdfjklé"));
 				} else {
-					notesPanel.add(new WholeNote(octave, tone));
+					ulwilaComponents.add(new UlwilaComponent(new WholeNote(octave, tone), "asdfjklé"));
 				}
 			}
-		}
+		}			
 
-		return notesPanel;
+		return new UlwilaTrack(ulwilaComponents, new TimeSignature(4, 4, 20, 120));
 	}
 
 }

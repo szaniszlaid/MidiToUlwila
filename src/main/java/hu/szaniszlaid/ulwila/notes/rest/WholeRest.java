@@ -8,8 +8,8 @@ import hu.szaniszlaid.ulwila.notes.MusicComponent;
 
 public class WholeRest extends MusicComponent {
 
-	private int width = QUARTER_NOTE_WIDTH - QUARTER_NOTE_WIDTH / 10;
-	private int height = QUARTER_NOTE_HEIGHT;
+	private static int width = QUARTER_NOTE_WIDTH - QUARTER_NOTE_WIDTH / 10;
+	private static int height = QUARTER_NOTE_HEIGHT;
 
 	@Override
 	public void draw(Graphics2D g) {
