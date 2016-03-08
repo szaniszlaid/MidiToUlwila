@@ -137,8 +137,8 @@ public class Main extends JFrame {
 				int returnValue = fileChooser.showSaveDialog(btnExport);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-
-					new ExportHelper().exportComponents(ulwilaTrack, selectedFile);
+					ExportHelper.exportWordViaTextBox(ulwilaTrack);
+					//new ExportHelper().exportComponents(ulwilaTrack, selectedFile);
 				}
 
 			}

@@ -7,8 +7,12 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,6 +32,15 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.util.Units;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -35,6 +48,56 @@ import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class ExportHelper {
+	
+	public static void exportWordViaTextBox(UlwilaTrack ulwilaTrack) {
+		//http://stackoverflow.com/questions/35164070/create-text-box-in-document-docx-using-apache-poi/35210029#35210029
+		
+	}
+
+	public static void exportWord(UlwilaTrack ulwilaTrack) {
+
+		try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream("images.docx")) {
+			for (UlwilaRow ulwilaRow : ulwilaTrack.getRows()) {
+				for (UlwilaBar ulwilaBar : ulwilaRow.getBars()) {
+					System.out.println("bar");
+					XWPFTable table = doc.createTable();
+					table.createRow();
+
+					for (int i = 0; i< ulwilaBar.getComponents().size(); i++ ) {		
+						UlwilaComponent ulwilaComponent = ulwilaBar.getComponents().get(i);
+						MusicComponent musicComponent = ulwilaComponent.getMusicComponent();
+						
+						XWPFTableRow imageRow = table.getRow(0);						
+						XWPFTableCell  cell = imageRow.getCell(i);
+						imageRow.addNewTableCell();
+		
+						XWPFParagraph  paragraph = cell.getParagraphs().get(0);
+						XWPFRun run = paragraph.createRun();
+						
+						ByteArrayOutputStream os = new ByteArrayOutputStream();
+						
+						BufferedImage bi = getImage(ulwilaComponent.getMusicComponent());
+						ImageIO.write(bi, "png", os);
+						InputStream is = new ByteArrayInputStream(os.toByteArray());
+						run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "asdf", Units.toEMU(musicComponent.getWidth()), Units.toEMU(musicComponent.getHeight()));
+					
+						//Lyrics
+						XWPFTableRow lyricsRow = table.getRow(1);
+						lyricsRow.addNewTableCell();
+						XWPFTableCell  lyricsCell = lyricsRow.getCell(i);
+						lyricsCell.setText(ulwilaComponent.getLyrics());
+					}
+
+				}
+			}
+
+			doc.write(out);
+		} catch (IOException | InvalidFormatException e) {
+			// TODO handling, logging
+			e.printStackTrace();
+		}
+
+	}
 
 	public void exportComponents(UlwilaTrack ulwilaTrack, File directory) {
 
@@ -58,18 +121,12 @@ public class ExportHelper {
 
 			// set table style
 			Element style = doc.createElement("style");
-			style.setTextContent(
-				"table{\n" +
-					"display:table;\n" + 
-					"margin-top:5px;\n" + 
-					"margin-right:50px;\n" + 
-				"}\n");
+			style.setTextContent("table{\n" + "display:table;\n" + "margin-top:5px;\n" + "margin-right:50px;\n" + "}\n");
 			head.appendChild(style);
 
 			// body elements
 			Element body = doc.createElement("body");
 			html.appendChild(body);
-
 
 			for (UlwilaRow row : ulwilaTrack.getRows()) {
 				// egy sor amibe ütem táblázatok vannak vannak
@@ -77,7 +134,7 @@ public class ExportHelper {
 				body.appendChild(belsoDiv);
 
 				for (UlwilaBar bar : row.getBars()) {
-					//ütem táblázat
+					// ütem táblázat
 					Element barTable = doc.createElement("table");
 					barTable.setAttribute("style", "display: inline-block");
 					belsoDiv.appendChild(barTable);
@@ -99,7 +156,7 @@ public class ExportHelper {
 						noteElement.appendChild(imageElement);
 						noteRow.appendChild(noteElement);
 
-						//lyrics
+						// lyrics
 						Element lyricsElement = doc.createElement("td");
 						lyricsElement.setAttribute("align", "center");
 						if (c.getLyrics() != null) {
@@ -173,7 +230,7 @@ public class ExportHelper {
 	private static BufferedImage getImage(Component c) {
 		BufferedImage bi = null;
 		try {
-			bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB); //TYPE_INT_ARGB TYPE_4BYTE_ABGR
+			bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB); // TYPE_INT_ARGB TYPE_4BYTE_ABGR
 			Graphics2D g2d = bi.createGraphics();
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
@@ -186,7 +243,7 @@ public class ExportHelper {
 			g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 			c.print(g2d);
 			g2d.dispose();
-			//	bi = blurImage(bi);
+			// bi = blurImage(bi);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -195,19 +252,14 @@ public class ExportHelper {
 		return bi;
 	}
 
-	//TODO write javadoc src=http://www.componenthouse.com/High-Quality-Image-Resize-with-Java-td21.html
+	// TODO write javadoc src=http://www.componenthouse.com/High-Quality-Image-Resize-with-Java-td21.html
 	public static BufferedImage blurImage(BufferedImage image) {
 		float ninth = 1.0f / 6.0f;
-		float[] blurKernel = {
-				ninth, ninth, ninth,
-				ninth, ninth, ninth,
-				ninth, ninth, ninth
-		};
+		float[] blurKernel = { ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth };
 
 		Map<RenderingHints.Key, Object> map = new HashMap<>();
 
-		map.put(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		map.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
 		map.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		map.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
