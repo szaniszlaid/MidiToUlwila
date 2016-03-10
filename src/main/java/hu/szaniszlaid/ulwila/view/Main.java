@@ -137,8 +137,8 @@ public class Main extends JFrame {
 				int returnValue = fileChooser.showSaveDialog(btnExport);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					ExportHelper.exportWordViaTextBox(ulwilaTrack);
-					//new ExportHelper().exportComponents(ulwilaTrack, selectedFile);
+					//ExportHelper.exportToWord(ulwilaTrack);
+					new ExportHelper().exportToHtml(ulwilaTrack, selectedFile);
 				}
 
 			}
@@ -260,7 +260,7 @@ public class Main extends JFrame {
 					ulwilaComponents.add(new UlwilaComponent(new WholeNote(octave, tone), "asdfjklé"));
 				}
 			}
-		}			
+		}
 
 		return new UlwilaTrack(ulwilaComponents, new TimeSignature(4, 4, 20, 120));
 	}

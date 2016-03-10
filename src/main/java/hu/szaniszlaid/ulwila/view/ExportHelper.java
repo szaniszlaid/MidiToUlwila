@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
-import org.apache.poi.xssf.usermodel.XSSFDrawing;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -48,50 +49,81 @@ import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 
 public class ExportHelper {
-	
-	public static void exportWordViaTextBox(UlwilaTrack ulwilaTrack) {
-		//http://stackoverflow.com/questions/35164070/create-text-box-in-document-docx-using-apache-poi/35210029#35210029
-		
-	}
 
-	public static void exportWord(UlwilaTrack ulwilaTrack) {
+	final static char NON_BREAKING_SPACE = 0x00A0;
+
+	public static void exportToWord(UlwilaTrack ulwilaTrack) {
 
 		try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream("images.docx")) {
 			for (UlwilaRow ulwilaRow : ulwilaTrack.getRows()) {
-				for (UlwilaBar ulwilaBar : ulwilaRow.getBars()) {
-					System.out.println("bar");
-					XWPFTable table = doc.createTable();
-					table.createRow();
+				System.out.println("sor");
+				// columns for components and bars separate
+				XWPFTable table = doc.createTable();//doc.createTable(2, ulwilaRow.getUlwilaComponentsSize() + ulwilaRow.getBars().size() - 1);
+				table.getCTTbl().getTblPr().unsetTblBorders();
+				table.createRow();
 
-					for (int i = 0; i< ulwilaBar.getComponents().size(); i++ ) {		
-						UlwilaComponent ulwilaComponent = ulwilaBar.getComponents().get(i);
+				XWPFTableRow imageRow = table.getRow(0);
+				XWPFTableRow lyricsRow = table.getRow(1);
+
+				int colIterator = 0;
+
+				Iterator<UlwilaBar> barsIterator = ulwilaRow.getBars().iterator();
+
+				while (barsIterator.hasNext()) {
+					System.out.println("bar");
+					UlwilaBar ulwilaBar = barsIterator.next();
+
+					Iterator<UlwilaComponent> componentsIterator = ulwilaBar.getComponents().iterator();
+
+					while (componentsIterator.hasNext()) {
+						UlwilaComponent ulwilaComponent = componentsIterator.next();
 						MusicComponent musicComponent = ulwilaComponent.getMusicComponent();
-						
-						XWPFTableRow imageRow = table.getRow(0);						
-						XWPFTableCell  cell = imageRow.getCell(i);
-						imageRow.addNewTableCell();
-		
-						XWPFParagraph  paragraph = cell.getParagraphs().get(0);
+
+						XWPFTableCell cell = imageRow.getCell(colIterator);
+
+						XWPFParagraph paragraph = cell.getParagraphs().get(0);
 						XWPFRun run = paragraph.createRun();
-						
+
 						ByteArrayOutputStream os = new ByteArrayOutputStream();
-						
+
 						BufferedImage bi = getImage(ulwilaComponent.getMusicComponent());
 						ImageIO.write(bi, "png", os);
 						InputStream is = new ByteArrayInputStream(os.toByteArray());
-						run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "asdf", Units.toEMU(musicComponent.getWidth()), Units.toEMU(musicComponent.getHeight()));
-					
-						//Lyrics
-						XWPFTableRow lyricsRow = table.getRow(1);
-						lyricsRow.addNewTableCell();
-						XWPFTableCell  lyricsCell = lyricsRow.getCell(i);
-						lyricsCell.setText(ulwilaComponent.getLyrics());
-					}
+						run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "asdf", Units.toEMU(musicComponent.getWidth()),
+								Units.toEMU(musicComponent.getHeight()));
 
+						//Lyrics
+						XWPFTableCell lyricsCell = lyricsRow.getCell(colIterator);
+						lyricsCell.setText(ulwilaComponent.getLyrics());
+						lyricsCell.getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+
+						//add separation column
+						if (componentsIterator.hasNext()) {
+							imageRow.addNewTableCell();
+							lyricsRow.addNewTableCell();
+							colIterator++;
+							System.out.println("component");
+						} else if (barsIterator.hasNext()) {
+							System.out.println("extra");
+							XWPFTableCell separationCell = imageRow.addNewTableCell();
+							//TODO change fix tab to transparent placeholder
+							//separationCell.addParagraph().createRun().addTab();
+							separationCell.setText("" + NON_BREAKING_SPACE + NON_BREAKING_SPACE + NON_BREAKING_SPACE + NON_BREAKING_SPACE);
+							imageRow.addNewTableCell();
+							lyricsRow.addNewTableCell();
+							lyricsRow.addNewTableCell();
+							colIterator++;
+							colIterator++;
+						}
+
+					}
 				}
+
+				doc.createParagraph();
 			}
 
 			doc.write(out);
+			System.out.println("export successful");
 		} catch (IOException | InvalidFormatException e) {
 			// TODO handling, logging
 			e.printStackTrace();
@@ -99,7 +131,7 @@ public class ExportHelper {
 
 	}
 
-	public void exportComponents(UlwilaTrack ulwilaTrack, File directory) {
+	public void exportToHtml(UlwilaTrack ulwilaTrack, File directory) {
 
 		String directoryName = directory.getName();
 
@@ -252,7 +284,7 @@ public class ExportHelper {
 		return bi;
 	}
 
-	// TODO write javadoc src=http://www.componenthouse.com/High-Quality-Image-Resize-with-Java-td21.html
+// TODO write javadoc src=http://www.componenthouse.com/High-Quality-Image-Resize-with-Java-td21.html
 	public static BufferedImage blurImage(BufferedImage image) {
 		float ninth = 1.0f / 6.0f;
 		float[] blurKernel = { ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth };
