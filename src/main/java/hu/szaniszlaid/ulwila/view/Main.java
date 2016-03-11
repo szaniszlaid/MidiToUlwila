@@ -1,16 +1,19 @@
 package hu.szaniszlaid.ulwila.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -47,6 +50,11 @@ public class Main extends JFrame {
 	private JScrollPane scrollPanel;
 	private UlwilaTrack ulwilaTrack;
 
+	private JButton openBtn;
+	private JButton sampleBtn;
+	private JButton exportHtmlBtn;
+	private JButton exportWordBtn;
+
 	public Main() {
 		// set LookAndFeel to system default
 		try {
@@ -69,12 +77,24 @@ public class Main extends JFrame {
 		setLocationRelativeTo(null);
 
 		JPanel menu = new JPanel();
-		JButton exportButton = getExportButton();
-		exportButton.setEnabled(false);
-		menu.add(exportButton);
+
+		initOpenButton();
+		menu.add(openBtn);
+
+		initSampleButton();
+		menu.add(sampleBtn);
+
+		initExportHtmlButton();
+		menu.add(exportHtmlBtn);
+
+		initExportWordButton();
+		menu.add(exportWordBtn);
+
+		//setExportButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
+
 		// set scroll speed TODO properties file
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(24);
 
@@ -83,8 +103,58 @@ public class Main extends JFrame {
 		JPanel ulwilaSheet = new JPanel();
 		ulwilaSheet.setLayout(new BoxLayout(ulwilaSheet, BoxLayout.Y_AXIS));
 
-		JButton btnOpenFile = new JButton("Import");
-		btnOpenFile.addActionListener(new ActionListener() {
+		setContentPane(scrollPanel);
+	}
+
+	private void initSampleButton() {
+		URL imgUpURL = Main.class.getResource("/images/sampleLogo_up.png");
+		ImageIcon image = new ImageIcon(imgUpURL);
+
+		URL imgRolloverURL = Main.class.getResource("/images/sampleLogo_hower.png");
+		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
+
+		URL imgPressedUrl = Main.class.getResource("/images/sampleLogo_down.png");
+		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
+
+		sampleBtn = new JButton(image);
+		sampleBtn.setRolloverIcon(imageRollover);
+		sampleBtn.setPressedIcon(pressedImage);
+
+		sampleBtn.setBorderPainted(false);
+		sampleBtn.setFocusPainted(false);
+		sampleBtn.setContentAreaFilled(false);
+
+		sampleBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+
+		sampleBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				scrollPanel.setViewportView(getSampleTrackFromMap(getTestNotes()).getPanel());
+			}
+		});
+	}
+
+	private void initOpenButton() {
+		URL imgUpURL = Main.class.getResource("/images/openLogo_up.png");
+		ImageIcon image = new ImageIcon(imgUpURL);
+
+		URL imgRolloverURL = Main.class.getResource("/images/openLogo_hower.png");
+		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
+
+		URL imgPressedUrl = Main.class.getResource("/images/openLogo_down.png");
+		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
+
+		openBtn = new JButton(image);
+		openBtn.setRolloverIcon(imageRollover);
+		openBtn.setPressedIcon(pressedImage);
+
+		openBtn.setBorderPainted(false);
+		openBtn.setFocusPainted(false);
+		openBtn.setContentAreaFilled(false);
+
+		openBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+
+		openBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -103,48 +173,88 @@ public class Main extends JFrame {
 					}
 
 					ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
-					exportButton.setEnabled(true);
+					exportHtmlBtn.setEnabled(true);
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
 
+					setExportButtonsEnabled(true);
 				}
 			}
 		});
-
-		menu.add(btnOpenFile);
-
-		JButton btnSample = new JButton("Sample");
-		btnSample.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				scrollPanel.setViewportView(getSampleTrackFromMap(getTestNotes()).getPanel());
-			}
-		});
-
-		menu.add(btnSample);
-
-		setContentPane(scrollPanel);
 	}
 
-	private JButton getExportButton() {
-		JButton btnExport = new JButton("Export");
+	private void initExportHtmlButton() {
+		URL imgUpURL = Main.class.getResource("/images/htmlLogo_up.png");
+		ImageIcon image = new ImageIcon(imgUpURL);
+
+		URL imgRolloverURL = Main.class.getResource("/images/htmlLogo_hower.png");
+		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
+
+		URL imgPressedUrl = Main.class.getResource("/images/htmlLogo_down.png");
+		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
+
+		exportHtmlBtn = new JButton(image);
+		exportHtmlBtn.setRolloverIcon(imageRollover);
+		exportHtmlBtn.setPressedIcon(pressedImage);
+
+		exportHtmlBtn.setBorderPainted(false);
+		exportHtmlBtn.setFocusPainted(false);
+		exportHtmlBtn.setContentAreaFilled(false);
+		exportHtmlBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
 
 		//open saveAs dialog on button click
-		btnExport.addActionListener(new ActionListener() {
+		exportHtmlBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
-				int returnValue = fileChooser.showSaveDialog(btnExport);
+				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					//ExportHelper.exportToWord(ulwilaTrack);
 					new ExportHelper().exportToHtml(ulwilaTrack, selectedFile);
 				}
 
 			}
 		});
+	}
 
-		return btnExport;
+	private void initExportWordButton() {
+
+		URL imgUpURL = Main.class.getResource("/images/wordLogo_up.jpg");
+		ImageIcon image = new ImageIcon(imgUpURL);
+
+		URL imgRolloverURL = Main.class.getResource("/images/wordLogo_hower.jpg");
+		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
+
+		URL imgPressedUrl = Main.class.getResource("/images/wordLogo_down.jpg");
+		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
+
+		exportWordBtn = new JButton(image);
+		exportWordBtn.setRolloverIcon(imageRollover);
+		exportWordBtn.setPressedIcon(pressedImage);
+
+		exportWordBtn.setBorderPainted(false);
+		exportWordBtn.setFocusPainted(false);
+		exportWordBtn.setContentAreaFilled(false);
+
+		exportWordBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+
+		//open saveAs dialog on button click
+		exportWordBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					ExportHelper.exportToWord(ulwilaTrack, selectedFile);
+				}
+			}
+		});
+	}
+
+	private void setExportButtonsEnabled(boolean enabled) {
+		exportHtmlBtn.setEnabled(enabled);
+		exportWordBtn.setEnabled(enabled);
 	}
 
 	private static List<MusicTrack> getMusicTrack(File file) {
@@ -211,7 +321,6 @@ public class Main extends JFrame {
 		ulwilaComponents.add(new UlwilaComponent(new HalfRest()));
 		ulwilaComponents.add(new UlwilaComponent(new WholeRest()));
 
-
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
@@ -227,7 +336,7 @@ public class Main extends JFrame {
 				if (tone.isSemiTone()) {
 					ulwilaComponents.add(new UlwilaComponent(new EighthSemiNote(octave, tone), "as"));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new EighthNote(octave, tone),"as"));
+					ulwilaComponents.add(new UlwilaComponent(new EighthNote(octave, tone), "as"));
 				}
 			}
 		}
@@ -235,7 +344,7 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new QuarterSemiNote(octave, tone),"asd"));
+					ulwilaComponents.add(new UlwilaComponent(new QuarterSemiNote(octave, tone), "asd"));
 				} else {
 					ulwilaComponents.add(new UlwilaComponent(new QuarterNote(octave, tone), "asd"));
 				}

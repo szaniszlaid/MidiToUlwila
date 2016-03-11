@@ -52,13 +52,12 @@ public class ExportHelper {
 
 	final static char NON_BREAKING_SPACE = 0x00A0;
 
-	public static void exportToWord(UlwilaTrack ulwilaTrack) {
+	public static void exportToWord(UlwilaTrack ulwilaTrack, File file) {
 
-		try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream("images.docx")) {
+		try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream(file.getName() + ".docx")) {
 			for (UlwilaRow ulwilaRow : ulwilaTrack.getRows()) {
-				System.out.println("sor");
-				// columns for components and bars separate
-				XWPFTable table = doc.createTable();//doc.createTable(2, ulwilaRow.getUlwilaComponentsSize() + ulwilaRow.getBars().size() - 1);
+
+				XWPFTable table = doc.createTable();
 				table.getCTTbl().getTblPr().unsetTblBorders();
 				table.createRow();
 
@@ -70,7 +69,6 @@ public class ExportHelper {
 				Iterator<UlwilaBar> barsIterator = ulwilaRow.getBars().iterator();
 
 				while (barsIterator.hasNext()) {
-					System.out.println("bar");
 					UlwilaBar ulwilaBar = barsIterator.next();
 
 					Iterator<UlwilaComponent> componentsIterator = ulwilaBar.getComponents().iterator();
@@ -89,7 +87,7 @@ public class ExportHelper {
 						BufferedImage bi = getImage(ulwilaComponent.getMusicComponent());
 						ImageIO.write(bi, "png", os);
 						InputStream is = new ByteArrayInputStream(os.toByteArray());
-						run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "asdf", Units.toEMU(musicComponent.getWidth()),
+						run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "TODO", Units.toEMU(musicComponent.getWidth()),
 								Units.toEMU(musicComponent.getHeight()));
 
 						//Lyrics
@@ -102,9 +100,7 @@ public class ExportHelper {
 							imageRow.addNewTableCell();
 							lyricsRow.addNewTableCell();
 							colIterator++;
-							System.out.println("component");
 						} else if (barsIterator.hasNext()) {
-							System.out.println("extra");
 							XWPFTableCell separationCell = imageRow.addNewTableCell();
 							//TODO change fix tab to transparent placeholder
 							//separationCell.addParagraph().createRun().addTab();
