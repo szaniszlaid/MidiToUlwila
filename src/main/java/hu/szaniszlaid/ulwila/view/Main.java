@@ -1,24 +1,22 @@
 package hu.szaniszlaid.ulwila.view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ProgressMonitor;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -43,6 +41,7 @@ import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
+import hu.szaniszlaid.ulwila.view.CustomizedButton.CustomizedButtonBuilder;
 
 public class Main extends JFrame {
 
@@ -54,6 +53,8 @@ public class Main extends JFrame {
 	private JButton sampleBtn;
 	private JButton exportHtmlBtn;
 	private JButton exportWordBtn;
+	
+	private ProgressMonitor progressMonitor;
 
 	public Main() {
 		// set LookAndFeel to system default
@@ -90,7 +91,7 @@ public class Main extends JFrame {
 		initExportWordButton();
 		menu.add(exportWordBtn);
 
-		//setExportButtonsEnabled(false);
+		// setExportButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
@@ -107,24 +108,12 @@ public class Main extends JFrame {
 	}
 
 	private void initSampleButton() {
-		URL imgUpURL = Main.class.getResource("/images/sampleLogo_up.png");
-		ImageIcon image = new ImageIcon(imgUpURL);
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/sampleLogo_up.png")
+				.imgRolloverURL("/images/sampleLogo_hower.png")
+				.imgPressedURL("/images/sampleLogo_down.png");
 
-		URL imgRolloverURL = Main.class.getResource("/images/sampleLogo_hower.png");
-		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
-
-		URL imgPressedUrl = Main.class.getResource("/images/sampleLogo_down.png");
-		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
-
-		sampleBtn = new JButton(image);
-		sampleBtn.setRolloverIcon(imageRollover);
-		sampleBtn.setPressedIcon(pressedImage);
-
-		sampleBtn.setBorderPainted(false);
-		sampleBtn.setFocusPainted(false);
-		sampleBtn.setContentAreaFilled(false);
-
-		sampleBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+			sampleBtn = builder.create();
 
 		sampleBtn.addActionListener(new ActionListener() {
 			@Override
@@ -135,24 +124,12 @@ public class Main extends JFrame {
 	}
 
 	private void initOpenButton() {
-		URL imgUpURL = Main.class.getResource("/images/openLogo_up.png");
-		ImageIcon image = new ImageIcon(imgUpURL);
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/openLogo_up.png")
+				.imgRolloverURL("/images/openLogo_hower.png")
+				.imgPressedURL("/images/openLogo_down.png");
 
-		URL imgRolloverURL = Main.class.getResource("/images/openLogo_hower.png");
-		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
-
-		URL imgPressedUrl = Main.class.getResource("/images/openLogo_down.png");
-		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
-
-		openBtn = new JButton(image);
-		openBtn.setRolloverIcon(imageRollover);
-		openBtn.setPressedIcon(pressedImage);
-
-		openBtn.setBorderPainted(false);
-		openBtn.setFocusPainted(false);
-		openBtn.setContentAreaFilled(false);
-
-		openBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+			openBtn = builder.create();
 
 		openBtn.addActionListener(new ActionListener() {
 			@Override
@@ -184,25 +161,15 @@ public class Main extends JFrame {
 	}
 
 	private void initExportHtmlButton() {
-		URL imgUpURL = Main.class.getResource("/images/htmlLogo_up.png");
-		ImageIcon image = new ImageIcon(imgUpURL);
 
-		URL imgRolloverURL = Main.class.getResource("/images/htmlLogo_hower.png");
-		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+			.imgUrl("/images/htmlLogo_up.png")
+			.imgRolloverURL("/images/htmlLogo_hower.png")
+			.imgPressedURL("/images/htmlLogo_down.png");
 
-		URL imgPressedUrl = Main.class.getResource("/images/htmlLogo_down.png");
-		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
+		exportHtmlBtn = builder.create();
 
-		exportHtmlBtn = new JButton(image);
-		exportHtmlBtn.setRolloverIcon(imageRollover);
-		exportHtmlBtn.setPressedIcon(pressedImage);
-
-		exportHtmlBtn.setBorderPainted(false);
-		exportHtmlBtn.setFocusPainted(false);
-		exportHtmlBtn.setContentAreaFilled(false);
-		exportHtmlBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
-
-		//open saveAs dialog on button click
+		// open saveAs dialog on button click
 		exportHtmlBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -210,7 +177,7 @@ public class Main extends JFrame {
 				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					new ExportHelper().exportToHtml(ulwilaTrack, selectedFile);
+					//new ExportHelper().exportToHtml(ulwilaTrack, selectedFile);
 				}
 
 			}
@@ -218,27 +185,14 @@ public class Main extends JFrame {
 	}
 
 	private void initExportWordButton() {
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/wordLogo_up.jpg")
+				.imgRolloverURL("/images/wordLogo_hower.jpg")
+				.imgPressedURL("/images/wordLogo_down.jpg");
 
-		URL imgUpURL = Main.class.getResource("/images/wordLogo_up.jpg");
-		ImageIcon image = new ImageIcon(imgUpURL);
+			exportWordBtn = builder.create();
 
-		URL imgRolloverURL = Main.class.getResource("/images/wordLogo_hower.jpg");
-		ImageIcon imageRollover = new ImageIcon(imgRolloverURL);
-
-		URL imgPressedUrl = Main.class.getResource("/images/wordLogo_down.jpg");
-		ImageIcon pressedImage = new ImageIcon(imgPressedUrl);
-
-		exportWordBtn = new JButton(image);
-		exportWordBtn.setRolloverIcon(imageRollover);
-		exportWordBtn.setPressedIcon(pressedImage);
-
-		exportWordBtn.setBorderPainted(false);
-		exportWordBtn.setFocusPainted(false);
-		exportWordBtn.setContentAreaFilled(false);
-
-		exportWordBtn.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
-
-		//open saveAs dialog on button click
+		// open saveAs dialog on button click
 		exportWordBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -246,7 +200,8 @@ public class Main extends JFrame {
 				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					ExportHelper.exportToWord(ulwilaTrack, selectedFile);
+					//ExportHelper.exportToWord(ulwilaTrack, selectedFile);
+					new WordExportHelper(Main.this, ulwilaTrack, selectedFile).generate();;
 				}
 			}
 		});
