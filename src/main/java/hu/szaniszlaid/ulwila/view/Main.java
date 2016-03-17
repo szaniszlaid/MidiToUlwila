@@ -16,10 +16,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ProgressMonitor;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import hu.szaniszlaid.ulwila.export.HtmlExport;
+import hu.szaniszlaid.ulwila.export.WordExport;
 import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
@@ -53,8 +54,6 @@ public class Main extends JFrame {
 	private JButton sampleBtn;
 	private JButton exportHtmlBtn;
 	private JButton exportWordBtn;
-	
-	private ProgressMonitor progressMonitor;
 
 	public Main() {
 		// set LookAndFeel to system default
@@ -91,7 +90,7 @@ public class Main extends JFrame {
 		initExportWordButton();
 		menu.add(exportWordBtn);
 
-		// setExportButtonsEnabled(false);
+		setExportButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
@@ -111,7 +110,8 @@ public class Main extends JFrame {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
 				.imgUrl("/images/sampleLogo_up.png")
 				.imgRolloverURL("/images/sampleLogo_hower.png")
-				.imgPressedURL("/images/sampleLogo_down.png");
+				.imgPressedURL("/images/sampleLogo_down.png")
+				.toolTip("sample");
 
 			sampleBtn = builder.create();
 
@@ -127,7 +127,8 @@ public class Main extends JFrame {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
 				.imgUrl("/images/openLogo_up.png")
 				.imgRolloverURL("/images/openLogo_hower.png")
-				.imgPressedURL("/images/openLogo_down.png");
+				.imgPressedURL("/images/openLogo_down.png")
+				.toolTip("open midi");
 
 			openBtn = builder.create();
 
@@ -150,7 +151,6 @@ public class Main extends JFrame {
 					}
 
 					ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
-					exportHtmlBtn.setEnabled(true);
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
 
@@ -165,7 +165,8 @@ public class Main extends JFrame {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
 			.imgUrl("/images/htmlLogo_up.png")
 			.imgRolloverURL("/images/htmlLogo_hower.png")
-			.imgPressedURL("/images/htmlLogo_down.png");
+			.imgPressedURL("/images/htmlLogo_down.png")
+			.toolTip("HTML export");
 
 		exportHtmlBtn = builder.create();
 
@@ -177,7 +178,7 @@ public class Main extends JFrame {
 				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					//new ExportHelper().exportToHtml(ulwilaTrack, selectedFile);
+					new HtmlExport(Main.this, ulwilaTrack, selectedFile).generate();
 				}
 
 			}
@@ -188,7 +189,8 @@ public class Main extends JFrame {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
 				.imgUrl("/images/wordLogo_up.jpg")
 				.imgRolloverURL("/images/wordLogo_hower.jpg")
-				.imgPressedURL("/images/wordLogo_down.jpg");
+				.imgPressedURL("/images/wordLogo_down.jpg")
+				.toolTip("Word export");
 
 			exportWordBtn = builder.create();
 
@@ -200,8 +202,9 @@ public class Main extends JFrame {
 				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					//ExportHelper.exportToWord(ulwilaTrack, selectedFile);
-					new WordExportHelper(Main.this, ulwilaTrack, selectedFile).generate();;
+					// ExportHelper.exportToWord(ulwilaTrack, selectedFile);
+					new WordExport(Main.this, ulwilaTrack, selectedFile).generate();
+					;
 				}
 			}
 		});
