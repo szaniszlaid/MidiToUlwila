@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import hu.szaniszlaid.ulwila.export.HtmlExport;
+import hu.szaniszlaid.ulwila.export.WordExport;
 import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
@@ -40,12 +42,18 @@ import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
+import hu.szaniszlaid.ulwila.view.CustomizedButton.CustomizedButtonBuilder;
 
 public class Main extends JFrame {
 
 	private JPanel mainPanel = new JPanel();
 	private JScrollPane scrollPanel;
 	private UlwilaTrack ulwilaTrack;
+
+	private JButton openBtn;
+	private JButton sampleBtn;
+	private JButton exportHtmlBtn;
+	private JButton exportWordBtn;
 
 	public Main() {
 		// set LookAndFeel to system default
@@ -69,12 +77,24 @@ public class Main extends JFrame {
 		setLocationRelativeTo(null);
 
 		JPanel menu = new JPanel();
-		JButton exportButton = getExportButton();
-		exportButton.setEnabled(false);
-		menu.add(exportButton);
+
+		initOpenButton();
+		menu.add(openBtn);
+
+		initSampleButton();
+		menu.add(sampleBtn);
+
+		initExportHtmlButton();
+		menu.add(exportHtmlBtn);
+
+		initExportWordButton();
+		menu.add(exportWordBtn);
+
+		setExportButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
+
 		// set scroll speed TODO properties file
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(24);
 
@@ -83,8 +103,36 @@ public class Main extends JFrame {
 		JPanel ulwilaSheet = new JPanel();
 		ulwilaSheet.setLayout(new BoxLayout(ulwilaSheet, BoxLayout.Y_AXIS));
 
-		JButton btnOpenFile = new JButton("Import");
-		btnOpenFile.addActionListener(new ActionListener() {
+		setContentPane(scrollPanel);
+	}
+
+	private void initSampleButton() {
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/sampleLogo_up.png")
+				.imgRolloverURL("/images/sampleLogo_hower.png")
+				.imgPressedURL("/images/sampleLogo_down.png")
+				.toolTip("sample");
+
+			sampleBtn = builder.create();
+
+		sampleBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				scrollPanel.setViewportView(getSampleTrackFromMap(getTestNotes()).getPanel());
+			}
+		});
+	}
+
+	private void initOpenButton() {
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/openLogo_up.png")
+				.imgRolloverURL("/images/openLogo_hower.png")
+				.imgPressedURL("/images/openLogo_down.png")
+				.toolTip("open midi");
+
+			openBtn = builder.create();
+
+		openBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -103,48 +151,68 @@ public class Main extends JFrame {
 					}
 
 					ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
-					exportButton.setEnabled(true);
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
 
+					setExportButtonsEnabled(true);
 				}
 			}
 		});
-
-		menu.add(btnOpenFile);
-
-		JButton btnSample = new JButton("Sample");
-		btnSample.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				scrollPanel.setViewportView(getSampleTrackFromMap(getTestNotes()).getPanel());
-			}
-		});
-
-		menu.add(btnSample);
-
-		setContentPane(scrollPanel);
 	}
 
-	private JButton getExportButton() {
-		JButton btnExport = new JButton("Export");
+	private void initExportHtmlButton() {
 
-		//open saveAs dialog on button click
-		btnExport.addActionListener(new ActionListener() {
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+			.imgUrl("/images/htmlLogo_up.png")
+			.imgRolloverURL("/images/htmlLogo_hower.png")
+			.imgPressedURL("/images/htmlLogo_down.png")
+			.toolTip("HTML export");
+
+		exportHtmlBtn = builder.create();
+
+		// open saveAs dialog on button click
+		exportHtmlBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
-				int returnValue = fileChooser.showSaveDialog(btnExport);
+				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-
-					new ExportHelper().exportComponents(ulwilaTrack, selectedFile);
+					new HtmlExport(Main.this, ulwilaTrack, selectedFile).generate();
 				}
 
 			}
 		});
+	}
 
-		return btnExport;
+	private void initExportWordButton() {
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/wordLogo_up.jpg")
+				.imgRolloverURL("/images/wordLogo_hower.jpg")
+				.imgPressedURL("/images/wordLogo_down.jpg")
+				.toolTip("Word export");
+
+			exportWordBtn = builder.create();
+
+		// open saveAs dialog on button click
+		exportWordBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					// ExportHelper.exportToWord(ulwilaTrack, selectedFile);
+					new WordExport(Main.this, ulwilaTrack, selectedFile).generate();
+					;
+				}
+			}
+		});
+	}
+
+	private void setExportButtonsEnabled(boolean enabled) {
+		exportHtmlBtn.setEnabled(enabled);
+		exportWordBtn.setEnabled(enabled);
 	}
 
 	private static List<MusicTrack> getMusicTrack(File file) {
@@ -211,7 +279,6 @@ public class Main extends JFrame {
 		ulwilaComponents.add(new UlwilaComponent(new HalfRest()));
 		ulwilaComponents.add(new UlwilaComponent(new WholeRest()));
 
-
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
@@ -227,7 +294,7 @@ public class Main extends JFrame {
 				if (tone.isSemiTone()) {
 					ulwilaComponents.add(new UlwilaComponent(new EighthSemiNote(octave, tone), "as"));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new EighthNote(octave, tone),"as"));
+					ulwilaComponents.add(new UlwilaComponent(new EighthNote(octave, tone), "as"));
 				}
 			}
 		}
@@ -235,7 +302,7 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new QuarterSemiNote(octave, tone),"asd"));
+					ulwilaComponents.add(new UlwilaComponent(new QuarterSemiNote(octave, tone), "asd"));
 				} else {
 					ulwilaComponents.add(new UlwilaComponent(new QuarterNote(octave, tone), "asd"));
 				}
@@ -260,7 +327,7 @@ public class Main extends JFrame {
 					ulwilaComponents.add(new UlwilaComponent(new WholeNote(octave, tone), "asdfjklé"));
 				}
 			}
-		}			
+		}
 
 		return new UlwilaTrack(ulwilaComponents, new TimeSignature(4, 4, 20, 120));
 	}
