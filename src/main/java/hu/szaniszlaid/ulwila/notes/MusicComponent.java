@@ -50,7 +50,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 		}
 	}
 
-	public abstract void draw(Graphics2D g);
+	protected abstract void draw(Graphics2D g);
 
 	public abstract double getMusicalLength();
 

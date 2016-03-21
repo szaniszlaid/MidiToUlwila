@@ -13,8 +13,8 @@ import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 
 public class QuarterSemiNote extends QuarterNote {
 
-    int width = QUARTER_NOTE_WIDTH;
-    int height = QUARTER_NOTE_HEIGHT;
+	private int width = QUARTER_NOTE_WIDTH;
+   	private int height = QUARTER_NOTE_HEIGHT;
 
     public QuarterSemiNote(Octave octave, Tone tone) {
         super(octave, tone);
