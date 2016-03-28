@@ -8,9 +8,9 @@ import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.szaniszlaid.ulwila.note.util.Octave;
-import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
+import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public class HalfNote extends MusicNote {
 

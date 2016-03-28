@@ -14,8 +14,8 @@ package hu.szaniszlaid.ulwila.midi;
 
 import java.util.Comparator;
 
-import hu.szaniszlaid.ulwila.note.util.Octave;
-import hu.szaniszlaid.ulwila.note.util.Tone;
+import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 /**
  * @class MidiNote A MidiNote contains

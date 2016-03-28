@@ -5,8 +5,6 @@ import java.util.List;
 
 import hu.szaniszlaid.ulwila.midi.MidiNote;
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
-import hu.szaniszlaid.ulwila.note.util.Octave;
-import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.NoteDuration;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
@@ -19,6 +17,8 @@ import hu.szaniszlaid.ulwila.notes.semi.HalfSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.WholeSemiNote;
+import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.Tone;
 import hu.szaniszlaid.ulwila.notes.whole.EighthNote;
 import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;

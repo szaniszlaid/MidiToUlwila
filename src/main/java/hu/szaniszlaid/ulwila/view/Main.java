@@ -24,8 +24,6 @@ import hu.szaniszlaid.ulwila.export.WordExport;
 import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
-import hu.szaniszlaid.ulwila.note.util.Octave;
-import hu.szaniszlaid.ulwila.note.util.Tone;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
@@ -37,6 +35,8 @@ import hu.szaniszlaid.ulwila.notes.semi.HalfSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.WholeSemiNote;
+import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.Tone;
 import hu.szaniszlaid.ulwila.notes.whole.EighthNote;
 import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
@@ -54,6 +54,11 @@ public class Main extends JFrame {
 	private JButton sampleBtn;
 	private JButton exportHtmlBtn;
 	private JButton exportWordBtn;
+	private JButton playBtn;
+	private JButton pauseBtn;
+	private JButton stopBtn;
+	
+	private UlwilaPlayer ulwilaPlayer;
 
 	public Main() {
 		// set LookAndFeel to system default
@@ -89,8 +94,18 @@ public class Main extends JFrame {
 
 		initExportWordButton();
 		menu.add(exportWordBtn);
+		
+		initPlayButton();
+		menu.add(playBtn);
+		
+		initPauseButton();
+		menu.add(pauseBtn);
 
-		setExportButtonsEnabled(false);
+		initStopButton();
+		menu.add(stopBtn);
+		
+	
+		setButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
@@ -105,6 +120,45 @@ public class Main extends JFrame {
 
 		setContentPane(scrollPanel);
 	}
+	
+	private void initPlayButton(){
+		playBtn = new JButton("play");
+		playBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				pauseBtn.setEnabled(true);
+				stopBtn.setEnabled(true);
+				pauseBtn.setEnabled(true);
+				ulwilaPlayer.play();
+			}
+		});
+	}
+	
+	private void initPauseButton(){
+		pauseBtn = new JButton("pause");
+		pauseBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				playBtn.setEnabled(true);
+				pauseBtn.setEnabled(false);
+				ulwilaPlayer.pause();
+			}
+		});
+	}
+	
+	private void initStopButton(){
+		stopBtn = new JButton("stop");
+		stopBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				playBtn.setEnabled(true);
+				stopBtn.setEnabled(false);
+				pauseBtn.setEnabled(false);
+				ulwilaPlayer.stop();
+			}
+		});
+	}
+
 
 	private void initSampleButton() {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
@@ -154,7 +208,9 @@ public class Main extends JFrame {
 
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
 
-					setExportButtonsEnabled(true);
+					setButtonsEnabled(true);
+					
+					ulwilaPlayer = new UlwilaPlayer(ulwilaTrack);
 				}
 			}
 		});
@@ -210,9 +266,12 @@ public class Main extends JFrame {
 		});
 	}
 
-	private void setExportButtonsEnabled(boolean enabled) {
+	private void setButtonsEnabled(boolean enabled) {
 		exportHtmlBtn.setEnabled(enabled);
 		exportWordBtn.setEnabled(enabled);
+		playBtn.setEnabled(enabled);
+		pauseBtn.setEnabled(enabled);
+		stopBtn.setEnabled(enabled);
 	}
 
 	private static List<MusicTrack> getMusicTrack(File file) {

@@ -5,13 +5,19 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.util.List;
 
-import hu.szaniszlaid.ulwila.note.util.Octave;
-import hu.szaniszlaid.ulwila.note.util.Tone;
+import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public abstract class MusicNote extends MusicComponent {
 
     private Octave octave;
 	private Tone tone;
+	
+	
+	public int getMidiNumber() {
+		return Tone.BASEKEY + octave.getMidiOffset() + tone.getMidiOffset();
+	}
+
 
     protected final static int offsetX = QUARTER_NOTE_WIDTH / 3 * 2;
 

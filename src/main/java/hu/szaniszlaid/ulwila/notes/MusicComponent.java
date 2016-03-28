@@ -76,6 +76,7 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public void focusGained(FocusEvent e) {
 		selected = true;
 		repaint();
+		((JComponent) getParent()).scrollRectToVisible(getBounds());
 	}
 
 	@Override
@@ -104,4 +105,5 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	@Override
 	public void mouseExited(MouseEvent me) {
 	}
+		
 }
