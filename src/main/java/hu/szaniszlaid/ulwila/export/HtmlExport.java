@@ -41,8 +41,6 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 		super(parent);
 		this.ulwilaTrack = ulwilaTrack;
 		this.directory = directory;
-		progressMonitor = new ProgressMonitor(parent, "Please wait until the process has finished", "", 0, 100);
-		progressMonitor.setMillisToDecideToPopup(0);
 	}
 
 	protected String generateMusicComponentFileName(MusicComponent component) {
