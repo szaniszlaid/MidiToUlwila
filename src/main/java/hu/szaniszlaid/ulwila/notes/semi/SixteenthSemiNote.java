@@ -13,9 +13,6 @@ import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 
 public class SixteenthSemiNote extends SixteenthNote {
 
-	int width = QUARTER_NOTE_WIDTH / 4;
-	int height = QUARTER_NOTE_HEIGHT;
-
 	public SixteenthSemiNote(Octave octave, Tone tone) {
 		super(octave, tone);
 
@@ -24,20 +21,20 @@ public class SixteenthSemiNote extends SixteenthNote {
 	@Override
 	public void drawNote(Graphics2D g) {
 		g.setColor(getLeftColor());
-		g.fillRect(MARGIN_LEFT, MARGIN_TOP, width / 2, height);
+		g.fillRect(MARGIN_LEFT, MARGIN_TOP, SIXTEENTH_WIDTH / 2, QUARTER_NOTE_HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawRect(MARGIN_LEFT, MARGIN_TOP, width / 2, height);
+		g.drawRect(MARGIN_LEFT, MARGIN_TOP, SIXTEENTH_WIDTH / 2, QUARTER_NOTE_HEIGHT);
 
 		g.setColor(getRightColor());
-		g.fillRect(width / 2 + MARGIN_LEFT, MARGIN_TOP, width / 2, height);
+		g.fillRect(SIXTEENTH_WIDTH / 2 + MARGIN_LEFT, MARGIN_TOP, SIXTEENTH_WIDTH / 2, QUARTER_NOTE_HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawRect(width / 2 + MARGIN_LEFT, MARGIN_TOP, width / 2, height);
+		g.drawRect(SIXTEENTH_WIDTH / 2 + MARGIN_LEFT, MARGIN_TOP, SIXTEENTH_WIDTH / 2, QUARTER_NOTE_HEIGHT);
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
-		double x = ((double) width / 5 - (double) width / 10) + MARGIN_LEFT;
-		double y = ((double) height / 2 - (double) height / 10) + MARGIN_TOP;
+		double x = ((double) SIXTEENTH_WIDTH / 2 - (double) QUARTER_NOTE_WIDTH / 10) + MARGIN_LEFT;
+		double y = ((double) QUARTER_NOTE_HEIGHT / 2 - (double) QUARTER_NOTE_HEIGHT / 10) + MARGIN_TOP;
 
 		List<Shape> octaveShapes = new ArrayList<>();
 		octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));

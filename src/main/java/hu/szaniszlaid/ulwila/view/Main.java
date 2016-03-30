@@ -30,6 +30,9 @@ import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
 import hu.szaniszlaid.ulwila.notes.rest.SixteenthRest;
 import hu.szaniszlaid.ulwila.notes.rest.WholeRest;
+import hu.szaniszlaid.ulwila.notes.semi.DottedEighthSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.DottedQuarterSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.DottedSemiHalfNote;
 import hu.szaniszlaid.ulwila.notes.semi.EighthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.HalfSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
@@ -37,6 +40,9 @@ import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.WholeSemiNote;
 import hu.szaniszlaid.ulwila.notes.util.Octave;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
+import hu.szaniszlaid.ulwila.notes.whole.DottedEighthNote;
+import hu.szaniszlaid.ulwila.notes.whole.DottedHalfNote;
+import hu.szaniszlaid.ulwila.notes.whole.DottedQuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.EighthNote;
 import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
@@ -57,7 +63,7 @@ public class Main extends JFrame {
 	private JButton playBtn;
 	private JButton pauseBtn;
 	private JButton stopBtn;
-	
+
 	private UlwilaPlayer ulwilaPlayer;
 
 	public Main() {
@@ -94,17 +100,17 @@ public class Main extends JFrame {
 
 		initExportWordButton();
 		menu.add(exportWordBtn);
-		
+
 		initPlayButton();
 		menu.add(playBtn);
-		
+
 		initPauseButton();
 		menu.add(pauseBtn);
 
 		initStopButton();
 		menu.add(stopBtn);
-		
-	
+
+
 		setButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
@@ -120,7 +126,7 @@ public class Main extends JFrame {
 
 		setContentPane(scrollPanel);
 	}
-	
+
 	private void initPlayButton(){
 		playBtn = new JButton("play");
 		playBtn.addActionListener(new ActionListener() {
@@ -133,7 +139,7 @@ public class Main extends JFrame {
 			}
 		});
 	}
-	
+
 	private void initPauseButton(){
 		pauseBtn = new JButton("pause");
 		pauseBtn.addActionListener(new ActionListener() {
@@ -145,7 +151,7 @@ public class Main extends JFrame {
 			}
 		});
 	}
-	
+
 	private void initStopButton(){
 		stopBtn = new JButton("stop");
 		stopBtn.addActionListener(new ActionListener() {
@@ -167,7 +173,7 @@ public class Main extends JFrame {
 				.imgPressedURL("/images/sampleLogo_down.png")
 				.toolTip("sample");
 
-			sampleBtn = builder.create();
+		sampleBtn = builder.create();
 
 		sampleBtn.addActionListener(new ActionListener() {
 			@Override
@@ -184,7 +190,7 @@ public class Main extends JFrame {
 				.imgPressedURL("/images/openLogo_down.png")
 				.toolTip("open midi");
 
-			openBtn = builder.create();
+		openBtn = builder.create();
 
 		openBtn.addActionListener(new ActionListener() {
 			@Override
@@ -200,8 +206,8 @@ public class Main extends JFrame {
 					List<MusicComponent> components = track.getComponents();
 					List<UlwilaComponent> ulwilaComponents = new ArrayList<>();
 
-					for (MusicComponent component : components) { // FIXME remove sample asd
-						ulwilaComponents.add(new UlwilaComponent(component, "asd"));
+					for (MusicComponent component : components) {
+						ulwilaComponents.add(new UlwilaComponent(component, ""));
 					}
 
 					ulwilaTrack = new UlwilaTrack(ulwilaComponents, track.getTimeSignature());
@@ -209,7 +215,7 @@ public class Main extends JFrame {
 					scrollPanel.setViewportView(ulwilaTrack.getPanel());
 
 					setButtonsEnabled(true);
-					
+
 					ulwilaPlayer = new UlwilaPlayer(ulwilaTrack);
 				}
 			}
@@ -219,10 +225,10 @@ public class Main extends JFrame {
 	private void initExportHtmlButton() {
 
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
-			.imgUrl("/images/htmlLogo_up.png")
-			.imgRolloverURL("/images/htmlLogo_hower.png")
-			.imgPressedURL("/images/htmlLogo_down.png")
-			.toolTip("HTML export");
+				.imgUrl("/images/htmlLogo_up.png")
+				.imgRolloverURL("/images/htmlLogo_hower.png")
+				.imgPressedURL("/images/htmlLogo_down.png")
+				.toolTip("HTML export");
 
 		exportHtmlBtn = builder.create();
 
@@ -248,7 +254,7 @@ public class Main extends JFrame {
 				.imgPressedURL("/images/wordLogo_down.jpg")
 				.toolTip("Word export");
 
-			exportWordBtn = builder.create();
+		exportWordBtn = builder.create();
 
 		// open saveAs dialog on button click
 		exportWordBtn.addActionListener(new ActionListener() {
@@ -348,6 +354,7 @@ public class Main extends JFrame {
 			}
 		}
 
+		//Eight
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
@@ -358,6 +365,18 @@ public class Main extends JFrame {
 			}
 		}
 
+		//DottedEight
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					ulwilaComponents.add(new UlwilaComponent(new DottedEighthSemiNote(octave, tone), "as"));
+				} else {
+					ulwilaComponents.add(new UlwilaComponent(new DottedEighthNote(octave, tone), "as"));
+				}
+			}
+		}
+
+		//Quarter
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
@@ -368,12 +387,35 @@ public class Main extends JFrame {
 			}
 		}
 
+		//DottedQuarter
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					ulwilaComponents.add(new UlwilaComponent(new DottedQuarterSemiNote(octave, tone), "as"));
+				} else {
+					ulwilaComponents.add(new UlwilaComponent(new DottedQuarterNote(octave, tone), "asd"));
+				}
+			}
+		}
+
+		//Half
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
 					ulwilaComponents.add(new UlwilaComponent(new HalfSemiNote(octave, tone), "asdf"));
 				} else {
 					ulwilaComponents.add(new UlwilaComponent(new HalfNote(octave, tone), "asdf"));
+				}
+			}
+		}
+
+		//DottedHalf
+		for (Octave octave : notes.keySet()) {
+			for (Tone tone : notes.get(octave)) {
+				if (tone.isSemiTone()) {
+					ulwilaComponents.add(new UlwilaComponent(new DottedSemiHalfNote(octave, tone), "asdf"));
+				} else {
+					ulwilaComponents.add(new UlwilaComponent(new DottedHalfNote(octave, tone), "asdf"));
 				}
 			}
 		}
