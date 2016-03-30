@@ -25,6 +25,9 @@ import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.rest.DottedEighthRest;
+import hu.szaniszlaid.ulwila.notes.rest.DottedHalfRest;
+import hu.szaniszlaid.ulwila.notes.rest.DottedQuarterRest;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
@@ -340,8 +343,12 @@ public class Main extends JFrame {
 		// rests
 		ulwilaComponents.add(new UlwilaComponent(new SixteenthRest()));
 		ulwilaComponents.add(new UlwilaComponent(new EighthRest()));
+		ulwilaComponents.add(new UlwilaComponent(new DottedEighthRest()));
+		
 		ulwilaComponents.add(new UlwilaComponent(new QuarterRest()));
+		ulwilaComponents.add(new UlwilaComponent(new DottedQuarterRest()));		
 		ulwilaComponents.add(new UlwilaComponent(new HalfRest()));
+		ulwilaComponents.add(new UlwilaComponent(new DottedHalfRest()));		
 		ulwilaComponents.add(new UlwilaComponent(new WholeRest()));
 
 		for (Octave octave : notes.keySet()) {
