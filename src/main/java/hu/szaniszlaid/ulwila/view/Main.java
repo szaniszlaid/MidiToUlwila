@@ -140,7 +140,7 @@ public class Main extends JFrame {
 				pauseBtn.setEnabled(true);
 				stopBtn.setEnabled(true);
 				pauseBtn.setEnabled(true);
-				ulwilaPlayer.play();
+				ulwilaPlayer.play(ulwilaTrack);
 			}
 		});
 	}
@@ -223,7 +223,7 @@ public class Main extends JFrame {
 
 					setButtonsEnabled(true);
 
-					ulwilaPlayer = new UlwilaPlayer(ulwilaTrack);
+					ulwilaPlayer = UlwilaPlayer.getInstance();
 				}
 			}
 		});
@@ -348,11 +348,11 @@ public class Main extends JFrame {
 		ulwilaComponents.add(new UlwilaComponent(new SixteenthRest()));
 		ulwilaComponents.add(new UlwilaComponent(new EighthRest()));
 		ulwilaComponents.add(new UlwilaComponent(new DottedEighthRest()));
-		
+
 		ulwilaComponents.add(new UlwilaComponent(new QuarterRest()));
-		ulwilaComponents.add(new UlwilaComponent(new DottedQuarterRest()));		
+		ulwilaComponents.add(new UlwilaComponent(new DottedQuarterRest()));
 		ulwilaComponents.add(new UlwilaComponent(new HalfRest()));
-		ulwilaComponents.add(new UlwilaComponent(new DottedHalfRest()));		
+		ulwilaComponents.add(new UlwilaComponent(new DottedHalfRest()));
 		ulwilaComponents.add(new UlwilaComponent(new WholeRest()));
 
 		for (Octave octave : notes.keySet()) {

@@ -16,8 +16,6 @@ import hu.szaniszlaid.ulwila.notes.MusicNote;
 //TODO choice instrument to play
 public class UlwilaPlayer {
 
-	private List<MusicComponent> musicComponents = new ArrayList<>();
-
 	private MidiChannel channel; // 0 is a piano, 9 is percussion, other channels are for other instruments
 
 	private int volume = 80; // between 0 and 127 TODO properties
@@ -27,8 +25,17 @@ public class UlwilaPlayer {
 
 	private Player player;
 
-	public UlwilaPlayer(UlwilaTrack track) {
-		setTrack(track);
+	private static UlwilaPlayer instance = null;
+
+	public static UlwilaPlayer getInstance() {
+		if (instance == null) {
+			instance = new UlwilaPlayer();
+		}
+		return instance;
+	}
+
+	private UlwilaPlayer() {
+
 		try {
 			synth = MidiSystem.getSynthesizer();
 			synth.open();
@@ -38,12 +45,18 @@ public class UlwilaPlayer {
 		}
 	}
 
-	public void play() {
+	public void play(UlwilaTrack ulwilaTrack) {
 		if (player == null) {
-			player = new Player();
+			player = new Player(ulwilaTrack);
 			player.play();
 		} else {
-			player.resume();
+			if (!ulwilaTrack.equals(player.getUlwilaTrack())) {
+				player.stop();
+				player = new Player(ulwilaTrack);
+				player.play();
+			} else {
+				player.resume();
+			}
 		}
 	}
 
@@ -53,7 +66,6 @@ public class UlwilaPlayer {
 			player = null;
 
 			channel.allNotesOff();
-			musicComponents.get(0).requestFocus();
 		}
 	}
 
@@ -63,20 +75,35 @@ public class UlwilaPlayer {
 		}
 	}
 
-	private void setTrack(UlwilaTrack track) {
-		for (UlwilaRow row : track.getRows()) {
-			for (UlwilaBar bar : row.getBars()) {
-				for (UlwilaComponent component : bar.getComponents()) {
-					musicComponents.add(component.getMusicComponent());
-				}
-			}
-		}
-	}
-
 	private class Player extends SwingWorker<Void, MusicComponent> {
 
 		volatile boolean paused = false;
 		volatile boolean stopped = false;
+
+		volatile List<MusicComponent> musicComponents;
+
+		UlwilaTrack ulwilaTrack;
+
+		public Player(UlwilaTrack ulwilaTrack) {
+			musicComponents = new ArrayList<>();
+			setTrack(ulwilaTrack);
+		}
+
+		private void setTrack(UlwilaTrack ulwilaTrack) {
+			this.ulwilaTrack = ulwilaTrack;
+			for (UlwilaRow row : ulwilaTrack.getRows()) {
+				for (UlwilaBar bar : row.getBars()) {
+					for (UlwilaComponent component : bar.getComponents()) {
+						musicComponents.add(component.getMusicComponent());
+					}
+				}
+			}
+		}
+
+		public UlwilaTrack getUlwilaTrack() {
+			return ulwilaTrack;
+		}
+
 
 		int lastPlayedNote = 0;
 
@@ -101,9 +128,10 @@ public class UlwilaPlayer {
 		}
 
 		@Override
-		protected Void doInBackground() throws InterruptedException {
+		protected Void doInBackground()
+				throws InterruptedException {
 			System.out.println("start playing in background");
-			while(lastPlayedNote < musicComponents.size()) {
+			while (lastPlayedNote < musicComponents.size()) {
 				if (!stopped) {
 					if (!paused) {
 						MusicComponent musicComponent = musicComponents.get(lastPlayedNote);

@@ -36,33 +36,6 @@ public class MidiFileReader {
     private byte[] data;       /** The entire midi file data */
     private int parse_offset;  /** The current offset while parsing */
 
-    /** Create a new MidiFileReader for the given filename */
-    /** Not used
-    public MidiFileReader(String filename) {
-        try { 
-            File info = new File(filename);
-            FileInputStream file = new FileInputStream(filename);
-            data = new byte[ (int)info.length() ];
-            int offset = 0;
-            int len = (int)info.length();
-            while (true) {
-                if (offset == len)
-                    break;
-                int n = file.read(data, offset, len- offset);
-                if (n <= 0)
-                    break;
-                offset += n;
-            }
-            file.close();
-
-            parse_offset = 0;
-        }
-        catch (IOException e) {
-            throw new MidiFileException("Cannot open file " + filename, 0);
-        }
-    }
-    **/
-
     /** Create a new MidiFileReader from the given data */
     public MidiFileReader(byte[] bytes) {
         data = bytes;
@@ -95,7 +68,7 @@ public class MidiFileReader {
         checkRead(amount);
         byte[] result = new byte[amount];
         for (int i = 0; i < amount; i++) {
-            result[i] = (byte)(data[i + parse_offset]);
+            result[i] = (data[i + parse_offset]);
         }
         parse_offset += amount;
         return result;
@@ -144,18 +117,18 @@ public class MidiFileReader {
         byte b;
 
         b = ReadByte();
-        result = (int)(b & 0x7f);
+        result = b & 0x7f;
 
         for (int i = 0; i < 3; i++) {
             if ((b & 0x80) != 0) {
                 b = ReadByte();
-                result = (int)( (result << 7) + (b & 0x7f) );
+                result = (result << 7) + (b & 0x7f);
             }
             else {
                 break;
             }
         }
-        return (int)result;
+        return result;
     }
 
     /** Skip over the given number of bytes */ 

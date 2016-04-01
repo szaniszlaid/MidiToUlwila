@@ -7,6 +7,9 @@ import hu.szaniszlaid.ulwila.midi.MidiNote;
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.NoteDuration;
+import hu.szaniszlaid.ulwila.notes.rest.DottedEighthRest;
+import hu.szaniszlaid.ulwila.notes.rest.DottedHalfRest;
+import hu.szaniszlaid.ulwila.notes.rest.DottedQuarterRest;
 import hu.szaniszlaid.ulwila.notes.rest.EighthRest;
 import hu.szaniszlaid.ulwila.notes.rest.HalfRest;
 import hu.szaniszlaid.ulwila.notes.rest.QuarterRest;
@@ -131,16 +134,22 @@ public class MusicTrack {
 
 	public static MusicComponent getRestComponent(NoteDuration duration) {
 		switch (duration) {
-		case Eighth:
-			return new EighthRest();
-		case Half:
-			return new HalfRest();
-		case Quarter:
-			return new QuarterRest();
-		case Sixteenth:
-			return new SixteenthRest();
 		case Whole:
 			return new WholeRest();
+		case Half:
+			return new HalfRest();
+		case DottedHalf:
+			return new DottedHalfRest();
+		case Quarter:
+			return new QuarterRest();
+		case DottedQuarter:
+			return new DottedQuarterRest();
+		case Eighth:
+			return new EighthRest();
+		case DottedEighth:
+			return new DottedEighthRest();
+		case Sixteenth:
+			return new SixteenthRest();
 		default:
 			return null;
 		}

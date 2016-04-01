@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.swing.ProgressMonitor;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
