@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import hu.szaniszlaid.ulwila.export.HtmlExport;
 import hu.szaniszlaid.ulwila.export.WordExport;
@@ -199,6 +201,8 @@ public class Main extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fileChooser = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("MIDI files", "mid", "MID");
+				fileChooser.setFileFilter(filter);
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
