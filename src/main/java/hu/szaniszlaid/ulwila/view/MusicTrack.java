@@ -24,6 +24,7 @@ import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.WholeSemiNote;
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 import hu.szaniszlaid.ulwila.notes.whole.DottedEighthNote;
 import hu.szaniszlaid.ulwila.notes.whole.DottedHalfNote;
@@ -38,18 +39,31 @@ public class MusicTrack {
 
 	private List<MidiNote> midiNotes;
 	private TimeSignature timeSignature;
+	private PaintStyle paintStyle;
 
-	public MusicTrack(List <MidiNote> midiNotes, TimeSignature timeSignature){
+	public MusicTrack(List<MidiNote> midiNotes, TimeSignature timeSignature, PaintStyle paintStyle) {
 		this.midiNotes = midiNotes;
 		this.setTimeSignature(timeSignature);
+		this.paintStyle = paintStyle;
 	}
 
-	public List<MusicComponent> getComponents(){
-		List <MusicComponent> components = new ArrayList<>();
+	public UlwilaTrack getUlwilaTrack() {
+		List<MusicComponent> components = getComponents();
+		List<UlwilaComponent> ulwilaComponents = new ArrayList<>();
+
+		for (MusicComponent component : components) {
+			ulwilaComponents.add(new UlwilaComponent(component, ""));
+		}
+
+		return new UlwilaTrack(ulwilaComponents, timeSignature);
+	}
+
+	public List<MusicComponent> getComponents() {
+		List<MusicComponent> components = new ArrayList<>();
 		int prevEnd = 0;
 		for (MidiNote midiNote : midiNotes) {
 			int startTime = midiNote.getStartTime();
-			while (startTime > prevEnd){
+			while (startTime > prevEnd) {
 				int duration = startTime - prevEnd;
 
 				NoteDuration restDuration = getTimeSignature().GetNoteDuration(duration);
@@ -59,15 +73,13 @@ public class MusicTrack {
 
 				prevEnd += getTimeSignature().DurationToTime(restDuration);
 
-
 			}
 			prevEnd = midiNote.getEndTime();
 
-
 			NoteDuration duration = getTimeSignature().GetNoteDuration(midiNote.getDuration());
 
-			MusicComponent comp = getNoteComponent(duration, midiNote.getOctave(), midiNote.getTone());
-			if (comp != null){
+			MusicComponent comp = getNoteComponent(duration, midiNote.getOctave(), midiNote.getTone(), paintStyle);
+			if (comp != null) {
 				components.add(comp);
 			}
 		}
@@ -75,55 +87,55 @@ public class MusicTrack {
 		return components;
 	}
 
-	public MusicComponent getNoteComponent(NoteDuration noteDuration, Octave octave, Tone tone) {
+	public MusicComponent getNoteComponent(NoteDuration noteDuration, Octave octave, Tone tone, PaintStyle paintStyle) {
 		switch (noteDuration) {
 		case Whole:
 			if (tone.isSemiTone()) {
-				return new WholeSemiNote(octave, tone);
+				return new WholeSemiNote(octave, tone, paintStyle);
 			} else {
-				return new WholeNote(octave, tone);
+				return new WholeNote(octave, tone, paintStyle);
 			}
 		case Half:
 			if (tone.isSemiTone()) {
-				return new HalfSemiNote(octave, tone);
+				return new HalfSemiNote(octave, tone, paintStyle);
 			} else {
-				return new HalfNote(octave, tone);
+				return new HalfNote(octave, tone, paintStyle);
 			}
 		case DottedHalf:
 			if (tone.isSemiTone()) {
-				return new DottedSemiHalfNote(octave, tone);
+				return new DottedSemiHalfNote(octave, tone, paintStyle);
 			} else {
-				return new DottedHalfNote(octave, tone);
+				return new DottedHalfNote(octave, tone, paintStyle);
 			}
 		case Quarter:
 			if (tone.isSemiTone()) {
-				return new QuarterSemiNote(octave, tone);
+				return new QuarterSemiNote(octave, tone, paintStyle);
 			} else {
-				return new QuarterNote(octave, tone);
+				return new QuarterNote(octave, tone, paintStyle);
 			}
 		case DottedQuarter:
 			if (tone.isSemiTone()) {
-				return new DottedQuarterSemiNote(octave, tone);
+				return new DottedQuarterSemiNote(octave, tone, paintStyle);
 			} else {
-				return new DottedQuarterNote(octave, tone);
+				return new DottedQuarterNote(octave, tone, paintStyle);
 			}
 		case Eighth:
 			if (tone.isSemiTone()) {
-				return new EighthSemiNote(octave, tone);
+				return new EighthSemiNote(octave, tone, paintStyle);
 			} else {
-				return new EighthNote(octave, tone);
+				return new EighthNote(octave, tone, paintStyle);
 			}
 		case DottedEighth:
 			if (tone.isSemiTone()) {
-				return new DottedEighthSemiNote(octave, tone);
+				return new DottedEighthSemiNote(octave, tone, paintStyle);
 			} else {
-				return new DottedEighthNote(octave, tone);
+				return new DottedEighthNote(octave, tone, paintStyle);
 			}
 		case Sixteenth:
 			if (tone.isSemiTone()) {
-				return new SixteenthSemiNote(octave, tone);
+				return new SixteenthSemiNote(octave, tone, paintStyle);
 			} else {
-				return new SixteenthNote(octave, tone);
+				return new SixteenthNote(octave, tone, paintStyle);
 			}
 
 		default:

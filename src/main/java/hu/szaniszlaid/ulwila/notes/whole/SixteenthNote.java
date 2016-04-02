@@ -10,14 +10,15 @@ import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public class SixteenthNote extends MusicNote {
 
 	public static int SIXTEENTH_WIDTH = (int) Math.round(QUARTER_NOTE_WIDTH * 0.3);
 
-	public SixteenthNote(Octave octave, Tone tone) {
-		super(octave, tone);
+	public SixteenthNote(Octave octave, Tone tone, PaintStyle paintStyle) {
+		super(octave, tone, paintStyle);
 	}
 
 	@Override

@@ -10,12 +10,13 @@ import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public class QuarterNote extends MusicNote {
 
-    public QuarterNote(Octave octave, Tone tone) {
-        super(octave, tone);
+    public QuarterNote(Octave octave, Tone tone,PaintStyle paintStlye) {
+        super(octave, tone, paintStlye);
     }
 
     @Override

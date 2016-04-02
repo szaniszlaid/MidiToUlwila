@@ -20,7 +20,7 @@ public class MidiFile {
 	/** The number of pulses per quarter note */
 	private int totalpulses;
 	/** The total length of the song, in pulses */
-	private boolean trackPerChannel;
+	//private boolean trackPerChannel;
 	/** True if we've split each channel into a track */
 
 	/* The list of Midi Events */
@@ -94,7 +94,7 @@ public class MidiFile {
 		int len;
 
 		tracks = new ArrayList<MidiTrack>();
-		trackPerChannel = false;
+	//	trackPerChannel = false;
 
 		MidiFileReader file = new MidiFileReader(rawdata);
 		id = file.ReadAscii(4);
@@ -105,7 +105,7 @@ public class MidiFile {
 		if (len != 6) {
 			throw new MidiFileException("Bad MThd header", 4);
 		}
-		trackmode = (short) file.ReadShort();
+		trackmode = (short) (file.ReadShort());
 		int num_tracks = file.ReadShort();
 		quarternote = file.ReadShort();
 
@@ -131,7 +131,7 @@ public class MidiFile {
 		 */
 		if (tracks.size() == 1 && HasMultipleChannels(tracks.get(0))) {
 			tracks = SplitChannels(tracks.get(0), allevents.get(tracks.get(0).trackNumber()));
-			trackPerChannel = true;
+			//trackPerChannel = true;
 		}
 
 		CheckStartTimes(tracks);
@@ -188,10 +188,10 @@ public class MidiFile {
 			// If the midi file is truncated here, we can still recover.
 			// Just return what we've parsed so far.
 
-			int startoffset, deltatime;
+			int  deltatime;
 			byte peekevent;
 			try {
-				startoffset = file.GetOffset();
+				//startoffset = file.GetOffset();
 				deltatime = file.ReadVarlen();
 				starttime += deltatime;
 				peekevent = file.Peek();
@@ -364,4 +364,8 @@ public class MidiFile {
 
 	/** Get the list of tracks */
 	public ArrayList<MidiTrack> getTracks() { return tracks; }
+
+	public short getTrackmode() {
+		return trackmode;
+	}
 }

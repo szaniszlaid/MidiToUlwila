@@ -12,6 +12,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
+
 public abstract class MusicComponent extends JComponent implements FocusListener, MouseListener {
 
 	public static final int QUARTER_NOTE_WIDTH = 60;
@@ -25,8 +27,11 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	public static final int MARGIN_BOTTOM = MARGIN / 2;
 
 	private boolean selected = false;
+	
+	private PaintStyle paintStyle;
 
-	public MusicComponent() {
+	public MusicComponent(PaintStyle paintStyle) {
+		this.setPaintStyle(paintStyle);
 		addFocusListener(this);
 		setFocusable(true);
 		addMouseListener(this);
@@ -65,6 +70,14 @@ public abstract class MusicComponent extends JComponent implements FocusListener
 	@Override
 	public int getHeight() {
 		return getSize().height + MARGIN_TOP + MARGIN_BOTTOM;
+	}
+
+	public PaintStyle getPaintStyle() {
+		return paintStyle;
+	}
+
+	public void setPaintStyle(PaintStyle paintStyle) {
+		this.paintStyle = paintStyle;
 	}
 
 	@Override

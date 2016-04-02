@@ -4,9 +4,9 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import hu.szaniszlaid.ulwila.notes.Components;
-import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.MusicRest;
 
-public class DottedEighthRest extends MusicComponent {
+public class DottedEighthRest extends MusicRest {
 
 	private static int width = QUARTER_NOTE_WIDTH - (QUARTER_NOTE_WIDTH / 10);
 

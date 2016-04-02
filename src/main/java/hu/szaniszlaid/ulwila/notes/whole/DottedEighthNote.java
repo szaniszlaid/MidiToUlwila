@@ -10,13 +10,14 @@ import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public class DottedEighthNote extends MusicNote {
 
 	static final int rectWidth = QUARTER_NOTE_WIDTH / 3;
-	public DottedEighthNote(Octave octave, Tone tone) {
-		super(octave, tone);
+	public DottedEighthNote(Octave octave, Tone tone, PaintStyle paintStlye) {
+		super(octave, tone, paintStlye);
 	}
 
 	@Override

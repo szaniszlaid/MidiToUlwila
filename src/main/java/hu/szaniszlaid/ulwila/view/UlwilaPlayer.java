@@ -104,7 +104,6 @@ public class UlwilaPlayer {
 			return ulwilaTrack;
 		}
 
-
 		int lastPlayedNote = 0;
 
 		void play() {
@@ -128,9 +127,7 @@ public class UlwilaPlayer {
 		}
 
 		@Override
-		protected Void doInBackground()
-				throws InterruptedException {
-			System.out.println("start playing in background");
+		protected Void doInBackground() throws InterruptedException {
 			while (lastPlayedNote < musicComponents.size()) {
 				if (!stopped) {
 					if (!paused) {
@@ -153,7 +150,7 @@ public class UlwilaPlayer {
 
 					} else {
 						System.out.println("playing in doInBackground is paused");
-						Thread.sleep(500);
+						Thread.sleep(200);
 					}
 				} else {
 					return null;
@@ -166,12 +163,12 @@ public class UlwilaPlayer {
 		@Override
 		protected void done() {
 			super.done();
-			try { //call get to catch if there were exceptions in background
+			try { // call get to catch if there were exceptions in background
 				get();
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			}
-
+			UlwilaPlayer.this.stop();
 			System.out.println("Playing stopped");
 
 		}
@@ -180,7 +177,7 @@ public class UlwilaPlayer {
 		protected void process(List<MusicComponent> chunks) {
 			super.process(chunks);
 			if (chunks != null && chunks.size() > 0) {
-				//request current playing element to focus
+				// request current playing element to focus
 				chunks.get(chunks.size() - 1).requestFocus();
 			}
 		}

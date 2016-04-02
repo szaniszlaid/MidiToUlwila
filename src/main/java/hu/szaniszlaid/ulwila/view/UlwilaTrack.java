@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import org.jdesktop.swingx.VerticalLayout;
 
 import hu.szaniszlaid.ulwila.midi.TimeSignature;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 
 public class UlwilaTrack {
 
@@ -57,6 +58,16 @@ public class UlwilaTrack {
 
 	public List<UlwilaRow> getRows() {
 		return rows;
+	}
+	
+	public void setPaintStyle(PaintStyle paintStyle) {
+		for (UlwilaRow row : rows) {
+			for (UlwilaBar bar : row.getBars()) {
+				for (UlwilaComponent component : bar.getComponents()) {
+					component.getMusicComponent().setPaintStyle(paintStyle);
+				}
+			}
+		}
 	}
 
 }

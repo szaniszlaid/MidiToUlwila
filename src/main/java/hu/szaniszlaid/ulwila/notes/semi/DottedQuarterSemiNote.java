@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 import hu.szaniszlaid.ulwila.notes.whole.DottedQuarterNote;
 
 public class DottedQuarterSemiNote extends DottedQuarterNote{
 
 
-	public DottedQuarterSemiNote(Octave octave, Tone tone) {
-		super(octave, tone);
+	public DottedQuarterSemiNote(Octave octave, Tone tone, PaintStyle paintStlye) {
+		super(octave, tone, paintStlye);
 		// TODO Auto-generated constructor stub
 	}
 

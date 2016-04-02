@@ -64,5 +64,4 @@ public class UlwilaComponent extends JPanel {
 	public void setLyrics(String lyrics) {
 		this.lyrics = lyrics;
 	}
-
 }

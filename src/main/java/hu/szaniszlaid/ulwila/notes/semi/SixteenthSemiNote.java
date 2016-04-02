@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
 
 public class SixteenthSemiNote extends SixteenthNote {
 
-	public SixteenthSemiNote(Octave octave, Tone tone) {
-		super(octave, tone);
-
+	public SixteenthSemiNote(Octave octave, Tone tone, PaintStyle paintStlye) {
+		super(octave, tone, paintStlye);
 	}
 
 	@Override

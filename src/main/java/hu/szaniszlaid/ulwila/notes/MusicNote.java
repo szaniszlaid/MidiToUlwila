@@ -6,6 +6,7 @@ import java.awt.Shape;
 import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public abstract class MusicNote extends MusicComponent {
@@ -13,20 +14,25 @@ public abstract class MusicNote extends MusicComponent {
 	private Octave octave;
 	private Tone tone;
 
-
 	public int getMidiNumber() {
 		return Tone.BASEKEY + octave.getMidiOffset() + tone.getMidiOffset();
 	}
 
-
 	protected final static int offsetX = QUARTER_NOTE_WIDTH / 4 * 3;
 
-	public MusicNote(Octave octave, Tone tone) {
-		super();
+	public MusicNote(Octave octave, Tone tone, PaintStyle paintStyle) {
+		super(paintStyle);
 		this.octave = octave;
 		this.tone = tone;
 	}
 
+	/**
+	 * @Deprecated use {@link #MusicNote(Octave, Tone, PaintStyle)} instead.
+	 */
+	@Deprecated
+	public MusicNote(Octave octave, Tone tone) {
+		this(octave, tone, PaintStyle.COLORED);
+	}
 
 	public MusicNote setOctave(Octave octave) {
 		this.octave = octave;
@@ -56,7 +62,7 @@ public abstract class MusicNote extends MusicComponent {
 			octaveColor = Color.BLACK;
 			break;
 		case SECOND:
-			return;//FIXME refactor, disgusting
+			return;// FIXME refactor, disgusting
 		case THIRD:
 			octaveColor = Color.WHITE;
 			break;
@@ -76,7 +82,7 @@ public abstract class MusicNote extends MusicComponent {
 	}
 
 	private Color getOctaveBorderColor() {
-		//set inverse border color if necessary
+		// set inverse border color if necessary
 		if (tone.isSemiTone()) {
 			if (getRightColor().equals(Color.BLACK)) {
 				return Color.WHITE;
@@ -103,60 +109,72 @@ public abstract class MusicNote extends MusicComponent {
 	}
 
 	public Color getColor() {
-		switch (getTone()) {
-		case C:
-			if (getOctave() == Octave.FOURTH) {
-				return Color.WHITE;
+		if (getPaintStyle().equals(PaintStyle.COLORED)) {
+			switch (getTone()) {
+			case C:
+				if (getOctave() == Octave.FOURTH) {
+					return Color.WHITE;
+				}
+				return Color.BLACK;
+			case D:
+				return new Color(145, 75, 41);
+			case E:
+				return new Color(0, 0, 255);
+			case F:
+				return new Color(0, 170, 0);
+			case G:
+				return Color.RED;
+			case A:
+				return new Color(255, 153, 0);
+			case H:
+				return Color.YELLOW;
+			default:
+				throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if note is a semi note!");
 			}
-			return Color.BLACK;
-		case D:
-			return new Color(145, 75, 41);
-		case E:
-			return new Color(0, 0, 255);
-		case F:
-			return new Color(0, 170, 0);
-		case G:
-			return Color.RED;
-		case A:
-			return new Color(255, 153, 0);
-		case H:
-			return Color.YELLOW;
-		default:
-			throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if note is a semi note!");
+		} else {
+			return Color.WHITE;
 		}
 	}
 
 	public Color getLeftColor() {
-		switch (getTone()) {
-		case CIS:
-			return Color.BLACK;
-		case DIS:
-			return new Color(145, 75, 41);
-		case FIS:
-			return new Color(0, 170, 0);
-		case GIS:
-			return Color.RED;
-		case AIS:
-			return new Color(255, 153, 0);
-		default:
-			throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
+		if (getPaintStyle().equals(PaintStyle.COLORED)) {
+			switch (getTone()) {
+			case CIS:
+				return Color.BLACK;
+			case DIS:
+				return new Color(145, 75, 41);
+			case FIS:
+				return new Color(0, 170, 0);
+			case GIS:
+				return Color.RED;
+			case AIS:
+				return new Color(255, 153, 0);
+			default:
+				throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
+			}
+		} else {
+			return Color.WHITE;
 		}
 	}
 
 	public Color getRightColor() {
-		switch (getTone()) {
-		case CIS:
-			return new Color(140, 80, 60);
-		case DIS:
-			return Color.BLUE;
-		case FIS:
-			return Color.RED;
-		case GIS:
-			return new Color(255, 153, 0);
-		case AIS:
-			return Color.YELLOW;
-		default:
-			throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
+		if (getPaintStyle().equals(PaintStyle.COLORED)) {
+			switch (getTone()) {
+			case CIS:
+				return new Color(140, 80, 60);
+			case DIS:
+				return Color.BLUE;
+			case FIS:
+				return Color.RED;
+			case GIS:
+				return new Color(255, 153, 0);
+			case AIS:
+				return Color.YELLOW;
+			default:
+				throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
+			}
+		} else {
+			return Color.WHITE;
 		}
 	}
 

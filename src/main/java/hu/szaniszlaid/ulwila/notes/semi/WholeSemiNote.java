@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
 
@@ -16,8 +17,8 @@ public class WholeSemiNote extends WholeNote {
 	int width = QUARTER_NOTE_WIDTH;
 	int height = QUARTER_NOTE_HEIGHT;
 
-	public WholeSemiNote(Octave octave, Tone tone) {
-		super(octave, tone);
+	public WholeSemiNote(Octave octave, Tone tone, PaintStyle paintStyle) {
+		super(octave, tone, paintStyle);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public class EighthNote extends MusicNote {
@@ -17,8 +18,8 @@ public class EighthNote extends MusicNote {
 	private static int width = QUARTER_NOTE_WIDTH;
 	private static int height = QUARTER_NOTE_HEIGHT;
 
-	public EighthNote(Octave octave, Tone tone) {
-		super(octave, tone);
+	public EighthNote(Octave octave, Tone tone, PaintStyle paintStlye) {
+		super(octave, tone, paintStlye);
 	}
 
 	@Override

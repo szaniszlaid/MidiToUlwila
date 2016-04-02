@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.util.Octave;
+import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 import hu.szaniszlaid.ulwila.notes.whole.DottedEighthNote;;
 
@@ -18,8 +19,8 @@ public class DottedEighthSemiNote extends DottedEighthNote {
 	int width = QUARTER_NOTE_WIDTH;
 	int height = QUARTER_NOTE_HEIGHT;
 
-	public DottedEighthSemiNote(Octave octave, Tone tone) {
-		super(octave, tone);
+	public DottedEighthSemiNote(Octave octave, Tone tone, PaintStyle paintStlye) {
+		super(octave, tone, paintStlye);
 	}
 
 	@Override
