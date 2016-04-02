@@ -10,11 +10,15 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingWorker;
 
@@ -22,18 +26,34 @@ public abstract class ExportHelper<T, V> extends SwingWorker<T, V> implements Pr
 
 	Component parent;
 	ProgressMonitor progressMonitor;
+	private File output;
 
-	public ExportHelper(Component parent) {
+	public ExportHelper(Component parent, File ouptut) {
 		super();
 		this.parent = parent;
-
+		this.output = ouptut;
 		progressMonitor = new ProgressMonitor(parent, "Please wait until the process has finished", "", 0, 100);
-		progressMonitor.setMillisToDecideToPopup(0);
+		progressMonitor.setMillisToDecideToPopup(50);
 	}
 
 	public void generate() {
 		addPropertyChangeListener(this);
 		execute();
+	}
+
+	protected void writeComponent(Component component) {
+		BufferedImage img = getImage(component);
+		if (img != null) {
+			if (Files.notExists(output.getParentFile().toPath())) {
+				output.getParentFile().mkdirs();
+			}
+
+			try {
+				ImageIO.write(img, "png", output);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -64,6 +84,8 @@ public abstract class ExportHelper<T, V> extends SwingWorker<T, V> implements Pr
 		try {
 			get(); // invoke get, to print RuntimeExceptions in background thread
 			System.out.println("export successful");
+			progressMonitor.setProgress(100);
+			progressMonitor.close();
 		} catch (CancellationException e) {
 			System.out.println("Task canceled.\n");
 		} catch (InterruptedException | ExecutionException e) {
@@ -75,7 +97,7 @@ public abstract class ExportHelper<T, V> extends SwingWorker<T, V> implements Pr
 	protected static BufferedImage getImage(Component c) {
 		BufferedImage bi = null;
 		try {
-			bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB); // TYPE_INT_ARGB TYPE_4BYTE_ABGR
+			bi = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB); // TYPE_INT_ARGB TYPE_4BYTE_ABGR, TRANSLUCENT
 			Graphics2D g2d = bi.createGraphics();
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
@@ -86,7 +108,7 @@ public abstract class ExportHelper<T, V> extends SwingWorker<T, V> implements Pr
 			g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 			g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
 			g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-			c.print(g2d);
+			c.printAll(g2d);
 			g2d.dispose();
 			// bi = blurImage(bi);
 		} catch (Exception e) {
@@ -112,5 +134,13 @@ public abstract class ExportHelper<T, V> extends SwingWorker<T, V> implements Pr
 		RenderingHints hints = new RenderingHints(map);
 		BufferedImageOp op = new ConvolveOp(new Kernel(3, 3, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
 		return op.filter(image, null);
+	}
+
+	public File getOutputFile() {
+		return output;
+	}
+
+	public void setOutputFile(File file) {
+		this.output = file;
 	}
 }

@@ -34,12 +34,10 @@ import hu.szaniszlaid.ulwila.view.UlwilaTrack;
 public class HtmlExport extends ExportHelper<Void, Void> {
 
 	private UlwilaTrack ulwilaTrack;
-	private File directory;
 
-	public HtmlExport(Component parent, UlwilaTrack ulwilaTrack, File directory) {
-		super(parent);
+	public HtmlExport(Component parent, UlwilaTrack ulwilaTrack, File file) {
+		super(parent, file);
 		this.ulwilaTrack = ulwilaTrack;
-		this.directory = directory;
 	}
 
 	protected String generateMusicComponentFileName(MusicComponent component) {
@@ -58,11 +56,11 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 
 	@Override
 	public Void doInBackground() {
-		String directoryName = directory.getName();
+		String directoryName = getOutputFile().getParentFile().getName();
 
 		try {
 
-			writeComponents(collectComponents(ulwilaTrack), directory);
+			writeComponents(collectComponents(ulwilaTrack), getOutputFile());
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -131,7 +129,7 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 			}
 
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(directory.getParent(), directory.getName() + ".html"));
+			StreamResult result = new StreamResult(getOutputFile() + ".html");
 
 			createXmlTransformer().transform(source, result);
 
@@ -177,17 +175,21 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 
 	private void writeComponents(Collection<MusicComponent> components, File folder) {
 		for (MusicComponent musicComponent : components) {
-			BufferedImage img = getImage(musicComponent);
-			if (img != null) {
-				if (Files.notExists(folder.toPath())) {
-					folder.mkdirs();
-				}
-				File output = new File(folder, generateMusicComponentFileName(musicComponent));
-				try {
-					ImageIO.write(img, "png", output);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			writeComponent(musicComponent, new File (folder, generateMusicComponentFileName(musicComponent)));
+		}
+	}
+	
+	private void writeComponent(Component component, File output) {
+		BufferedImage img = getImage(component);
+		if (img != null) {
+			if (Files.notExists(output.getParentFile().toPath())) {
+				output.getParentFile().mkdirs();
+			}
+
+			try {
+				ImageIO.write(img, "png", output);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}

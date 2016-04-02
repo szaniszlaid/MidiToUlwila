@@ -34,12 +34,10 @@ public class WordExport extends ExportHelper<Void, Void>{
 	final static char NON_BREAKING_SPACE = 0x00A0;
 
 	UlwilaTrack ulwilaTrack;
-	File file;
 
 	public WordExport(Component parent, UlwilaTrack ulwilaTrack, File file) {
-		super(parent);
+		super(parent, file);
 		this.ulwilaTrack = ulwilaTrack;
-		this.file = file;
 	}
 
 	protected String generateMusicComponentFileName(MusicComponent component) {
@@ -59,7 +57,7 @@ public class WordExport extends ExportHelper<Void, Void>{
 
 	@Override
 	public Void doInBackground() {
-		try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream(file.getAbsolutePath() + ".docx")) {
+		try (XWPFDocument doc = new XWPFDocument(); FileOutputStream out = new FileOutputStream(getOutputFile().getAbsolutePath() + ".docx")) {
 			int ulwilaTrackSize = ulwilaTrack.getRows().size();
 			for (int i = 0; i < ulwilaTrackSize; i++) {
 					UlwilaRow ulwilaRow = ulwilaTrack.getRows().get(i);

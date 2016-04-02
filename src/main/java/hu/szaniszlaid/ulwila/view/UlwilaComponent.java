@@ -1,5 +1,6 @@
 package hu.szaniszlaid.ulwila.view;
 
+import java.awt.Color;
 import java.awt.Label;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -21,6 +22,7 @@ public class UlwilaComponent extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(musicComponent);
 		add(getLyricsField(lyrics));
+		setBackground(Color.white);
 		
 	}
 	

@@ -1,5 +1,6 @@
 package hu.szaniszlaid.ulwila.view;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class UlwilaRow {
 
 	public JPanel getRowPanel() {
 		JPanel row = new JPanel();
+		row.setBackground(Color.white);
 		row.setLayout(new FlowLayout(FlowLayout.LEFT));
 		for (UlwilaBar bar : bars) {
 			row.add(bar.getPanel());

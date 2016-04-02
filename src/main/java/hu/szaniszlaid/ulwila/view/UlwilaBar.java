@@ -1,5 +1,6 @@
 package hu.szaniszlaid.ulwila.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class UlwilaBar{
 
 	public JPanel getPanel(){
 		JPanel barPanel = new JPanel();
+		barPanel.setBackground(Color.white);
 		//add separator to bar right side
 		barPanel.setBorder(new EmptyBorder(0, 0, 0, 30));
 		for (UlwilaComponent musicComponent : ulwilaComponents) {

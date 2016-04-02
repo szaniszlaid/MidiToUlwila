@@ -1,6 +1,7 @@
 package hu.szaniszlaid.ulwila.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import hu.szaniszlaid.ulwila.export.HtmlExport;
+import hu.szaniszlaid.ulwila.export.ImageExport;
 import hu.szaniszlaid.ulwila.export.WordExport;
 import hu.szaniszlaid.ulwila.midi.MidiFile;
 import hu.szaniszlaid.ulwila.midi.MidiTrack;
@@ -65,6 +67,7 @@ public class Main extends JFrame {
 	private JButton sampleBtn;
 	private JButton exportHtmlBtn;
 	private JButton exportWordBtn;
+	private JButton exportImageBtn;
 	private JButton playBtn;
 	private JButton pauseBtn;
 	private JButton stopBtn;
@@ -91,7 +94,7 @@ public class Main extends JFrame {
 	private void initComponents() {
 
 		// Set sizes of root frame
-		setSize(1000, 500);
+		setSize(1000, 800);
 
 		setLocationRelativeTo(null);
 
@@ -120,16 +123,23 @@ public class Main extends JFrame {
 		
 		initPaintStyleButton();
 		menu.add(paintStyleBtn);
+		
+		initExportImageButton();
+		menu.add(exportImageBtn);
 
 
+		menu.setBackground(Color.WHITE);
 		setButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(menu);
+		scrollPanel.getViewport().setBackground(Color.WHITE);
+		
 
 		// set scroll speed TODO properties file
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(24);
 
+		mainPanel.setBackground(Color.WHITE);
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 
 		JPanel ulwilaSheet = new JPanel();
@@ -266,6 +276,32 @@ public class Main extends JFrame {
 			}
 		});
 	}
+	
+	private void initExportImageButton() {
+
+//		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+//				.imgUrl("/images/htmlLogo_up.png")
+//				.imgRolloverURL("/images/htmlLogo_hower.png")
+//				.imgPressedURL("/images/htmlLogo_down.png")
+//				.toolTip("HTML export");
+//
+//		exportHtmlBtn = builder.create();
+		exportImageBtn = new JButton("ImageExport");
+
+		// open saveAs dialog on button click
+		exportImageBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showSaveDialog(exportHtmlBtn);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					new ImageExport(Main.this, scrollPanel.getViewport(), selectedFile).generate();
+				}
+
+			}
+		});
+	}
 
 	private void initExportWordButton() {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
@@ -295,6 +331,7 @@ public class Main extends JFrame {
 	private void setButtonsEnabled(boolean enabled) {
 		exportHtmlBtn.setEnabled(enabled);
 		exportWordBtn.setEnabled(enabled);
+		exportImageBtn.setEnabled(enabled);
 		playBtn.setEnabled(enabled);
 		pauseBtn.setEnabled(enabled);
 		stopBtn.setEnabled(enabled);

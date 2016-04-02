@@ -1,5 +1,6 @@
 package hu.szaniszlaid.ulwila.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class UlwilaTrack {
 	public JPanel getPanel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new VerticalLayout());
+		panel.setBackground(Color.WHITE);
 
 		for (UlwilaRow row : rows) {
 			panel.add(row.getRowPanel());
