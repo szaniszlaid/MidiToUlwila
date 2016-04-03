@@ -19,7 +19,7 @@ public class UlwilaPlayer {
 	private MidiChannel channel; // 0 is a piano, 9 is percussion, other channels are for other instruments
 
 	private int volume = 80; // between 0 and 127 TODO properties
-	private int duration = 1600; // in milliseconds TODO properties
+	private int duration = 3200; // in milliseconds TODO properties
 
 	private Synthesizer synth;
 

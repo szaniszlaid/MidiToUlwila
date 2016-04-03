@@ -1,9 +1,11 @@
 package hu.szaniszlaid.ulwila.view;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -52,11 +54,13 @@ public class UlwilaBar{
 
 	public JPanel getPanel(){
 		JPanel barPanel = new JPanel();
+		barPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		barPanel.setBackground(Color.white);
 		//add separator to bar right side
-		barPanel.setBorder(new EmptyBorder(0, 0, 0, 30));
-		for (UlwilaComponent musicComponent : ulwilaComponents) {
-			barPanel.add(musicComponent);
+
+		barPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
+		for (UlwilaComponent ulwilaComponent : ulwilaComponents) {
+			barPanel.add(ulwilaComponent);
 		}
 		return barPanel;
 	}

@@ -22,6 +22,7 @@ import hu.szaniszlaid.ulwila.notes.semi.EighthSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.HalfSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.QuarterSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.SixteenthSemiNote;
+import hu.szaniszlaid.ulwila.notes.semi.TripletSemiNote;
 import hu.szaniszlaid.ulwila.notes.semi.WholeSemiNote;
 import hu.szaniszlaid.ulwila.notes.util.Octave;
 import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
@@ -33,6 +34,7 @@ import hu.szaniszlaid.ulwila.notes.whole.EighthNote;
 import hu.szaniszlaid.ulwila.notes.whole.HalfNote;
 import hu.szaniszlaid.ulwila.notes.whole.QuarterNote;
 import hu.szaniszlaid.ulwila.notes.whole.SixteenthNote;
+import hu.szaniszlaid.ulwila.notes.whole.TripletNote;
 import hu.szaniszlaid.ulwila.notes.whole.WholeNote;
 
 public class MusicTrack {
@@ -61,11 +63,12 @@ public class MusicTrack {
 	public List<MusicComponent> getComponents() {
 		List<MusicComponent> components = new ArrayList<>();
 		int prevEnd = 0;
+		int tripletCount = 0;
 		for (MidiNote midiNote : midiNotes) {
 			int startTime = midiNote.getStartTime();
 			while (startTime > prevEnd) {
 				int duration = startTime - prevEnd;
-
+				
 				NoteDuration restDuration = getTimeSignature().GetNoteDuration(duration);
 
 				MusicComponent rest = getRestComponent(restDuration);
@@ -77,9 +80,16 @@ public class MusicTrack {
 			prevEnd = midiNote.getEndTime();
 
 			NoteDuration duration = getTimeSignature().GetNoteDuration(midiNote.getDuration());
+			System.out.println(duration);
 
 			MusicComponent comp = getNoteComponent(duration, midiNote.getOctave(), midiNote.getTone(), paintStyle);
 			if (comp != null) {
+				if (comp instanceof TripletNote) {
+					if (tripletCount % 3 == 0) {
+						((TripletNote) comp).setFirst(true);
+					}
+					tripletCount++;
+				}
 				components.add(comp);
 			}
 		}
@@ -130,6 +140,12 @@ public class MusicTrack {
 				return new DottedEighthSemiNote(octave, tone, paintStyle);
 			} else {
 				return new DottedEighthNote(octave, tone, paintStyle);
+			}
+		case Triplet:
+			if (tone.isSemiTone()) {
+				return new TripletSemiNote(octave, tone, paintStyle);
+			} else {
+				return new TripletNote(octave, tone, paintStyle);
 			}
 		case Sixteenth:
 			if (tone.isSemiTone()) {

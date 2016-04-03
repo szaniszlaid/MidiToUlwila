@@ -98,7 +98,6 @@ public class TimeSignature implements Serializable {
          1/16    =  2/32 =    4/64
          1/32    =  1/32 =    2/64
          **/ 
-
         if      (duration >= 28*whole/32)
             return NoteDuration.Whole;
         else if (duration >= 20*whole/32) 

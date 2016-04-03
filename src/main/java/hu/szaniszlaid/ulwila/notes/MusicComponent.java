@@ -10,16 +10,17 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 
 public abstract class MusicComponent extends JComponent implements FocusListener, MouseListener {
 
-	public static final int QUARTER_NOTE_WIDTH = 60;
-	public static final int QUARTER_NOTE_HEIGHT = 60;
+	public static final int QUARTER_NOTE_WIDTH = 200;
+	public static final int QUARTER_NOTE_HEIGHT = 200;
 
-	private static final int MARGIN = 6;
+	private static final int MARGIN = 8;
 
 	public static final int MARGIN_LEFT = MARGIN / 2;
 	public static final int MARGIN_RIGHT = MARGIN / 2;

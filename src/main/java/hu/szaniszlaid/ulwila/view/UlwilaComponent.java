@@ -1,10 +1,12 @@
 package hu.szaniszlaid.ulwila.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Label;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,7 +25,6 @@ public class UlwilaComponent extends JPanel {
 		add(musicComponent);
 		add(getLyricsField(lyrics));
 		setBackground(Color.white);
-		
 	}
 	
 	public UlwilaComponent(MusicComponent musicComponent) {
@@ -33,7 +34,9 @@ public class UlwilaComponent extends JPanel {
 	
 	private JTextField getLyricsField(String lyricsText) {
 		JTextField lyricsField = new JTextField(lyricsText, Label.CENTER);
+		lyricsField.setBorder(BorderFactory.createEmptyBorder());
 		lyricsField.setHorizontalAlignment(JTextField.CENTER);
+		setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		lyricsField.addFocusListener(new FocusListener() {
 			
