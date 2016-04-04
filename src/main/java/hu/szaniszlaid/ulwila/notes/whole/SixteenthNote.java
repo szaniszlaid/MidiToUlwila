@@ -24,15 +24,15 @@ public class SixteenthNote extends MusicNote {
 	@Override
 	public void drawNote(Graphics2D g) {
 		g.setColor(getColor());
-		g.fillRect(0 + MARGIN_LEFT, 0 + MARGIN_TOP, SIXTEENTH_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.fillRect(0 + MARGIN_HORIZONTAL, 0 + MARGIN_VERTICAL, SIXTEENTH_WIDTH, QUARTER_NOTE_HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawRect(0 + MARGIN_LEFT, 0 + MARGIN_TOP, SIXTEENTH_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.drawRect(0 + MARGIN_HORIZONTAL, 0 + MARGIN_VERTICAL, SIXTEENTH_WIDTH, QUARTER_NOTE_HEIGHT);
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
-		double x = ((double) SIXTEENTH_WIDTH / 2 - (double) QUARTER_NOTE_WIDTH / 10) + MARGIN_LEFT;
-		double y = ((double) QUARTER_NOTE_HEIGHT / 2 - (double) QUARTER_NOTE_HEIGHT / 10) + MARGIN_TOP;
+		double x = ((double) SIXTEENTH_WIDTH / 2 - (double) QUARTER_NOTE_WIDTH / 10) + MARGIN_HORIZONTAL;
+		double y = ((double) QUARTER_NOTE_HEIGHT / 2 - (double) QUARTER_NOTE_HEIGHT / 10) + MARGIN_VERTICAL;
 
 		List<Shape> octaveShapes = new ArrayList<>();
 		octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));

@@ -25,23 +25,23 @@ public class QuarterSemiNote extends QuarterNote {
     public void drawNote(Graphics2D g) {
 
         g.setColor(getLeftColor());
-        Arc2D quarterLeft = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.OPEN);
+        Arc2D quarterLeft = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.OPEN);
         g.fill(quarterLeft);
         g.setColor(Color.BLACK);
-        Arc2D.Double borderLeft = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.CHORD);
+        Arc2D.Double borderLeft = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.CHORD);
         g.draw(borderLeft);
         g.setColor(getRightColor());
-        Arc2D quarterRight = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, -180, Arc2D.OPEN);
+        Arc2D quarterRight = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, -180, Arc2D.OPEN);
         g.fill(quarterRight);
         g.setColor(Color.BLACK);
-        Arc2D quarterRightBorder = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, -180, Arc2D.CHORD);
+        Arc2D quarterRightBorder = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, -180, Arc2D.CHORD);
         g.draw(quarterRightBorder);
     }
 
     @Override
     public List<Shape> getOctaveShapes() {
-        int x = width / 2 - width / 10 + MARGIN_LEFT;
-        int y = height / 2 - height / 10 + MARGIN_TOP;
+        int x = width / 2 - width / 10 + MARGIN_HORIZONTAL;
+        int y = height / 2 - height / 10 + MARGIN_VERTICAL;
         List<Shape> octaveShapes = new ArrayList<>();
         octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 0, 360, Arc2D.CHORD));
         return octaveShapes;
@@ -52,8 +52,8 @@ public class QuarterSemiNote extends QuarterNote {
     protected void drawOctave(Graphics2D g) {
         super.drawOctave(g);
         if (getTone().equals(Tone.CIS) && getOctave().equals(Octave.FIRST)) {
-            int x = width / 2 - width / 10  + MARGIN_LEFT;
-            int y = height / 2 - height / 10 + MARGIN_TOP;
+            int x = width / 2 - width / 10  + MARGIN_HORIZONTAL;
+            int y = height / 2 - height / 10 + MARGIN_VERTICAL;
             g.setColor(Color.WHITE);
             Arc2D.Double borderLeft = new Arc2D.Double(x, y, width / 5, height / 5, 90, 180, Arc2D.OPEN);
             g.draw(borderLeft);

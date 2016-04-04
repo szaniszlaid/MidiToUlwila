@@ -25,20 +25,20 @@ public class EighthSemiNote extends EighthNote {
     public void drawNote(Graphics2D g) {
 
         g.setColor(getRightColor());
-        Arc2D left = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.CHORD);
+        Arc2D left = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.CHORD);
         g.fill(left);
         g.setColor(getLeftColor());
-        Arc2D right = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 110, 140, Arc2D.CHORD);
+        Arc2D right = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 110, 140, Arc2D.CHORD);
         g.fill(right);
         g.setColor(Color.BLACK);
-        Arc2D.Double border = new Arc2D.Double(MARGIN_LEFT, MARGIN_TOP, width, height, 90, 180, Arc2D.CHORD);
+        Arc2D.Double border = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.CHORD);
         g.draw(border);
     }
 
     @Override
     public List<Shape> getOctaveShapes() {
-        int centerX = (width / 2 - width / 10) + MARGIN_LEFT;
-        int centerY = (height / 2 - height / 10) + MARGIN_TOP;
+        int centerX = (width / 2 - width / 10) + MARGIN_HORIZONTAL;
+        int centerY = (height / 2 - height / 10) + MARGIN_VERTICAL;
         List<Shape> octaveShapes = new ArrayList<>();
         octaveShapes.add(new Arc2D.Double(centerX, centerY, width / 5, height / 5, 90, 180, Arc2D.OPEN));
         return octaveShapes;

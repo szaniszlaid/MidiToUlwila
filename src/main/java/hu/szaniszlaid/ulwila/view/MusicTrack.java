@@ -63,12 +63,12 @@ public class MusicTrack {
 	public List<MusicComponent> getComponents() {
 		List<MusicComponent> components = new ArrayList<>();
 		int prevEnd = 0;
-		int tripletCount = 0;
+		int tripletCnt = 0;
 		for (MidiNote midiNote : midiNotes) {
 			int startTime = midiNote.getStartTime();
 			while (startTime > prevEnd) {
 				int duration = startTime - prevEnd;
-				
+
 				NoteDuration restDuration = getTimeSignature().GetNoteDuration(duration);
 
 				MusicComponent rest = getRestComponent(restDuration);
@@ -80,15 +80,17 @@ public class MusicTrack {
 			prevEnd = midiNote.getEndTime();
 
 			NoteDuration duration = getTimeSignature().GetNoteDuration(midiNote.getDuration());
-			System.out.println(duration);
 
 			MusicComponent comp = getNoteComponent(duration, midiNote.getOctave(), midiNote.getTone(), paintStyle);
+
 			if (comp != null) {
 				if (comp instanceof TripletNote) {
-					if (tripletCount % 3 == 0) {
+					if (tripletCnt % 3 == 0) {
 						((TripletNote) comp).setFirst(true);
+						tripletCnt++;
 					}
-					tripletCount++;
+				} else {
+					tripletCnt = 0;
 				}
 				components.add(comp);
 			}

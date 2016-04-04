@@ -22,20 +22,20 @@ public class TripletSemiNote extends TripletNote{
 	    public void drawNote(Graphics2D g) {		 
 		 
 	        g.setColor(getRightColor());
-	        Arc2D left = new Arc2D.Double(getMarginLeft(), MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180, Arc2D.CHORD);
+	        Arc2D left = new Arc2D.Double(getHorizontalMargin(), MARGIN_VERTICAL, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180, Arc2D.CHORD);
 	        g.fill(left);
 	        g.setColor(getLeftColor());
-	        Arc2D right = new Arc2D.Double(getMarginLeft(), MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 110, 140, Arc2D.CHORD);
+	        Arc2D right = new Arc2D.Double(getHorizontalMargin(), MARGIN_VERTICAL, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 110, 140, Arc2D.CHORD);
 	        g.fill(right);
 	        g.setColor(Color.BLACK);
-	        Arc2D.Double border = new Arc2D.Double(getMarginLeft(), MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180, Arc2D.CHORD);
+	        Arc2D.Double border = new Arc2D.Double(getHorizontalMargin(), MARGIN_VERTICAL, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180, Arc2D.CHORD);
 	        g.draw(border);
 	    }
 
 	    @Override
 	    public List<Shape> getOctaveShapes() {
-	        int centerX = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 10) + getMarginLeft();
-	        int centerY = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 10) + MARGIN_TOP;
+	        int centerX = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 10) + getHorizontalMargin();
+	        int centerY = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 10) + MARGIN_VERTICAL;
 	        List<Shape> octaveShapes = new ArrayList<>();
 	        octaveShapes.add(new Arc2D.Double(centerX, centerY, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 90, 180, Arc2D.OPEN));
 	        return octaveShapes;

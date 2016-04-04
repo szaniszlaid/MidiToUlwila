@@ -12,7 +12,7 @@ public class QuarterRest extends MusicRest {
 
     @Override
     public void draw(Graphics2D g) {
-        g.drawPolygon(Components.getHexagon(MARGIN_LEFT, MARGIN_TOP, width, height));
+        g.drawPolygon(Components.getHexagon(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height));
     }
 
 	@Override

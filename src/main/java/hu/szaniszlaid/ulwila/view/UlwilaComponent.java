@@ -21,10 +21,11 @@ public class UlwilaComponent extends JPanel {
 	public UlwilaComponent(MusicComponent musicComponent, String lyrics) {
 		this.musicComponent = musicComponent;
 		this.lyrics = lyrics;
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		musicComponent.setAlignmentX(CENTER_ALIGNMENT);
 		add(musicComponent);
 		add(getLyricsField(lyrics));
-		setBackground(Color.white);
+		setBackground(Color.WHITE);
 	}
 	
 	public UlwilaComponent(MusicComponent musicComponent) {

@@ -20,6 +20,7 @@ public class ImageExport extends ExportHelper<Void, Void> {
 
 	@Override
 	protected Void doInBackground() throws Exception {
+		panel.setSize(panel.getPreferredSize());
 		writeComponent(panel);
 		return null;
 	}

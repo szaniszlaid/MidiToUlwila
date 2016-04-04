@@ -24,20 +24,19 @@ public class TripletNote extends MusicNote {
 	}
 
 	@Override
-	public void drawNote(Graphics2D g) {		
+	public void drawNote(Graphics2D g) {
 		g.setColor(getColor());
-		Arc2D eighth = new Arc2D.Double(getMarginLeft(), MARGIN_TOP, width, height, 90, 180, Arc2D.OPEN);
+		Arc2D eighth = new Arc2D.Double(getHorizontalMargin() / 2, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.OPEN);
 		g.fill(eighth);
 		g.setColor(Color.BLACK);
-		Arc2D.Double border = new Arc2D.Double(getMarginLeft(), MARGIN_TOP, width, height, 90, 180, Arc2D.CHORD);
+		Arc2D.Double border = new Arc2D.Double(getHorizontalMargin() / 2, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.CHORD);
 		g.draw(border);
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
-		System.out.println( getMarginLeft());
-		int x = width / 2 - width / 10 + getMarginLeft(); //FIXME 
-		int y = height / 2 - height / 10 + MARGIN_TOP;
+		int x = width / 2 - width / 10 + getHorizontalMargin(); // FIXME
+		int y = height / 2 - height / 10 + MARGIN_VERTICAL;
 		List<Shape> octaveShapes = new ArrayList<>();
 		octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 90, 180, Arc2D.OPEN));
 		return octaveShapes;
@@ -50,12 +49,15 @@ public class TripletNote extends MusicNote {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension(width / 2, height);
+		return new Dimension(width / 2 + getHorizontalMargin() * 2 +1, height);
 	}
-	
+
 	@Override
-	public int getWidth() {
-		return width / 2 + 1;
+	protected int getHorizontalMargin() {
+		if (isFirst()) {
+			return MARGIN_HORIZONTAL;
+		}
+		return 0;
 	}
 
 	public boolean isFirst() {
@@ -64,12 +66,5 @@ public class TripletNote extends MusicNote {
 
 	public void setFirst(boolean isFirst) {
 		this.isFirst = isFirst;
-	}
-
-	protected int getMarginLeft() {	
-		if (isFirst) {
-			return MARGIN_LEFT;
-		} 
-		return 0;
 	}
 }

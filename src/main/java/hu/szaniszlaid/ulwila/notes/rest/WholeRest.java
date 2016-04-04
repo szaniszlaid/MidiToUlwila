@@ -13,10 +13,10 @@ public class WholeRest extends MusicRest {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawPolygon(Components.getHexagon(MARGIN_LEFT, MARGIN_TOP, width, height));
-		g.drawPolygon(Components.getHexagon(width + MARGIN_LEFT, MARGIN_TOP, width, height));
-		g.drawPolygon(Components.getHexagon(2 * width + MARGIN_LEFT, MARGIN_TOP, width, height));
-		g.drawPolygon(Components.getHexagon(3 * width + MARGIN_LEFT, MARGIN_TOP, width, height));
+		g.drawPolygon(Components.getHexagon(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height));
+		g.drawPolygon(Components.getHexagon(width + MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height));
+		g.drawPolygon(Components.getHexagon(2 * width + MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height));
+		g.drawPolygon(Components.getHexagon(3 * width + MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height));
 	}
 
 	@Override

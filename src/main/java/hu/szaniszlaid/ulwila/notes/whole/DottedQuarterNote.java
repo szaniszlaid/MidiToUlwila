@@ -21,23 +21,23 @@ public class DottedQuarterNote extends MusicNote {
 
 	@Override
 	public void drawNote(Graphics2D g) {
-		double x = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 3) + MARGIN_LEFT;
-		double y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 3) + MARGIN_TOP;
+		double x = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 3) + MARGIN_HORIZONTAL;
+		double y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 3) + MARGIN_VERTICAL;
 
 		//Eight part
 		g.setColor(getColor());
-		Arc2D quarter = new Arc2D.Double(offsetX, MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180, Arc2D.OPEN);
+		Arc2D quarter = new Arc2D.Double(offsetX, MARGIN_VERTICAL, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180, Arc2D.OPEN);
 		g.fill(quarter);
 		g.setColor(Color.BLACK);
-		Arc2D.Double border = new Arc2D.Double(offsetX, MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180,
+		Arc2D.Double border = new Arc2D.Double(offsetX, MARGIN_VERTICAL, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT, 90, 180,
 				Arc2D.CHORD);
 		g.draw(border);
 
 		//Quarter part
 		g.setColor(getColor());
-		g.fillOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.fillOval(0 + MARGIN_HORIZONTAL, 0 + MARGIN_VERTICAL, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawOval(0 + MARGIN_LEFT, 0 + MARGIN_TOP, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.drawOval(0 + MARGIN_HORIZONTAL, 0 + MARGIN_VERTICAL, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 
 		if (getTone() == Tone.C && getOctave() == Octave.FIRST) {
 			g.setColor(Color.WHITE);
@@ -53,9 +53,9 @@ public class DottedQuarterNote extends MusicNote {
 		int y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 10);
 
 		List<Shape> octaveShapes = new ArrayList<>();
-		octaveShapes.add(new Arc2D.Double(x + MARGIN_LEFT, y + MARGIN_TOP, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
+		octaveShapes.add(new Arc2D.Double(x + MARGIN_HORIZONTAL, y + MARGIN_VERTICAL, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
 
-		octaveShapes.add(new Arc2D.Double(x + offsetX, y + MARGIN_TOP, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 90, 180, Arc2D.OPEN));
+		octaveShapes.add(new Arc2D.Double(x + offsetX, y + MARGIN_VERTICAL, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 90, 180, Arc2D.OPEN));
 		return octaveShapes;
 	}
 
