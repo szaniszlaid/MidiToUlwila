@@ -142,7 +142,8 @@ class UlwilaDrawing extends JPanel implements FocusListener, MouseListener{
 			@Override
 			protected void paintComponent(Graphics g) {
 				g.setColor(new Color(255, 157, 0, 128));
-				g.fillRoundRect(0, 0, component.getWidth() + component.getHorizontalMargin(), component.getHeight() + component.getVerticalMargin(), 20, 15);
+				g.fillRoundRect(0, 0, component.getWidth() + component.getHorizontalMargin(), 
+						component.getHeight() + component.getVerticalMargin(), component.getHorizontalMargin(), component.getVerticalMargin());
 				super.paintComponent(g);
 			}
 		};

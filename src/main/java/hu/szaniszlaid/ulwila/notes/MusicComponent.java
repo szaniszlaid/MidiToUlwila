@@ -13,7 +13,7 @@ public abstract class MusicComponent extends Component  {
 	public static final int QUARTER_NOTE_WIDTH = 70;
 	public static final int QUARTER_NOTE_HEIGHT = 70;
 
-	private static final int MARGIN = 6;
+	private static final int MARGIN = 10;
 
 	public static final int MARGIN_HORIZONTAL = MARGIN / 2;
 

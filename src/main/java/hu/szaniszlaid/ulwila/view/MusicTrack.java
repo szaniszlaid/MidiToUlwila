@@ -70,7 +70,7 @@ public class MusicTrack {
 			int startTime = midiNote.getStartTime();
 			while (startTime > prevEnd) {
 				int duration = startTime - prevEnd;
-
+				
 				NoteDuration restDuration = getTimeSignature().GetNoteDuration(duration);
 
 				MusicComponent rest = getRestComponent(restDuration);

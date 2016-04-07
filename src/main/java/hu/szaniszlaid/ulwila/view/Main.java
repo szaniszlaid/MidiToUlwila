@@ -72,6 +72,8 @@ public class Main extends JFrame {
 	private JButton pauseBtn;
 	private JButton stopBtn;
 	private JButton paintStyleBtn;
+	
+	JFileChooser fileChooser;
 
 	private UlwilaPlayer ulwilaPlayer;
 	
@@ -126,6 +128,8 @@ public class Main extends JFrame {
 		
 		initExportImageButton();
 		menu.add(exportImageBtn);
+		
+		initFileChooser();
 
 
 		menu.setBackground(Color.WHITE);
@@ -231,12 +235,11 @@ public class Main extends JFrame {
 		openBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				JFileChooser fileChooser = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("MIDI files", "mid", "MID");
-				fileChooser.setFileFilter(filter);
+			
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
+					setTitle(selectedFile.getName());
 
 					// TODO modify this to list (remove get(0))
 					MusicTrack musicTrack = getMusicTrack(new File(selectedFile.getPath())).get(0);
@@ -251,6 +254,12 @@ public class Main extends JFrame {
 				}
 			}
 		});
+	}
+	
+	private void initFileChooser() {
+		fileChooser = new JFileChooser();
+		FileFilter filter = new FileNameExtensionFilter("MIDI files", "mid", "MID");
+		fileChooser.setFileFilter(filter);
 	}
 
 	private void initExportHtmlButton() {

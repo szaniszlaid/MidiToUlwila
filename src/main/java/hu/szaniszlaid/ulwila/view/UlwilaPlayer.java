@@ -152,7 +152,6 @@ public class UlwilaPlayer {
 						}
 
 					} else {
-						System.out.println("playing in doInBackground is paused");
 						Thread.sleep(200);
 					}
 				} else {

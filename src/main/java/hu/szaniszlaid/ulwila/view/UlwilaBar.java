@@ -57,7 +57,7 @@ public class UlwilaBar{
 		barPanel.setBackground(Color.white);
 		//add separator to bar right side
 
-		barPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
+		barPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 15));
 		for (UlwilaComponent ulwilaComponent : ulwilaComponents) {
 			barPanel.add(ulwilaComponent);
 		}
