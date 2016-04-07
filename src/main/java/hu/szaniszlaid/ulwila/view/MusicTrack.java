@@ -64,7 +64,9 @@ public class MusicTrack {
 		List<MusicComponent> components = new ArrayList<>();
 		int prevEnd = 0;
 		int tripletCnt = 0;
-		for (MidiNote midiNote : midiNotes) {
+
+		for (int i=0; i<midiNotes.size(); i++) {
+			MidiNote midiNote = midiNotes.get(i);
 			int startTime = midiNote.getStartTime();
 			while (startTime > prevEnd) {
 				int duration = startTime - prevEnd;
@@ -82,12 +84,23 @@ public class MusicTrack {
 			NoteDuration duration = getTimeSignature().GetNoteDuration(midiNote.getDuration());
 
 			MusicComponent comp = getNoteComponent(duration, midiNote.getOctave(), midiNote.getTone(), paintStyle);
-
 			if (comp != null) {
-				if (comp instanceof TripletNote) {
-					if (tripletCnt % 3 == 0) {
+				if (duration.equals(NoteDuration.Triplet)) {
+					if (tripletCnt++ % 3 == 0) {
 						((TripletNote) comp).setFirst(true);
-						tripletCnt++;
+					}
+					
+					//check if is the 3rd note in triplets
+					if (tripletCnt++ % 3 == 2) {
+						((TripletNote) comp).setLast(true);
+					}
+					
+					//check if the following note is not a triplet
+					if (i + 1 < midiNotes.size()) {
+						NoteDuration subsequentDuration = getTimeSignature().GetNoteDuration(midiNotes.get(i+1).getDuration());
+						if (!subsequentDuration.equals(NoteDuration.Triplet)) {
+							((TripletNote) comp).setLast(true);
+						}
 					}
 				} else {
 					tripletCnt = 0;

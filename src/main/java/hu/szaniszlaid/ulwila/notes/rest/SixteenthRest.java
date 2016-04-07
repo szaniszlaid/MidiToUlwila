@@ -11,7 +11,7 @@ public class SixteenthRest extends MusicRest {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawPolygon(Components.getQuarterHexagon(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, QUARTER_NOTE_HEIGHT));
+		g.drawPolygon(Components.getQuarterHexagon(0, 0, width, QUARTER_NOTE_HEIGHT));
 	}
 
 	@Override

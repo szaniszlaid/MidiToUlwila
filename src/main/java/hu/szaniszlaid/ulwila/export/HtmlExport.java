@@ -56,7 +56,7 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 
 	@Override
 	public Void doInBackground() {
-		String directoryName = getOutputFile().getParentFile().getName();
+		String directoryName = getOutputFile().getName();
 
 		try {
 
@@ -142,13 +142,11 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 		return null;
 	}
 
-	private Set<MusicComponent> collectComponents(UlwilaTrack ulwilaTrack) {
-		Set<MusicComponent> components = new HashSet<>();
+	private Set<UlwilaComponent> collectComponents(UlwilaTrack ulwilaTrack) {
+		Set<UlwilaComponent> components = new HashSet<>();
 		for (UlwilaRow row : ulwilaTrack.getRows()) {
 			for (UlwilaBar bar : row.getBars()) {
-				for (UlwilaComponent c : bar.getComponents()) {
-					components.add(c.getMusicComponent());
-				}
+				components.addAll(bar.getComponents());
 			}
 		}
 
@@ -173,12 +171,12 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 		return transformer;
 	}
 
-	private void writeComponents(Collection<MusicComponent> components, File folder) {
-		for (MusicComponent musicComponent : components) {
-			writeComponent(musicComponent, new File (folder, generateMusicComponentFileName(musicComponent)));
+	private void writeComponents(Collection<UlwilaComponent> components, File folder) {
+		for (UlwilaComponent ulwilaComponent : components) {
+			writeComponent(ulwilaComponent.getMusicComponent(), new File(folder, generateMusicComponentFileName(ulwilaComponent.getMusicComponent())));
 		}
 	}
-	
+
 	private void writeComponent(Component component, File output) {
 		BufferedImage img = getImage(component);
 		if (img != null) {

@@ -12,8 +12,8 @@ public class DottedEighthRest extends MusicRest {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawPolygon(Components.getHalfHexagon(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, QUARTER_NOTE_HEIGHT));
-		g.drawPolygon(Components.getQuarterHexagon(width/2 + MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, QUARTER_NOTE_HEIGHT));
+		g.drawPolygon(Components.getHalfHexagon(0, 0, width, QUARTER_NOTE_HEIGHT));
+		g.drawPolygon(Components.getQuarterHexagon(width / 2, 0, width, QUARTER_NOTE_HEIGHT));
 	}
 
 	@Override

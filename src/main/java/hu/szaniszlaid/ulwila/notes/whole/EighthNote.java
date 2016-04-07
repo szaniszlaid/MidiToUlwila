@@ -25,17 +25,17 @@ public class EighthNote extends MusicNote {
 	@Override
 	public void drawNote(Graphics2D g) {
 		g.setColor(getColor());
-		Arc2D quarter = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.OPEN);
+		Arc2D quarter = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.OPEN);
 		g.fill(quarter);
 		g.setColor(Color.BLACK);
-		Arc2D.Double border = new Arc2D.Double(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.CHORD);
+		Arc2D.Double border = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
 		g.draw(border);
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
-		int x = width / 2 - width / 10 + MARGIN_HORIZONTAL;
-		int y = height / 2 - height / 10 + MARGIN_VERTICAL;
+		int x = width / 2 - width / 10;
+		int y = height / 2 - height / 10;
 		List<Shape> octaveShapes = new ArrayList<>();
 		octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 90, 180, Arc2D.OPEN));
 		return octaveShapes;

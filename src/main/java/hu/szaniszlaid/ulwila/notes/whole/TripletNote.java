@@ -18,6 +18,7 @@ public class TripletNote extends MusicNote {
 	private static int width = QUARTER_NOTE_WIDTH;
 	private static int height = QUARTER_NOTE_HEIGHT;
 	private boolean isFirst = false;
+	private boolean isLast = false;
 
 	public TripletNote(Octave octave, Tone tone, PaintStyle paintStlye) {
 		super(octave, tone, paintStlye);
@@ -26,17 +27,17 @@ public class TripletNote extends MusicNote {
 	@Override
 	public void drawNote(Graphics2D g) {
 		g.setColor(getColor());
-		Arc2D eighth = new Arc2D.Double(getHorizontalMargin() / 2, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.OPEN);
+		Arc2D eighth = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.OPEN);
 		g.fill(eighth);
 		g.setColor(Color.BLACK);
-		Arc2D.Double border = new Arc2D.Double(getHorizontalMargin() / 2, MARGIN_VERTICAL, width, height, 90, 180, Arc2D.CHORD);
+		Arc2D.Double border = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
 		g.draw(border);
 	}
 
 	@Override
 	public List<Shape> getOctaveShapes() {
-		int x = width / 2 - width / 10 + getHorizontalMargin(); // FIXME
-		int y = height / 2 - height / 10 + MARGIN_VERTICAL;
+		int x = width / 2 - width / 10 ;
+		int y = height / 2 - height / 10;
 		List<Shape> octaveShapes = new ArrayList<>();
 		octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 90, 180, Arc2D.OPEN));
 		return octaveShapes;
@@ -49,13 +50,21 @@ public class TripletNote extends MusicNote {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension(width / 2 + getHorizontalMargin() * 2 +1, height);
+		return new Dimension(width / 2, height);
 	}
 
 	@Override
-	protected int getHorizontalMargin() {
+	public int getMarginLeft() {
 		if (isFirst()) {
-			return MARGIN_HORIZONTAL;
+			return super.getMarginLeft();
+		}
+		return 0;
+	}
+	
+	@Override
+	public int getMarginRight() {
+		if (isLast()) {
+			return super.getMarginRight();
 		}
 		return 0;
 	}
@@ -66,5 +75,12 @@ public class TripletNote extends MusicNote {
 
 	public void setFirst(boolean isFirst) {
 		this.isFirst = isFirst;
+	}
+
+	public boolean isLast() {
+		return isLast;
+	}
+	public void setLast(boolean isLast) {
+		this.isLast = isLast;		
 	}
 }

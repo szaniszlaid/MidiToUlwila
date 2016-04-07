@@ -10,18 +10,18 @@ public class QuarterRest extends MusicRest {
 	private static int width = QUARTER_NOTE_WIDTH - QUARTER_NOTE_WIDTH / 10;
 	private static int height = QUARTER_NOTE_HEIGHT;
 
-    @Override
-    public void draw(Graphics2D g) {
-        g.drawPolygon(Components.getHexagon(MARGIN_HORIZONTAL, MARGIN_VERTICAL, width, height));
-    }
+	@Override
+	public void draw(Graphics2D g) {
+		g.drawPolygon(Components.getHexagon(0, 0, width, height));
+	}
 
 	@Override
 	public double getMusicalLength() {
-		return (double) 1/4;
+		return (double) 1 / 4;
 	}
 
 	@Override
 	public Dimension getSize() {
-        return new Dimension(width, height);
+		return new Dimension(width, height);
 	}
 }

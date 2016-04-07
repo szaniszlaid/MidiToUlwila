@@ -91,10 +91,12 @@ public class WordExport extends ExportHelper<Void, Void>{
 
 							ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-							BufferedImage bi = getImage(ulwilaComponent.getMusicComponent());
+							BufferedImage bi = getImage(musicComponent);
 							ImageIO.write(bi, "png", os);
 							InputStream is = new ByteArrayInputStream(os.toByteArray());
-							run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "TODO", Units.toEMU(musicComponent.getWidth()), Units.toEMU(musicComponent.getHeight()));
+							int width = Units.toEMU(Units.pixelToPoints(musicComponent.getWidth()));
+							int height = Units.toEMU(Units.pixelToPoints(musicComponent.getHeight()));
+							run.addPicture(is, XWPFDocument.PICTURE_TYPE_PNG, "TODO", width, height);
 
 							// Lyrics
 							XWPFTableCell lyricsCell = lyricsRow.getCell(colIterator);

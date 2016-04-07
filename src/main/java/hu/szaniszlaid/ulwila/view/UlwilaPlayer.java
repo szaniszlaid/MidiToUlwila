@@ -75,17 +75,17 @@ public class UlwilaPlayer {
 		}
 	}
 
-	private class Player extends SwingWorker<Void, MusicComponent> {
+	private class Player extends SwingWorker<Void, UlwilaComponent> {
 
 		volatile boolean paused = false;
 		volatile boolean stopped = false;
 
-		volatile List<MusicComponent> musicComponents;
+		volatile List<UlwilaComponent> ulwilaComponents;
 
 		UlwilaTrack ulwilaTrack;
 
 		public Player(UlwilaTrack ulwilaTrack) {
-			musicComponents = new ArrayList<>();
+			ulwilaComponents = new ArrayList<>();
 			setTrack(ulwilaTrack);
 		}
 
@@ -94,7 +94,7 @@ public class UlwilaPlayer {
 			for (UlwilaRow row : ulwilaTrack.getRows()) {
 				for (UlwilaBar bar : row.getBars()) {
 					for (UlwilaComponent component : bar.getComponents()) {
-						musicComponents.add(component.getMusicComponent());
+						ulwilaComponents.add(component);
 					}
 				}
 			}
@@ -128,15 +128,18 @@ public class UlwilaPlayer {
 
 		@Override
 		protected Void doInBackground() throws InterruptedException {
-			while (lastPlayedNote < musicComponents.size()) {
+			while (lastPlayedNote < ulwilaComponents.size()) {
 				if (!stopped) {
 					if (!paused) {
-						MusicComponent musicComponent = musicComponents.get(lastPlayedNote);
+						UlwilaComponent ulwilaComponent =  ulwilaComponents.get(lastPlayedNote);
+						MusicComponent musicComponent = ulwilaComponent.getMusicComponent();
+						
 						lastPlayedNote++;
 
-						publish(musicComponent);
+						publish(ulwilaComponent);
 
 						boolean isNote = musicComponent instanceof MusicNote;
+
 
 						if (isNote) {
 							channel.noteOn(((MusicNote) musicComponent).getMidiNumber(), volume);
@@ -174,7 +177,7 @@ public class UlwilaPlayer {
 		}
 
 		@Override
-		protected void process(List<MusicComponent> chunks) {
+		protected void process(List<UlwilaComponent> chunks) {
 			super.process(chunks);
 			if (chunks != null && chunks.size() > 0) {
 				// request current playing element to focus
