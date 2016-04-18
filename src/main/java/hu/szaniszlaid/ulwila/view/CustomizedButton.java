@@ -12,7 +12,7 @@ public class CustomizedButton extends JButton {
 	private ImageIcon imageRollover;
 	private ImageIcon imagePressed;
 
-	public CustomizedButton(URL imgURL, URL imgRolloverURL, URL imgPressedURL, String Tooltip) {
+	private CustomizedButton(URL imgURL, URL imgRolloverURL, URL imgPressedURL, String Tooltip) {
 		super();
 		if (imgURL != null) {
 			this.image = new ImageIcon(imgURL);

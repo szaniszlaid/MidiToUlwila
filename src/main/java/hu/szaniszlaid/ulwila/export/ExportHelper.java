@@ -22,6 +22,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingWorker;
 
+import hu.szaniszlaid.ulwila.notes.MusicComponent;
+import hu.szaniszlaid.ulwila.notes.MusicNote;
+
 public abstract class ExportHelper<T, V> extends SwingWorker<T, V> implements PropertyChangeListener {
 
 	Component parent;
@@ -111,6 +114,21 @@ public abstract class ExportHelper<T, V> extends SwingWorker<T, V> implements Pr
 
 		return bi;
 	}
+	
+	protected String generateMusicComponentFileName(MusicComponent component) {
+		StringBuilder fileName = new StringBuilder();
+		fileName.append(Double.toString(component.getMusicalLength()));
+		fileName.append("_");
+		if (component instanceof MusicNote) {
+			MusicNote note = (MusicNote) component;
+			fileName.append(note.getTone());
+			fileName.append("_");
+			fileName.append(note.getOctave());
+		}
+		fileName.append(".png");
+		return fileName.toString();
+	}
+
 
 	// TODO write javadoc src=http://www.componenthouse.com/High-Quality-Image-Resize-with-Java-td21.html
 	protected static BufferedImage blurImage(BufferedImage image) {

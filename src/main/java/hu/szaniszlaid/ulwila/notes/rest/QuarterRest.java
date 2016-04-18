@@ -1,5 +1,6 @@
 package hu.szaniszlaid.ulwila.notes.rest;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
@@ -12,6 +13,7 @@ public class QuarterRest extends MusicRest {
 
 	@Override
 	public void draw(Graphics2D g) {
+		g.setColor(Color.BLACK);
 		g.drawPolygon(Components.getHexagon(0, 0, width, height));
 	}
 

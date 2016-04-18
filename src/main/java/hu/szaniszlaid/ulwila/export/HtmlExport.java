@@ -40,19 +40,6 @@ public class HtmlExport extends ExportHelper<Void, Void> {
 		this.ulwilaTrack = ulwilaTrack;
 	}
 
-	protected String generateMusicComponentFileName(MusicComponent component) {
-		StringBuilder fileName = new StringBuilder();
-		fileName.append(Double.toString(component.getMusicalLength()));
-		fileName.append("_");
-		if (component instanceof MusicNote) {
-			MusicNote note = (MusicNote) component;
-			fileName.append(note.getTone());
-			fileName.append("_");
-			fileName.append(note.getOctave());
-		}
-		fileName.append(".png");
-		return fileName.toString();
-	}
 
 	@Override
 	public Void doInBackground() {

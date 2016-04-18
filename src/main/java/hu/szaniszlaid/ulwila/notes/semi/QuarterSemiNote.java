@@ -23,16 +23,20 @@ public class QuarterSemiNote extends QuarterNote {
 
 	@Override
 	public void drawNote(Graphics2D g) {
-
+		//Left part
 		g.setColor(getLeftColor());
 		Arc2D quarterLeft = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.OPEN);
 		g.fill(quarterLeft);
+		//Border
 		g.setColor(Color.BLACK);
 		Arc2D.Double borderLeft = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
 		g.draw(borderLeft);
+		
+		//Right part
 		g.setColor(getRightColor());
 		Arc2D quarterRight = new Arc2D.Double(0, 0, width, height, 90, -180, Arc2D.OPEN);
 		g.fill(quarterRight);
+		//Border
 		g.setColor(Color.BLACK);
 		Arc2D quarterRightBorder = new Arc2D.Double(0, 0, width, height, 90, -180, Arc2D.CHORD);
 		g.draw(quarterRightBorder);
@@ -45,7 +49,6 @@ public class QuarterSemiNote extends QuarterNote {
 		List<Shape> octaveShapes = new ArrayList<>();
 		octaveShapes.add(new Arc2D.Double(x, y, width / 5, height / 5, 0, 360, Arc2D.CHORD));
 		return octaveShapes;
-
 	}
 
 	@Override

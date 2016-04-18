@@ -13,7 +13,7 @@ import javax.swing.SwingWorker;
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
 import hu.szaniszlaid.ulwila.notes.MusicNote;
 
-//TODO choice instrument to play
+//TODO choose instrument to play music
 public class UlwilaPlayer {
 
 	private MidiChannel channel; // 0 is a piano, 9 is percussion, other channels are for other instruments

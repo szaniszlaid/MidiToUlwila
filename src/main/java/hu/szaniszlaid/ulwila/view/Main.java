@@ -153,7 +153,14 @@ public class Main extends JFrame {
 	}
 
 	private void initPlayButton(){
-		playBtn = new JButton("play");
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/play_up.png")
+				.imgRolloverURL("/images/play_hover.png")
+				.imgPressedURL("/images/play_down.png")
+				.toolTip("play");
+		
+		playBtn = builder.create();
+		
 		playBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -166,7 +173,14 @@ public class Main extends JFrame {
 	}
 
 	private void initPauseButton(){
-		pauseBtn = new JButton("pause");
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/pause_up.png")
+				.imgRolloverURL("/images/pause_hover.png")
+				.imgPressedURL("/images/pause_down.png")
+				.toolTip("pause");
+
+		pauseBtn = builder.create();
+
 		pauseBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -178,7 +192,13 @@ public class Main extends JFrame {
 	}
 
 	private void initStopButton(){
-		stopBtn = new JButton("stop");
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/stop_up.png")
+				.imgRolloverURL("/images/stop_hover.png")
+				.imgPressedURL("/images/stop_down.png")
+				.toolTip("stop");
+
+		stopBtn = builder.create();
 		stopBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -191,8 +211,13 @@ public class Main extends JFrame {
 	}
 	
 	private void initPaintStyleButton(){
-		paintStyleBtn = new JButton(paintStyle.inverse().toString());
-		//paintStyleBtn.setEnabled(false);
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/sketch_up.png")
+				.imgRolloverURL("/images/sketch_hover.png")
+				.imgPressedURL("/images/sketch_down.png")
+				.toolTip("sketch");
+
+		paintStyleBtn = builder.create();
 		paintStyleBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -207,9 +232,9 @@ public class Main extends JFrame {
 
 	private void initSampleButton() {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
-				.imgUrl("/images/sampleLogo_up.png")
-				.imgRolloverURL("/images/sampleLogo_hower.png")
-				.imgPressedURL("/images/sampleLogo_down.png")
+				.imgUrl("/images/sample_up.png")
+				.imgRolloverURL("/images/sample_hover.png")
+				.imgPressedURL("/images/sample_down.png")
 				.toolTip("sample");
 
 		sampleBtn = builder.create();
@@ -225,9 +250,9 @@ public class Main extends JFrame {
 
 	private void initOpenButton() {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
-				.imgUrl("/images/openLogo_up.png")
-				.imgRolloverURL("/images/openLogo_hower.png")
-				.imgPressedURL("/images/openLogo_down.png")
+				.imgUrl("/images/open_up.png")
+				.imgRolloverURL("/images/open_hover.png")
+				.imgPressedURL("/images/open_down.png")
 				.toolTip("open midi");
 
 		openBtn = builder.create();
@@ -265,9 +290,9 @@ public class Main extends JFrame {
 	private void initExportHtmlButton() {
 
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
-				.imgUrl("/images/htmlLogo_up.png")
-				.imgRolloverURL("/images/htmlLogo_hower.png")
-				.imgPressedURL("/images/htmlLogo_down.png")
+				.imgUrl("/images/html_up.png")
+				.imgRolloverURL("/images/html_hover.png")
+				.imgPressedURL("/images/html_down.png")
 				.toolTip("HTML export");
 
 		exportHtmlBtn = builder.create();
@@ -289,14 +314,13 @@ public class Main extends JFrame {
 	
 	private void initExportImageButton() {
 
-//		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
-//				.imgUrl("/images/htmlLogo_up.png")
-//				.imgRolloverURL("/images/htmlLogo_hower.png")
-//				.imgPressedURL("/images/htmlLogo_down.png")
-//				.toolTip("HTML export");
-//
-//		exportHtmlBtn = builder.create();
-		exportImageBtn = new JButton("ImageExport");
+		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
+				.imgUrl("/images/image_up.png")
+				.imgRolloverURL("/images/image_hover.png")
+				.imgPressedURL("/images/image_down.png")
+				.toolTip("Image export");
+
+		exportImageBtn = builder.create();
 
 		// open saveAs dialog on button click
 		exportImageBtn.addActionListener(new ActionListener() {
@@ -315,9 +339,9 @@ public class Main extends JFrame {
 
 	private void initExportWordButton() {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
-				.imgUrl("/images/wordLogo_up.jpg")
-				.imgRolloverURL("/images/wordLogo_hower.jpg")
-				.imgPressedURL("/images/wordLogo_down.jpg")
+				.imgUrl("/images/word_up.png")
+				.imgRolloverURL("/images/word_hover.png")
+				.imgPressedURL("/images/word_down.png")
 				.toolTip("Word export");
 
 		exportWordBtn = builder.create();

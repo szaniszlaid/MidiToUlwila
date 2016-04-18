@@ -1,14 +1,15 @@
 package hu.szaniszlaid.ulwila.notes;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import javax.swing.JComponent;
+
 import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 
-public abstract class MusicComponent extends Component  {
+public abstract class MusicComponent extends JComponent  {
 
 	public static final int QUARTER_NOTE_WIDTH = 70;
 	public static final int QUARTER_NOTE_HEIGHT = 70;
@@ -51,7 +52,7 @@ public abstract class MusicComponent extends Component  {
 		super.paint(g);
 	}
 
-	protected void paintComponent(Graphics2D g) {
+	private void paintComponent(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		draw(g);
 	}
