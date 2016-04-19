@@ -123,6 +123,7 @@ public class UlwilaPlayer {
 		}
 
 		void stop() {
+			ulwilaComponents.get(0).requestFocus();
 			stopped = true;
 		}
 
@@ -133,7 +134,7 @@ public class UlwilaPlayer {
 					if (!paused) {
 						UlwilaComponent ulwilaComponent =  ulwilaComponents.get(lastPlayedNote);
 						MusicComponent musicComponent = ulwilaComponent.getMusicComponent();
-						
+
 						lastPlayedNote++;
 
 						publish(ulwilaComponent);

@@ -109,25 +109,26 @@ public abstract class MusicNote extends MusicComponent {
 	}
 
 	public Color getColor() {
+		UlwilaColor ulwilaColor = UlwilaColor.getInstance();
 		if (getPaintStyle().equals(PaintStyle.COLORED)) {
 			switch (getTone()) {
 			case C:
 				if (getOctave() == Octave.FOURTH) {
 					return Color.WHITE;
 				}
-				return Color.BLACK;
+				return ulwilaColor.getC();
 			case D:
-				return new Color(145, 75, 41);
+				return ulwilaColor.getD();
 			case E:
-				return new Color(0, 0, 255);
+				return ulwilaColor.getE();
 			case F:
-				return new Color(0, 170, 0);
+				return ulwilaColor.getF();
 			case G:
-				return Color.RED;
+				return ulwilaColor.getG();
 			case A:
-				return new Color(255, 153, 0);
+				return ulwilaColor.getA();
 			case H:
-				return Color.YELLOW;
+				return ulwilaColor.getH();
 			default:
 				throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if note is a semi note!");
 			}
@@ -137,18 +138,19 @@ public abstract class MusicNote extends MusicComponent {
 	}
 
 	public Color getLeftColor() {
+		UlwilaColor ulwilaColor = UlwilaColor.getInstance();
 		if (getPaintStyle().equals(PaintStyle.COLORED)) {
 			switch (getTone()) {
 			case CIS:
-				return Color.BLACK;
+				return ulwilaColor.getC();
 			case DIS:
-				return new Color(145, 75, 41);
+				return ulwilaColor.getD();
 			case FIS:
-				return new Color(0, 170, 0);
+				return ulwilaColor.getF();
 			case GIS:
-				return Color.RED;
+				return ulwilaColor.getG();
 			case AIS:
-				return new Color(255, 153, 0);
+				return ulwilaColor.getA();
 			default:
 				throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
 			}
@@ -158,18 +160,19 @@ public abstract class MusicNote extends MusicComponent {
 	}
 
 	public Color getRightColor() {
+		UlwilaColor ulwilaColor = UlwilaColor.getInstance();
 		if (getPaintStyle().equals(PaintStyle.COLORED)) {
 			switch (getTone()) {
 			case CIS:
-				return new Color(140, 80, 60);
+				return ulwilaColor.getD();
 			case DIS:
-				return Color.BLUE;
+				return ulwilaColor.getE();
 			case FIS:
-				return Color.RED;
+				return ulwilaColor.getG();
 			case GIS:
-				return new Color(255, 153, 0);
+				return ulwilaColor.getA();
 			case AIS:
-				return Color.YELLOW;
+				return ulwilaColor.getH();
 			default:
 				throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
 			}
