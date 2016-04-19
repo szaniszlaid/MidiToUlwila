@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -159,12 +160,14 @@ public class Main extends JFrame {
 		initFileChooser();
 
 		setJMenuBar(initMenu());
-
-		controlPanel.setBackground(Color.WHITE);
+		
+		controlPanel.setBorder(BorderFactory.createEtchedBorder());
+		//controlPanel.setBackground(Color.WHITE);
 		setButtonsEnabled(false);
 
 		scrollPanel = new JScrollPane();
 		scrollPanel.setColumnHeaderView(controlPanel);
+
 		scrollPanel.getViewport().setBackground(Color.WHITE);
 
 		// set scroll speed TODO properties file
