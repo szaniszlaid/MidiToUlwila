@@ -415,14 +415,13 @@ public class Main extends JFrame {
 
 	private void initSettingsButton() {
 		CustomizedButtonBuilder builder = new CustomizedButtonBuilder()
-//				.imgUrl("/images/sample_up.png")
-//				.imgRolloverURL("/images/sample_hover.png")
-//				.imgPressedURL("/images/sample_down.png")
+				.imgUrl("/images/settings_up.png")
+				.imgRolloverURL("/images/settings_hover.png")
+				.imgPressedURL("/images/settings_down.png")
 				.toolTip("color settings");
 
 		settingsBtn = builder.create();
-		//TODO remove if icon set
-		settingsBtn.setText("settings");
+
 		settingsBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
