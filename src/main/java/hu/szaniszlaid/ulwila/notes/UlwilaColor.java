@@ -1,28 +1,27 @@
 package hu.szaniszlaid.ulwila.notes;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+
+import hu.szaniszlaid.ulwila.notes.util.Tone;
 
 public class UlwilaColor {
 
 	private static UlwilaColor instance;
-
-	private Color c;
-	private Color d;
-	private Color e;
-	private Color f;
-	private Color g;
-	private Color a;
-	private Color h;
+	
+	private Map<Tone, Color> colors;
 
 	private UlwilaColor() {
+		colors = new HashMap<>();
 		//set ulwila colors to default
-		setC(Color.BLACK);
-		setD(new Color(145, 75, 41));
-		setE(new Color(0, 0, 255));
-		setF(new Color(0, 170, 0));
-		setG(Color.RED);
-		setA(new Color(255, 153, 0));
-		setH(Color.YELLOW);
+		colors.put(Tone.C, Color.BLACK);
+		colors.put(Tone.D, new Color(145, 75, 41));
+		colors.put(Tone.E, new Color(0, 0, 255));
+		colors.put(Tone.F, new Color(0, 170, 0));
+		colors.put(Tone.G, Color.RED);
+		colors.put(Tone.A, new Color(255, 153, 0));
+		colors.put(Tone.H, Color.YELLOW);
 	}
 
 	public static UlwilaColor getInstance() {
@@ -31,60 +30,13 @@ public class UlwilaColor {
 		}
 		return instance;
 	}
-
-	public Color getD() {
-		return d;
+	
+	public Color getColorByTone(Tone tone) {
+		return colors.get(tone);
+	}
+	
+	public void setColorByTone(Tone tone, Color color) {
+		colors.put(tone, color);
 	}
 
-	public void setD(Color d) {
-		this.d = d;
-	}
-
-	public Color getE() {
-		return e;
-	}
-
-	public void setE(Color e) {
-		this.e = e;
-	}
-
-	public Color getF() {
-		return f;
-	}
-
-	public void setF(Color f) {
-		this.f = f;
-	}
-
-	public Color getA() {
-		return a;
-	}
-
-	public void setA(Color a) {
-		this.a = a;
-	}
-
-	public Color getH() {
-		return h;
-	}
-
-	public void setH(Color h) {
-		this.h = h;
-	}
-
-	public Color getC() {
-		return c;
-	}
-
-	public void setC(Color c) {
-		this.c = c;
-	}
-
-	public Color getG() {
-		return g;
-	}
-
-	public void setG(Color g) {
-		this.g = g;
-	}
 }

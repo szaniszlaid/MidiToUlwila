@@ -9,6 +9,8 @@ import hu.szaniszlaid.ulwila.notes.util.Octave;
 import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 
+import static hu.szaniszlaid.ulwila.notes.util.Tone.*;
+
 public abstract class MusicNote extends MusicComponent {
 
 	private Octave octave;
@@ -111,27 +113,16 @@ public abstract class MusicNote extends MusicComponent {
 	public Color getColor() {
 		UlwilaColor ulwilaColor = UlwilaColor.getInstance();
 		if (getPaintStyle().equals(PaintStyle.COLORED)) {
-			switch (getTone()) {
-			case C:
-				if (getOctave() == Octave.FOURTH) {
+			if (getTone().isSemiTone()) {
+				throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if note is a semi note!");
+			} else {
+				//special
+				if (getOctave() == Octave.FOURTH && getTone().equals(Tone.C)) {
 					return Color.WHITE;
 				}
-				return ulwilaColor.getC();
-			case D:
-				return ulwilaColor.getD();
-			case E:
-				return ulwilaColor.getE();
-			case F:
-				return ulwilaColor.getF();
-			case G:
-				return ulwilaColor.getG();
-			case A:
-				return ulwilaColor.getA();
-			case H:
-				return ulwilaColor.getH();
-			default:
-				throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if note is a semi note!");
+				return ulwilaColor.getColorByTone(getTone());
 			}
+			
 		} else {
 			return Color.WHITE;
 		}
@@ -142,15 +133,15 @@ public abstract class MusicNote extends MusicComponent {
 		if (getPaintStyle().equals(PaintStyle.COLORED)) {
 			switch (getTone()) {
 			case CIS:
-				return ulwilaColor.getC();
+				return ulwilaColor.getColorByTone(C);
 			case DIS:
-				return ulwilaColor.getD();
+				return ulwilaColor.getColorByTone(D);
 			case FIS:
-				return ulwilaColor.getF();
+				return ulwilaColor.getColorByTone(F);
 			case GIS:
-				return ulwilaColor.getG();
+				return ulwilaColor.getColorByTone(G);
 			case AIS:
-				return ulwilaColor.getA();
+				return ulwilaColor.getColorByTone(A);
 			default:
 				throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
 			}
@@ -164,15 +155,15 @@ public abstract class MusicNote extends MusicComponent {
 		if (getPaintStyle().equals(PaintStyle.COLORED)) {
 			switch (getTone()) {
 			case CIS:
-				return ulwilaColor.getD();
+				return ulwilaColor.getColorByTone(D);
 			case DIS:
-				return ulwilaColor.getE();
+				return ulwilaColor.getColorByTone(E);
 			case FIS:
-				return ulwilaColor.getG();
+				return ulwilaColor.getColorByTone(G);
 			case GIS:
-				return ulwilaColor.getA();
+				return ulwilaColor.getColorByTone(A);
 			case AIS:
-				return ulwilaColor.getH();
+				return ulwilaColor.getColorByTone(H);
 			default:
 				throw new UnsupportedOperationException("Use getColor() method if note is a whole note");
 			}
