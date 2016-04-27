@@ -23,7 +23,6 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 import hu.szaniszlaid.ulwila.notes.MusicComponent;
-import hu.szaniszlaid.ulwila.notes.MusicNote;
 import hu.szaniszlaid.ulwila.view.UlwilaBar;
 import hu.szaniszlaid.ulwila.view.UlwilaComponent;
 import hu.szaniszlaid.ulwila.view.UlwilaRow;

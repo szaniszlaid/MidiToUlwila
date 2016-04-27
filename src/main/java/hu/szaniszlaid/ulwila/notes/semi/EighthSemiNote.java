@@ -25,14 +25,15 @@ public class EighthSemiNote extends EighthNote {
 	public void drawNote(Graphics2D g) {
 
 		g.setColor(getRightColor());
-		Arc2D left = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
-		g.fill(left);
-		g.setColor(getLeftColor());
-		Arc2D right = new Arc2D.Double(0, 0, width, height, 110, 140, Arc2D.CHORD);
+		Arc2D right = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
 		g.fill(right);
 		g.setColor(Color.BLACK);
-		Arc2D.Double border = new Arc2D.Double(0, 0, width, height, 90, 180, Arc2D.CHORD);
-		g.draw(border);
+		g.draw(right);
+		g.setColor(getLeftColor());
+		Arc2D left = new Arc2D.Double(0, 0, width, height, 110, 140, Arc2D.CHORD);
+		g.fill(left);
+		g.setColor(Color.BLACK);
+		g.draw(left);
 	}
 
 	@Override

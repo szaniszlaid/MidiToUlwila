@@ -21,20 +21,32 @@ public class QuarterNote extends MusicNote {
 
 	@Override
 	public void drawNote(Graphics2D g) {
-		double x = (QUARTER_NOTE_WIDTH / 2 - QUARTER_NOTE_WIDTH / 3);
-		double y = (QUARTER_NOTE_HEIGHT / 2 - QUARTER_NOTE_HEIGHT / 3);
 
-		g.setColor(getColor());
-		g.fillOval(0, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
-		g.setColor(Color.BLACK);
-		g.drawOval(0, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		int noteWidth = QUARTER_NOTE_WIDTH;
+		int noteHeight = QUARTER_NOTE_HEIGHT;
 
-		if (getTone() == Tone.C && getOctave() == Octave.FIRST) {
+		int x = 0;
+		int y = 0;
+		// 8th part
+
+		if (getOctave().equals(Octave.FOURTH)) {
 			g.setColor(Color.WHITE);
-			Arc2D whiteCircle = new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 1.5, QUARTER_NOTE_HEIGHT / 1.5, 0, 360, Arc2D.CHORD);
-			g.fill(whiteCircle);
+			g.fillOval(x, y, noteWidth, noteHeight);
+
+			g.setColor(Color.BLACK);
+			g.drawOval(x, y, noteWidth, noteHeight);
+
+			noteWidth = QUARTER_NOTE_WIDTH - FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight = QUARTER_NOTE_HEIGHT - FOURTH_OCTAVE_WHITE_WIDTH;
+
+			x = FOURTH_OCTAVE_WHITE_WIDTH/2;
+			y = FOURTH_OCTAVE_WHITE_WIDTH/2;
 		}
 
+		g.setColor(getColor());
+		g.fillOval(x, y, noteWidth, noteHeight);
+		g.setColor(Color.BLACK);
+		g.drawOval(y, x, noteWidth, noteHeight);
 	}
 
 	@Override

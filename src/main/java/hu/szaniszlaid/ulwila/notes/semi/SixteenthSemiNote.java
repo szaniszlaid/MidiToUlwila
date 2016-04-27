@@ -2,10 +2,6 @@ package hu.szaniszlaid.ulwila.notes.semi;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Arc2D;
-import java.util.ArrayList;
-import java.util.List;
 
 import hu.szaniszlaid.ulwila.notes.util.Octave;
 import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
@@ -31,13 +27,4 @@ public class SixteenthSemiNote extends SixteenthNote {
 		g.drawRect(SIXTEENTH_WIDTH / 2, 0, SIXTEENTH_WIDTH / 2, QUARTER_NOTE_HEIGHT);
 	}
 
-	@Override
-	public List<Shape> getOctaveShapes() {
-		double x = ((double) SIXTEENTH_WIDTH / 2 - (double) QUARTER_NOTE_WIDTH / 10);
-		double y = ((double) QUARTER_NOTE_HEIGHT / 2 - (double) QUARTER_NOTE_HEIGHT / 10);
-
-		List<Shape> octaveShapes = new ArrayList<>();
-		octaveShapes.add(new Arc2D.Double(x, y, QUARTER_NOTE_WIDTH / 5, QUARTER_NOTE_HEIGHT / 5, 0, 360, Arc2D.CHORD));
-		return octaveShapes;
-	}
 }

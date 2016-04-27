@@ -1,5 +1,13 @@
 package hu.szaniszlaid.ulwila.notes;
 
+import static hu.szaniszlaid.ulwila.notes.util.Tone.A;
+import static hu.szaniszlaid.ulwila.notes.util.Tone.C;
+import static hu.szaniszlaid.ulwila.notes.util.Tone.D;
+import static hu.szaniszlaid.ulwila.notes.util.Tone.E;
+import static hu.szaniszlaid.ulwila.notes.util.Tone.F;
+import static hu.szaniszlaid.ulwila.notes.util.Tone.G;
+import static hu.szaniszlaid.ulwila.notes.util.Tone.H;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -9,12 +17,12 @@ import hu.szaniszlaid.ulwila.notes.util.Octave;
 import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 import hu.szaniszlaid.ulwila.notes.util.Tone;
 
-import static hu.szaniszlaid.ulwila.notes.util.Tone.*;
-
 public abstract class MusicNote extends MusicComponent {
 
 	private Octave octave;
 	private Tone tone;
+	
+	Color octaveColor = Color.BLACK;
 
 	public int getMidiNumber() {
 		return Tone.BASEKEY + octave.getMidiOffset() + tone.getMidiOffset();
@@ -58,7 +66,6 @@ public abstract class MusicNote extends MusicComponent {
 	public abstract void drawNote(Graphics2D g);
 
 	protected void drawOctave(Graphics2D g) {
-		Color octaveColor = Color.BLACK;
 		switch (octave) {
 		case FIRST:
 			octaveColor = Color.BLACK;
@@ -69,7 +76,7 @@ public abstract class MusicNote extends MusicComponent {
 			octaveColor = Color.WHITE;
 			break;
 		case FOURTH:
-			octaveColor = Color.BLACK;
+			octaveColor = Color.WHITE;
 			break;
 		}
 
@@ -92,7 +99,7 @@ public abstract class MusicNote extends MusicComponent {
 				return Color.BLACK;
 			}
 		} else {
-			if (getColor().equals(Color.BLACK)) {
+			if (getColor().equals(Color.BLACK) && octaveColor.equals(Color.BLACK)) {
 				return Color.WHITE;
 			} else {
 				return Color.BLACK;
@@ -116,10 +123,6 @@ public abstract class MusicNote extends MusicComponent {
 			if (getTone().isSemiTone()) {
 				throw new UnsupportedOperationException("Use getLeftColor() or getRightColor() method if note is a semi note!");
 			} else {
-				//special
-				if (getOctave() == Octave.FOURTH && getTone().equals(Tone.C)) {
-					return Color.WHITE;
-				}
 				return ulwilaColor.getColorByTone(getTone());
 			}
 			

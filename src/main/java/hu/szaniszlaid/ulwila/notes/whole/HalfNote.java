@@ -21,14 +21,58 @@ public class HalfNote extends MusicNote {
 
 	@Override
 	public void drawNote(Graphics2D g) {
+		int noteWidth = QUARTER_NOTE_WIDTH;
+		int noteHeight = QUARTER_NOTE_HEIGHT;
+
+		int x = 0;
+		int y = 0;
+	
+		//second white
+		if (getOctave().equals(Octave.FOURTH)) {
+			
+			g.setColor(Color.WHITE);
+			g.fillOval(x + offsetX, y, noteWidth, noteHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(x + offsetX, y, noteWidth, noteHeight);	
+			
+			x += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			y += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			
+			noteWidth -= FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight -= FOURTH_OCTAVE_WHITE_WIDTH;
+
+		}
+		
+		//second part
 		g.setColor(getColor());
-		g.fillOval(offsetX, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.fillOval(x + offsetX, y, noteWidth, noteHeight);
 		g.setColor(Color.BLACK);
-		g.drawOval(offsetX, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.drawOval(x + offsetX, y, noteWidth, noteHeight);
+
+		
+
+		//first part
+		if (getOctave().equals(Octave.FOURTH)) {
+						
+			g.setColor(Color.WHITE);
+			g.fillOval(x, y, noteWidth, noteHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(x, y, noteWidth, noteHeight);
+			
+	
+			
+			x += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			y += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			
+			noteWidth -= FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight -= FOURTH_OCTAVE_WHITE_WIDTH;
+
+		}
+
 		g.setColor(getColor());
-		g.fillOval(0, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.fillOval(x, y, noteWidth, noteHeight);
 		g.setColor(Color.BLACK);
-		g.drawOval(0, 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.drawOval(y, x, noteWidth, noteHeight);
 
 	}
 

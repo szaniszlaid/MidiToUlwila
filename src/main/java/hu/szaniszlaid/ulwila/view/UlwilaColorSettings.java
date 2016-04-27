@@ -68,18 +68,17 @@ public class UlwilaColorSettings extends JDialog {
 	private void initNotes() {
 		contentPanel.setLayout(new GridLayout(4, 2));
 		
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.C, PaintStyle.COLORED)));
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.D, PaintStyle.COLORED)));
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.E, PaintStyle.COLORED)));
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.F, PaintStyle.COLORED)));
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.G, PaintStyle.COLORED)));
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.A, PaintStyle.COLORED)));
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.H, PaintStyle.COLORED)));
-		contentPanel.add(initNote(new QuarterNote(Octave.FIRST, Tone.C, PaintStyle.COLORED)));
-
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.C, PaintStyle.COLORED)));
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.D, PaintStyle.COLORED)));
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.E, PaintStyle.COLORED)));
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.F, PaintStyle.COLORED)));
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.G, PaintStyle.COLORED)));
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.A, PaintStyle.COLORED)));
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.H, PaintStyle.COLORED)));
+		contentPanel.add(createNoteSettingsPanel(new QuarterNote(Octave.FIRST, Tone.C, PaintStyle.COLORED)));
 	}
 
-	private JPanel initNote(MusicNote note) {
+	private JPanel createNoteSettingsPanel(MusicNote note) {
 		JPanel panel = new JPanel();
 		UlwilaColor ulwilaColor = UlwilaColor.getInstance();
 
@@ -93,7 +92,7 @@ public class UlwilaColorSettings extends JDialog {
 				chooser.setColor(colorOriginal);
 				chooser.getSelectionModel().addChangeListener(new ChangeListener() {
 					@Override
-					public void stateChanged(ChangeEvent arg0) {
+					public void stateChanged(ChangeEvent e) {
 						Color color = chooser.getColor();
 						ulwilaColor.setColorByTone(note.getTone(), color);
 						repaint();

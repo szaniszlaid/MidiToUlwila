@@ -24,8 +24,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import hu.szaniszlaid.ulwila.notes.MusicComponent;
-import hu.szaniszlaid.ulwila.notes.MusicNote;
 import hu.szaniszlaid.ulwila.view.UlwilaBar;
 import hu.szaniszlaid.ulwila.view.UlwilaComponent;
 import hu.szaniszlaid.ulwila.view.UlwilaRow;
