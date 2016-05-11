@@ -27,7 +27,7 @@ public class HalfNote extends MusicNote {
 		int x = 0;
 		int y = 0;
 	
-		//second white
+		//second white part
 		if (getOctave().equals(Octave.FOURTH)) {
 			
 			g.setColor(Color.WHITE);
@@ -51,21 +51,24 @@ public class HalfNote extends MusicNote {
 
 		
 
-		//first part
+		//first white part
 		if (getOctave().equals(Octave.FOURTH)) {
+			
+			x = 0;
+			y = 0;
 						
 			g.setColor(Color.WHITE);
-			g.fillOval(x, y, noteWidth, noteHeight);
+			g.fillOval(x, y, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 			g.setColor(Color.BLACK);
-			g.drawOval(x, y, noteWidth, noteHeight);
+			g.drawOval(x, y, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
 			
 	
 			
 			x += FOURTH_OCTAVE_WHITE_WIDTH/2;
 			y += FOURTH_OCTAVE_WHITE_WIDTH/2;
 			
-			noteWidth -= FOURTH_OCTAVE_WHITE_WIDTH;
-			noteHeight -= FOURTH_OCTAVE_WHITE_WIDTH;
+			noteWidth = QUARTER_NOTE_WIDTH - FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight = QUARTER_NOTE_HEIGHT - FOURTH_OCTAVE_WHITE_WIDTH;
 
 		}
 

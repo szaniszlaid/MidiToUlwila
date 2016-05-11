@@ -11,8 +11,8 @@ import hu.szaniszlaid.ulwila.notes.util.PaintStyle;
 
 public abstract class MusicComponent extends JComponent  {
 
-	public static final int QUARTER_NOTE_WIDTH = 80;
-	public static final int QUARTER_NOTE_HEIGHT = 80;
+	public static final int QUARTER_NOTE_WIDTH = 70;
+	public static final int QUARTER_NOTE_HEIGHT = 70;
 	public static final int FOURTH_OCTAVE_WHITE_WIDTH = 6;
 
 	private static final int MARGIN = 10;

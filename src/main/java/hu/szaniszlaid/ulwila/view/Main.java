@@ -627,9 +627,11 @@ public class Main extends JFrame {
 		for (Tone tone : Tone.values()) {
 			notes.get(Octave.THIRD).add(tone);
 		}
-
+		
 		notes.put(Octave.FOURTH, new ArrayList<>());
-		notes.get(Octave.FOURTH).add(Tone.C);
+		for (Tone tone : Tone.values()) {
+			notes.get(Octave.FOURTH).add(tone);
+		}
 
 		return notes;
 	}
@@ -652,9 +654,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new SixteenthSemiNote(octave, tone, paintStyle), "a"));
+					ulwilaComponents.add(new UlwilaComponent(new SixteenthSemiNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new SixteenthNote(octave, tone, paintStyle), "s"));
+					ulwilaComponents.add(new UlwilaComponent(new SixteenthNote(octave, tone, paintStyle)));
 				}
 			}
 		}
@@ -663,9 +665,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new EighthSemiNote(octave, tone, paintStyle), "as"));
+					ulwilaComponents.add(new UlwilaComponent(new EighthSemiNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new EighthNote(octave, tone, paintStyle), "as"));
+					ulwilaComponents.add(new UlwilaComponent(new EighthNote(octave, tone, paintStyle)));
 				}
 			}
 		}
@@ -674,9 +676,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new DottedEighthSemiNote(octave, tone, paintStyle), "as"));
+					ulwilaComponents.add(new UlwilaComponent(new DottedEighthSemiNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new DottedEighthNote(octave, tone, paintStyle), "as"));
+					ulwilaComponents.add(new UlwilaComponent(new DottedEighthNote(octave, tone, paintStyle)));
 				}
 			}
 		}
@@ -685,9 +687,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new QuarterSemiNote(octave, tone, paintStyle), "asd"));
+					ulwilaComponents.add(new UlwilaComponent(new QuarterSemiNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new QuarterNote(octave, tone, paintStyle), "asd"));
+					ulwilaComponents.add(new UlwilaComponent(new QuarterNote(octave, tone, paintStyle)));
 				}
 			}
 		}
@@ -696,9 +698,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new DottedQuarterSemiNote(octave, tone, paintStyle), "as"));
+					ulwilaComponents.add(new UlwilaComponent(new DottedQuarterSemiNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new DottedQuarterNote(octave, tone, paintStyle), "asd"));
+					ulwilaComponents.add(new UlwilaComponent(new DottedQuarterNote(octave, tone, paintStyle)));
 				}
 			}
 		}
@@ -707,9 +709,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new HalfSemiNote(octave, tone, paintStyle), "asdf"));
+					ulwilaComponents.add(new UlwilaComponent(new HalfSemiNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new HalfNote(octave, tone, paintStyle), "asdf"));
+					ulwilaComponents.add(new UlwilaComponent(new HalfNote(octave, tone, paintStyle)));
 				}
 			}
 		}
@@ -718,9 +720,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new DottedSemiHalfNote(octave, tone, paintStyle), "asdf"));
+					ulwilaComponents.add(new UlwilaComponent(new DottedSemiHalfNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new DottedHalfNote(octave, tone, paintStyle), "asdf"));
+					ulwilaComponents.add(new UlwilaComponent(new DottedHalfNote(octave, tone, paintStyle)));
 				}
 			}
 		}
@@ -728,9 +730,9 @@ public class Main extends JFrame {
 		for (Octave octave : notes.keySet()) {
 			for (Tone tone : notes.get(octave)) {
 				if (tone.isSemiTone()) {
-					ulwilaComponents.add(new UlwilaComponent(new WholeSemiNote(octave, tone, paintStyle), "asdfjklé"));
+					ulwilaComponents.add(new UlwilaComponent(new WholeSemiNote(octave, tone, paintStyle)));
 				} else {
-					ulwilaComponents.add(new UlwilaComponent(new WholeNote(octave, tone, paintStyle), "asdfjklé"));
+					ulwilaComponents.add(new UlwilaComponent(new WholeNote(octave, tone, paintStyle)));
 				}
 			}
 		}

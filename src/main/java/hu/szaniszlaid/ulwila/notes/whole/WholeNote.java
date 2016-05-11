@@ -21,25 +21,105 @@ public class WholeNote extends MusicNote {
 
 	@Override
 	public void drawNote(Graphics2D g) {
-		g.setColor(getColor());
-		g.fillOval(getNthOffset(3), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
-		g.setColor(Color.BLACK);
-		g.drawOval(getNthOffset(3), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		//4th quarter
+		int x = 0;
+		int y = 0;
+		
+		int noteWidth = QUARTER_NOTE_WIDTH;
+		int noteHeight = QUARTER_NOTE_HEIGHT;
+		if (getOctave().equals(Octave.FOURTH)) {
+			
+			g.setColor(Color.WHITE);
+			g.fillOval(getNthOffset(3), y, noteWidth, noteHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(getNthOffset(3), y, noteWidth, noteHeight);	
+			
+			x += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			y += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			
+			noteWidth -= FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight -= FOURTH_OCTAVE_WHITE_WIDTH;
 
+		}
 		g.setColor(getColor());
-		g.fillOval(getNthOffset(2), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.fillOval(x + getNthOffset(3), y, noteWidth, noteHeight);
 		g.setColor(Color.BLACK);
-		g.drawOval(getNthOffset(2), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.drawOval(x + getNthOffset(3), y, noteWidth, noteHeight);
 
-		g.setColor(getColor());
-		g.fillOval(getNthOffset(1), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
-		g.setColor(Color.BLACK);
-		g.drawOval(getNthOffset(1), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		//3th quarter
+		x = 0;
+		y = 0;
+		
+		noteWidth = QUARTER_NOTE_WIDTH;
+		noteHeight = QUARTER_NOTE_HEIGHT;
+		if (getOctave().equals(Octave.FOURTH)) {
+			
+			g.setColor(Color.WHITE);
+			g.fillOval(getNthOffset(2), y, noteWidth, noteHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(getNthOffset(2), y, noteWidth, noteHeight);	
+			
+			x += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			y += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			
+			noteWidth -= FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight -= FOURTH_OCTAVE_WHITE_WIDTH;
 
+		}
 		g.setColor(getColor());
-		g.fillOval(getNthOffset(0), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.fillOval(x + getNthOffset(2), y, noteWidth, noteHeight);
 		g.setColor(Color.BLACK);
-		g.drawOval(getNthOffset(0), 0, QUARTER_NOTE_WIDTH, QUARTER_NOTE_HEIGHT);
+		g.drawOval(x + getNthOffset(2), y, noteWidth, noteHeight);
+
+		//2th quarter
+		x = 0;
+		y = 0;
+		
+		noteWidth = QUARTER_NOTE_WIDTH;
+		noteHeight = QUARTER_NOTE_HEIGHT;
+		if (getOctave().equals(Octave.FOURTH)) {
+			
+			g.setColor(Color.WHITE);
+			g.fillOval(getNthOffset(1), y, noteWidth, noteHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(getNthOffset(1), y, noteWidth, noteHeight);	
+			
+			x += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			y += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			
+			noteWidth -= FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight -= FOURTH_OCTAVE_WHITE_WIDTH;
+
+		}
+		g.setColor(getColor());
+		g.fillOval(x + getNthOffset(1), y, noteWidth, noteHeight);
+		g.setColor(Color.BLACK);
+		g.drawOval(x + getNthOffset(1), y, noteWidth, noteHeight);
+
+		//1th quarter
+		x = 0;
+		y = 0;
+		
+		noteWidth = QUARTER_NOTE_WIDTH;
+		noteHeight = QUARTER_NOTE_HEIGHT;
+		if (getOctave().equals(Octave.FOURTH)) {
+			
+			g.setColor(Color.WHITE);
+			g.fillOval(getNthOffset(0), y, noteWidth, noteHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(getNthOffset(0), y, noteWidth, noteHeight);	
+			
+			x += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			y += FOURTH_OCTAVE_WHITE_WIDTH/2;
+			
+			noteWidth -= FOURTH_OCTAVE_WHITE_WIDTH;
+			noteHeight -= FOURTH_OCTAVE_WHITE_WIDTH;
+
+		}
+		g.setColor(getColor());
+		g.fillOval(x + getNthOffset(0), y, noteWidth, noteHeight);
+		g.setColor(Color.BLACK);
+		g.drawOval(x + getNthOffset(0), y, noteWidth, noteHeight);
 
 	}
 

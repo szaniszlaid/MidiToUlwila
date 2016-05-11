@@ -27,7 +27,6 @@ public class QuarterNote extends MusicNote {
 
 		int x = 0;
 		int y = 0;
-		// 8th part
 
 		if (getOctave().equals(Octave.FOURTH)) {
 			g.setColor(Color.WHITE);
